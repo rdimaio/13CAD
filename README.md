@@ -16,7 +16,7 @@ The library's structure is a slightly modified version of [this answer](https://
 /tests     Test suites that should be run during a `make test`
 ```
 
-**Public** headers go in ```include/```, while **private** headers go in ```src/```.
+**Public** headers go in ```/include```, while **private** headers go in ```/src```.
 [This page](https://stackoverflow.com/questions/2272735/private-public-header-example) illustrates
 the difference between the two. In particular:
 
@@ -30,7 +30,7 @@ As a general rule, **keep everything private unless absolutely necessary to the 
 
 Note: these are not universal coding rules. 
 You can write code however you like, but for consistency's sake it's ideal that
-all members of the group follow this set of conventions (which happen to be the most common in C++).
+all members of the group follow this set of conventions (which are very common in C++).
 
 ### Git
 - Follow the [Git commit message convention](https://gist.github.com/robertpainsi/b632364184e70900af4ab688decf6f53)
