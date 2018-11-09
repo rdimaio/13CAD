@@ -1,5 +1,6 @@
 # ModelLoader/CMakeLists.txt
 cmake_minimum_required( VERSION 2.8 )
+set(CMAKE_CXX_STANDARD 14)
 project(ModelLoader)
 
 include_directories( include/
