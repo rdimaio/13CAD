@@ -1,0 +1,24 @@
+sudo: false
+
+language:
+  - cpp
+
+branches:
+  except:
+    - gh-pages
+
+before_install:
+  - sudo apt-get install libgtest-dev
+  - cd /usr/src/googletest/googletest
+  - sudo mkdir build
+  - cd build
+  - sudo cmake ..
+  - sudo make
+  - sudo cp libgtest* /usr/lib/
+  - cd ..
+  - sudo rm -rf build
+
+script:
+  - cmake .
+  - make
+  - make test
