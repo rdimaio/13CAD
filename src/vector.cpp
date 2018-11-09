@@ -20,6 +20,15 @@ Vector3D Vector3D::operator-(Vector3D rhsVector) {
     return result;
 }
 
+bool operator==(const Vector3D& lhsVector, const Vector3D& rhsVector) {
+        if (lhsVector.x == rhsVector.x && lhsVector.y == rhsVector.y && lhsVector.z == rhsVector.z) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+
 /**
  * Scalar multiplication - vector on lhs
  */

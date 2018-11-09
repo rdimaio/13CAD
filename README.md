@@ -9,11 +9,12 @@ The library's structure is a slightly modified version of [this answer](https://
 
 ```
 /         Makefile and configure scripts.
-/src      Source files (.cpp) and private header files (.h)
+/bin      Tools build directory
+/demos    User-friendly demo programs aimed at providing an interactive understanding of the library elements
 /include  Public header files (.h) exposed to the library users
 /lib      Library build directory
-/bin      Tools build directory
-/tests     Test suites that should be run during a `make test`
+/src      Source files (.cpp) and private header files (.h)
+/tests    Test suites that should be run during a `make test`
 ```
 
 **Public** headers go in ```/include```, while **private** headers go in ```/src```.

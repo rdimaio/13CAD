@@ -1,6 +1,9 @@
-#include <stdio.h>
+#ifndef VECTOR_H
+#define VECTOR_H
 
+#include <stdio.h>
 #include <iostream>
+
 /**
  * 3D vector representation of a vertex.
  */
@@ -19,6 +22,7 @@ class Vector3D {
         // Note: rhs stands for right hand side
         Vector3D operator+(Vector3D rhsVector);
         Vector3D operator-(Vector3D rhsVector);
+        friend bool operator==(const Vector3D& lhsVector, const Vector3D& rhsVector);
         float dot(Vector3D rhsVector); // Dot product
         Vector3D cross(Vector3D rhsVector); // Cross product
         friend std::ostream& operator<<(std::ostream& os, Vector3D &v); // cout
@@ -26,3 +30,5 @@ class Vector3D {
         Vector3D operator*(float scalar); // Vector on lhs
         friend Vector3D operator*(float scalar, Vector3D v); // Vector on rhs
 };
+
+#endif
