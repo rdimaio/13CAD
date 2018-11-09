@@ -1,0 +1,13 @@
+sudo: false
+
+language:
+  - cpp
+
+branches:
+  except:
+    - gh-pages
+
+script:
+  - cmake -DTESTING=ON .
+  - make
+  - ./UnitTest
