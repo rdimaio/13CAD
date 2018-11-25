@@ -30,4 +30,4 @@ branches:
 script:
   - cmake -DTESTING=ON .
   - make 
-  - ./UnitTest
+  - ./Test_ModelLoader

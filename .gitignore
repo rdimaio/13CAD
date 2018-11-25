@@ -35,6 +35,7 @@
 *.out
 *.app
 ModelLoader
+Test_ModelLoader
 
 ### CMake ###
 CMakeCache.txt
