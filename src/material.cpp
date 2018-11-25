@@ -1,10 +1,5 @@
-#include "Material.h"
+#include "material.h"
 
-Material::Material(){
-  this->ID=0.0;
-  this->Density=0.0;
-
-}
 Material::~Material(){}
 
 Material::Material( double aID, double Den, string Col, string aName){

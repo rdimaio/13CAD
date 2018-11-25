@@ -1,8 +1,13 @@
+[![Build Status](https://travis-ci.com/rdimaio/ModelLoader.svg?token=GZpV6k64pFgseGbhWU1L&branch=master)](https://travis-ci.com/rdimaio/ModelLoader)
+
 # Cross-platform model loading library
 
 ```cpp
 // H62PEP - Group 13
 ```
+
+### TODOs
+- Implement Doxygen
 
 ## Library structure
 The library's structure is a slightly modified version of [this answer](https://stackoverflow.com/a/1398594):

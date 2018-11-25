@@ -1,8 +1,8 @@
-#include <string>
-using namespace std;
-
 #ifndef MATERIAL_H
 #define MATERIAL_H
+
+#include <string>
+using namespace std;
 
 class Material {
 private:
@@ -13,11 +13,10 @@ private:
 
 public:
   //construct
-  Material()
-  Material( double aID, double Den, string Col, string aName)
+  Material(double aID, double Den, string Col, string aName);
   //deconstruct
-  ~Material()
-  void setMaterial( double aID, double Den, string Col, string aName)
+  ~Material();
+  void setMaterial( double aID, double Den, string Col, string aName);
 
   double getID();
   double getDensity();
