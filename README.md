@@ -116,7 +116,7 @@ If you want to run the tests yourself, execute these commands:
 cd ModelLoader
 cmake -DTESTING=ON .
 make
-./UnitTest
+./Test_ModelLoader
 ```
 
 ## Travis CI
