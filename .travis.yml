@@ -3,22 +3,31 @@ sudo: false
 language:
   - cpp
 
+compiler:
+  - gcc
+  - clang
+
+matrix:
+  include:
+    # works on Trusty
+    - os: linux
+      addons:
+        apt:
+          sources:
+            - llvm-toolchain-trusty-5.0
+          packages:
+            - clang-5.0
+      env:
+        - MATRIX_EVAL="CC=clang-5.0 && CXX=clang++-5.0"
+
+before_install:
+    - eval "${MATRIX_EVAL}"
+
 branches:
   except:
     - gh-pages
 
-before_install:
-  - sudo apt-get install libgtest-dev
-  - cd /usr/src/googletest/googletest
-  - sudo mkdir build
-  - cd build
-  - sudo cmake ..
-  - sudo make
-  - sudo cp libgtest* /usr/lib/
-  - cd ..
-  - sudo rm -rf build
-
 script:
-  - cmake .
-  - make
-  - make test
+  - cmake -DTESTING=ON .
+  - make 
+  - ./Test_ModelLoader

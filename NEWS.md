@@ -1,1 +1,10 @@
- 
+## Project week 2:
+
+- Project structure was finalised and implemented
+- Vector implementation was completed, along with tests using Google Test
+- Continuous integration was set up successfully using Travis-CI
+
+
+## Project week 1:
+
+- Individual worksheets were completed, and a plan for the project was formed.
