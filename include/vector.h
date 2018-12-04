@@ -18,6 +18,16 @@ class Vector3D {
         Vector3D(float x, float y, float z);
         ~Vector3D();
 
+		// Accessors
+		float getX();
+		float getY();
+		float getZ();
+
+		// Mutators
+		void setX(float x);
+		void setY(float y);
+		void setZ(float z);
+
         // Operator overloading
         // Note: rhs stands for right hand side
         Vector3D operator+(Vector3D rhsVector);

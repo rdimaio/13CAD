@@ -10,6 +10,32 @@ Vector3D::~Vector3D() {
     
 }
 
+
+float Vector3D::getX() {
+	return this->x;
+}
+
+float Vector3D::getY() {
+	return this->y;
+}
+
+float Vector3D::getZ() {
+	return this->z;
+}
+
+
+void Vector3D::setX(float x) {
+	this->x = x;
+}
+
+void Vector3D::setY(float y) {
+	this->y = y;
+}
+
+void Vector3D::setZ(float z) {
+	this->z = z;
+}
+
 Vector3D Vector3D::operator+(Vector3D rhsVector) {
     Vector3D result(this->x + rhsVector.x, this->y + rhsVector.y, this->z + rhsVector.z);
     return result;
