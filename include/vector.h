@@ -22,7 +22,7 @@ class Vector3D {
 		float getX();
 		float getY();
 		float getZ();
-
+		
 		// Mutators
 		void setX(float x);
 		void setY(float y);

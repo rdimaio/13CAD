@@ -7,9 +7,9 @@ Vector3D v1(1, 2, 3);
 Vector3D v2(4, 5, 6);
 
 TEST(accessorTest, base) {
-	float xExpected = v1.x;
-	float yExpected = v1.y;
-	float zExpected = v1.z;
+	float xExpected = 1;
+	float yExpected = 2;
+	float zExpected = 3;
 
 	float xObtained = v1.getX();
 	float yObtained = v1.getY();
