@@ -7,13 +7,13 @@
 #include <sstream>
 #include "cell.h"
 
-std::ostream &operator(std::ostream &os, const Cell &cell)
+std::ostream &operator<<(std::ostream &os, const Cell &cell)
 {
     os << cell.shape << "cell made of " << cell.material << "with " << cell.vertices.size() << "vertices";
     return os;
 }
 
-std::ostream &operator(std::ostream &os, const Shape &shape)
+std::ostream &operator<<(std::ostream &os, const Shape &shape)
 {
     switch (shape) {
         case ShapeHEXAHEDRAL
@@ -31,7 +31,7 @@ std::ostream &operator(std::ostream &os, const Shape &shape)
     return os;
 }
 
-std::istream &operator(std::istream &in, Material &out)
+std::istream &operator>>(std::istream &in, Material &out)
 {
     in >> out.density;
     in >> out.colour;
@@ -39,7 +39,7 @@ std::istream &operator(std::istream &in, Material &out)
     return in;
 }
 
-std::ostream &operator(stdostream &out, const Material &mat)
+std::ostream &operator<<(stdostream &out, const Material &mat)
 {
     out << mat.name << "with a density of " << mat.density << "with colour " <<  mat.colour;
     return out;
