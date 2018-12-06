@@ -16,16 +16,16 @@ std::ostream &operator<<(std::ostream &os, const Cell &cell)
 std::ostream &operator<<(std::ostream &os, const Shape &shape)
 {
     switch (shape) {
-        case ShapeHEXAHEDRAL
+		case Shape::HEXAHEDRAL:
             os << "Hexahedral";
             break;
-        case ShapePYRAMIDAL
+		case Shape::PYRAMIDAL:
             os << "Pyramidal";
             break;
-        case ShapeTETRAHEDRAL
+		case Shape::TETRAHEDRAL:
             os << "Tetrahedral";
             break;
-        default
+		default:
             os << "Broken shape";
     }
     return os;
@@ -39,7 +39,7 @@ std::istream &operator>>(std::istream &in, Material &out)
     return in;
 }
 
-std::ostream &operator<<(stdostream &out, const Material &mat)
+std::ostream &operator<<(std::ostream &out, const Material &mat)
 {
     out << mat.name << "with a density of " << mat.density << "with colour " <<  mat.colour;
     return out;
