@@ -1,6 +1,0 @@
-C:\Users\90730\Desktop\ModelLoader>git fetch upstream
-From https://github.com/rdimaio/ModelLoader
- * [new branch]      master     -> upstream/master
-
-C:\Users\90730\Desktop\ModelLoader>git merge upstream/master
-Already up to date.
