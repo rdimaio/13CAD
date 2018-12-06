@@ -4,7 +4,7 @@
 // cell is made of and the remaining  numbers state which node defines
 // each corner.
 
-#include cell.h
+#include "cell.h"
 
 stdostream &operator(stdostream &os, const Cell &cell)
 {
