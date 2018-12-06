@@ -4,42 +4,43 @@
 // cell is made of and the remaining  numbers state which node defines
 // each corner.
 
+#include <sstream>
 #include "cell.h"
 
-stdostream &operator(stdostream &os, const Cell &cell)
+std::ostream &operator(std::ostream &os, const Cell &cell)
 {
-    os  cell.shape   cell made of   cell.material   with   cell.vertices.size()   vertices;
+    os << cell.shape << "cell made of " << cell.material << "with " << cell.vertices.size() << "vertices";
     return os;
 }
 
-stdostream &operator(stdostream &os, const Shape &shape)
+std::ostream &operator(std::ostream &os, const Shape &shape)
 {
     switch (shape) {
         case ShapeHEXAHEDRAL
-            os  Hexahedral;
+            os << "Hexahedral";
             break;
         case ShapePYRAMIDAL
-            os  Pyramidal;
+            os << "Pyramidal";
             break;
         case ShapeTETRAHEDRAL
-            os  Tetrahedral;
+            os << "Tetrahedral";
             break;
         default
-            os  Broken Shape;
+            os << "Broken shape";
     }
     return os;
 }
 
-stdistream &operator(stdistream &in, Material &out)
+std::istream &operator(std::istream &in, Material &out)
 {
-    in  out.density;
-    in  out.colour;
-    in  out.name;
+    in >> out.density;
+    in >> out.colour;
+    in >> out.name;
     return in;
 }
 
-stdostream &operator(stdostream &out, const Material &mat)
+std::ostream &operator(stdostream &out, const Material &mat)
 {
-    out  mat.name   with a density of   mat.density   with colour   mat.colour;
+    out << mat.name << "with a density of " << mat.density << "with colour " <<  mat.colour;
     return out;
 }

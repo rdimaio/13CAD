@@ -33,5 +33,5 @@ public:
 
     Shape shape;
     Material material;
-    std::vector<Vec3> vertices;
+    std::vector<Vector3D> vertices;
 };
