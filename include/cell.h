@@ -3,7 +3,7 @@
 #include <sstream>
 #include <vector>
 
-#include "Vector.h"
+#include "vector.h"
 
 enum class Shape {
     HEXAHEDRAL, PYRAMIDAL, TETRAHEDRAL
