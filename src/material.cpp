@@ -1,5 +1,3 @@
-//fnc def//
-
 #include "material.h"
 
 Material::Material(){ //class
@@ -30,15 +28,18 @@ string Material::getName(){
     return this->Name;
   }
 
-void Material::setID ( double aID){
+void Material::setID(double aID){
     this->ID = aID;
   }
-void Material::setDensity ( double Den){
+
+void Material::setDensity(double Den){
     this->Density = Den;
   }
-void Material::setColour ( double Col){
+
+void Material::setColour(string Col){
     this->Colour = Col;
   }
-void Material::setName ( double aName){
+
+void Material::setName(string aName){
     this->Name = aName;
   }
