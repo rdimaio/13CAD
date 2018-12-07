@@ -1,28 +1,34 @@
+//fnc declare//
+#include <iostream>
+#include <string>//string//
+using namespace std;
+
 #ifndef MATERIAL_H
 #define MATERIAL_H
 
-#include <string>
-using namespace std;
-
 class Material {
-private:
+private://no change outwhere in the program//
+//member variables//
   double ID;
   double Density;
   string Colour;
   string Name;
 
-public:
-  //construct
-  Material(double aID, double Den, string Col, string aName);
-  //deconstruct
+public://declaration//
+  Material();//nor state//
+  Material( double aID, double Den, string Col, string aName);
   ~Material();
-  void setMaterial( double aID, double Den, string Col, string aName);
+  //get=return//
 
   double getID();
   double getDensity();
   string getColour();
   string getName();
 
-
+  void setID( double aID);
+  void setDensity( double Den);
+  void setColour( string Col);
+  void setName( string aName);
 };
+
 #endif
