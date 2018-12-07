@@ -2,6 +2,7 @@
 cmake_minimum_required( VERSION 2.8 )
 set(CMAKE_CXX_STANDARD 14)
 project(ModelLoader)
+set(TEST_PROJECT_NAME Test_ModelLoader)
 
 include_directories( include/
     src/
@@ -15,8 +16,6 @@ set(SOURCES
     src/vector.cpp)
 
 option(TESTING "Testing mode" OFF) #OFF by default
-
-message(${SOURCES})
 
 if(TESTING)
     # Download and unpack googletest at configure time
@@ -52,8 +51,8 @@ if(TESTING)
     endif()
 
     file(GLOB TEST_SOURCES "tests/*.cpp")
-    add_executable(UnitTest ${TEST_SOURCES} ${SOURCES})
-    target_link_libraries(UnitTest gtest_main pthread)
+    add_executable(${TEST_PROJECT_NAME} ${TEST_SOURCES} ${SOURCES})
+    target_link_libraries(${TEST_PROJECT_NAME} gtest_main pthread)
 else()
     # Append main.cpp
     list(APPEND SOURCES src/main.cpp)

@@ -8,6 +8,13 @@ Material::Material(){ //class
   this->Density=0.0;//initialize
 }
 
+Material::Material( double aID, double Den, string Col, string aName){
+    this->ID = aID;
+    this->Density = Den;
+    this->Colour = Col;
+    this->Name = aName;
+  }
+
 Material::~Material(){}
 
 double Material::getID(){

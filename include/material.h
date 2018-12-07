@@ -2,10 +2,10 @@
 #include <iostream>
 #include <string>//string//
 using namespace std;
-#define MATERIAL_H
-#ifndef MATERIAL_H //if not define//
 
-//class//
+#ifndef MATERIAL_H
+#define MATERIAL_H
+
 class Material {
 private://no change outwhere in the program//
 //member variables//
@@ -19,6 +19,7 @@ public://declaration//
   Material( double aID, double Den, string Col, string aName);
   ~Material();
   //get=return//
+
   double getID();
   double getDensity();
   string getColour();
