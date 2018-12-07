@@ -6,6 +6,7 @@
 
 #include <sstream>
 #include "cell.h"
+#include "iostream"
 
 std::ostream &operator<<(std::ostream &os, const Cell &cell)
 {
