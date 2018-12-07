@@ -1,6 +1,6 @@
 //fnc def//
 
-#include "Material.h"
+#include "material.h"
 
 Material::Material(){ //class
   //set member variables to nor state but the string is already equal nor state
