@@ -1,8 +1,7 @@
 #ifndef MATERIAL_H
 #define MATERIAL_H
 
-
-
+#include <string>
 
 /**
  * Material with specific density and colour.

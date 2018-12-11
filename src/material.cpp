@@ -1,6 +1,6 @@
 #include "material.h"
 
-#include <stdio>
+#include <string>
 
 Material::Material(){ 
 
@@ -50,7 +50,7 @@ void Material::setName(std::string name){
     this->name = name;
 }
 
-bool operator==(const Material& lhsMaterial, const Material& rhsMaterial);
+bool operator==(const Material& lhsMaterial, const Material& rhsMaterial) {
         if (lhsMaterial.id == rhsMaterial.id && lhsMaterial.density == rhsMaterial.density && lhsMaterial.colour == rhsMaterial.colour && lhsMaterial.name == rhsMaterial.name) {
         return true;
     } else {
