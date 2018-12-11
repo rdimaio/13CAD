@@ -1,31 +1,37 @@
+#ifndef MATERIAL_H
+#define MATERIAL_H
+
 #include <iostream>
 #include <string>
 using namespace std;
 
-#ifndef MATERIAL_H
-#define MATERIAL_H
 
+/**
+ * Material with specific density and colour.
+ */
 class Material {
 	private:
-		double ID;
-		double Density;
-		string Colour;
-		string Name;
+		double id;
+		double density;
+		string colour;
+		string name;
 
 	public:
-		Material();//nor state//
-		Material( double aID, double Den, string Col, string aName);
+		Material(); // Empty initialisation case
+		Material(double id, double density, string colour, string name);
 		~Material();
   
-		double getID();
+		// Accessors
+		double getId();
 		double getDensity();
 		string getColour();
 		string getName();
 
-		void setID(double aID);
-		void setDensity(double Den);
-		void setColour(string Col);
-		void setName(string aName);
+		// Mutators
+		void setId(double id);
+		void setDensity(double density);
+		void setColour(string column);
+		void setName(string name);
 };
 
 #endif

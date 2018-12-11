@@ -19,7 +19,7 @@ The library's structure is a slightly modified version of [this answer](https://
 /include  Public header files (.h) exposed to the library users
 /lib      Library build directory
 /src      Source files (.cpp) and private header files (.h)
-/tests    Test suites that should be run during a `make test`
+/tests    Test suites
 ```
 
 **Public** headers go in ```/include```, while **private** headers go in ```/src```.

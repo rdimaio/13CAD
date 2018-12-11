@@ -1,45 +1,49 @@
 #include "material.h"
 
-Material::Material(){ //class
-  //set member variables to nor state but the string is already equal nor state
-  this->ID=0.0;//initialize
-  this->Density=0.0;//initialize
+Material::Material(){ 
+
+    // Initialise variables
+    this->id=0.0;
+    this->density=0.0;
 }
 
-Material::Material( double aID, double Den, string Col, string aName){
-    this->ID = aID;
-    this->Density = Den;
-    this->Colour = Col;
-    this->Name = aName;
-  }
+Material::Material(double id, double density, string column, string name){
+    this->id = id;
+    this->density = density;
+    this->colour = column;
+    this->name = name;
+}
 
 Material::~Material(){}
 
-double Material::getID(){
-    return this->ID;
-  }
+double Material::getId(){
+    return this->id;
+}
+
 double Material::getDensity(){
-    return this->Density;
-  }
+    return this->density;
+}
+
 string Material::getColour(){
-    return this->Colour;
-  }
+    return this->colour;
+}
+
 string Material::getName(){
-    return this->Name;
-  }
+    return this->name;
+}
 
-void Material::setID(double aID){
-    this->ID = aID;
-  }
+void Material::setId(double id){
+    this->id = id;
+}
 
-void Material::setDensity(double Den){
-    this->Density = Den;
-  }
+void Material::setDensity(double density){
+    this->density = density;
+}
 
 void Material::setColour(string Col){
-    this->Colour = Col;
-  }
+    this->colour = colour;
+}
 
 void Material::setName(string aName){
-    this->Name = aName;
-  }
+    this->name = name;
+}

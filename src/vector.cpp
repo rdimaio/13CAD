@@ -6,10 +6,7 @@ Vector3D::Vector3D(float x, float y, float z) {
     this->z = z;
 }
 
-Vector3D::~Vector3D() {
-    
-}
-
+Vector3D::~Vector3D(){}
 
 float Vector3D::getX() {
 	return this->x;
@@ -22,7 +19,6 @@ float Vector3D::getY() {
 float Vector3D::getZ() {
 	return this->z;
 }
-
 
 void Vector3D::setX(float x) {
 	this->x = x;
