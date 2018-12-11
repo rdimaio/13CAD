@@ -1,5 +1,7 @@
 #include "material.h"
 
+#include <stdio>
+
 Material::Material(){ 
 
     // Initialise variables
@@ -7,7 +9,7 @@ Material::Material(){
     this->density=0.0;
 }
 
-Material::Material(double id, double density, string column, string name){
+Material::Material(double id, double density, std::string column, std::string name){
     this->id = id;
     this->density = density;
     this->colour = column;
@@ -24,11 +26,11 @@ double Material::getDensity(){
     return this->density;
 }
 
-string Material::getColour(){
+std::string Material::getColour(){
     return this->colour;
 }
 
-string Material::getName(){
+std::string Material::getName(){
     return this->name;
 }
 
@@ -40,10 +42,18 @@ void Material::setDensity(double density){
     this->density = density;
 }
 
-void Material::setColour(string Col){
+void Material::setColour(std::string colour){
     this->colour = colour;
 }
 
-void Material::setName(string aName){
+void Material::setName(std::string name){
     this->name = name;
+}
+
+bool operator==(const Material& lhsMaterial, const Material& rhsMaterial);
+        if (lhsMaterial.id == rhsMaterial.id && lhsMaterial.density == rhsMaterial.density && lhsMaterial.colour == rhsMaterial.colour && lhsMaterial.name == rhsMaterial.name) {
+        return true;
+    } else {
+        return false;
+    }
 }

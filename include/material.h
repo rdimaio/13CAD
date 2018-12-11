@@ -1,9 +1,7 @@
 #ifndef MATERIAL_H
 #define MATERIAL_H
 
-#include <iostream>
-#include <string>
-using namespace std;
+
 
 
 /**
@@ -13,25 +11,29 @@ class Material {
 	private:
 		double id;
 		double density;
-		string colour;
-		string name;
+		std::string colour;
+		std::string name;
 
 	public:
 		Material(); // Empty initialisation case
-		Material(double id, double density, string colour, string name);
+		Material(double id, double density, std::string colour, std::string name);
 		~Material();
   
 		// Accessors
 		double getId();
 		double getDensity();
-		string getColour();
-		string getName();
+		std::string getColour();
+		std::string getName();
 
 		// Mutators
 		void setId(double id);
 		void setDensity(double density);
-		void setColour(string column);
-		void setName(string name);
+		void setColour(std::string column);
+		void setName(std::string name);
+
+		// Operator overloading
+        // Note: rhs stands for right hand side
+		friend bool operator==(const Material& lhsMaterial, const Material& rhsMaterial);
 };
 
 #endif
