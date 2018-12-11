@@ -4,7 +4,7 @@
 // Test parameters
 Material m1(1, 5, "brown", "bronze");
 
-TEST(accessorTest, base) {
+TEST(accessorTest, materialBase) {
 	float idExpected = 1;
 	float densityExpected = 5;
 	std::string colourExpected = "brown";
@@ -21,7 +21,7 @@ TEST(accessorTest, base) {
     ASSERT_EQ(nameExpected, nameObtained);
 }
 
-TEST(mutatorTest, base) {
+TEST(mutatorTest, materialBase) {
 	Material mBase(4, 14.184, "silver", "mercury");
 	Material mExpected(1, 19.30, "gold yellow", "gold");
 	mBase.setId(1);
@@ -32,7 +32,7 @@ TEST(mutatorTest, base) {
 	ASSERT_EQ(mBase, mExpected);
 }
 
-TEST(equalityTest, base) {
+TEST(equalityTest, materialBase) {
     Material mEqual(1, 5, "brown", "bronze");
     ASSERT_EQ(m1, mEqual);
 }

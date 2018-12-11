@@ -6,7 +6,7 @@ float scalar = 1.5;
 Vector3D v1(1, 2, 3);
 Vector3D v2(4, 5, 6);
 
-TEST(accessorTest, base) {
+TEST(accessorTest, vectorBase) {
 	float xExpected = 1;
 	float yExpected = 2;
 	float zExpected = 3;
@@ -20,7 +20,7 @@ TEST(accessorTest, base) {
 	ASSERT_EQ(zExpected, zObtained);
 }
 
-TEST(mutatorTest, base) {
+TEST(mutatorTest, vectorBase) {
 	Vector3D vBase(4, 5, 6);
 	Vector3D vExpected(1, 2, 3);
 	vBase.setX(1);
@@ -30,41 +30,41 @@ TEST(mutatorTest, base) {
 	ASSERT_EQ(vBase, vExpected);
 }
 
-TEST(additionTest, base) {
+TEST(additionTest, vectorBase) {
     Vector3D vExpected(5, 7, 9);
     Vector3D vAdd = v1 + v2;
     ASSERT_EQ(vAdd, vExpected);
 }
 
-TEST(subtractionTest, base) {
+TEST(subtractionTest, vectorBase) {
     Vector3D vExpected(-3, -3, -3);
     Vector3D vSubtract = v1 - v2;
     ASSERT_EQ(vSubtract, vExpected);
 }
 
-TEST(equalityTest, base) {
+TEST(equalityTest, vectorBase) {
     Vector3D vEqual(1, 2, 3);
     ASSERT_EQ(v1, vEqual);
 }
 
-TEST(dotTest, base) {
+TEST(dotTest, vectorBase) {
     float dot = v1.dot(v2);
     ASSERT_EQ(dot, 32);
 }
 
-TEST(crossTest, base) {
+TEST(crossTest, vectorBase) {
     Vector3D vExpected(-3, 6, -3);
     Vector3D vCross = v1.cross(v2);
     ASSERT_EQ(vCross, vExpected);
 }
 
-TEST(scalarTest, lhs) {
+TEST(scalarTest, vectorLhs) {
     Vector3D vExpected(1.5, 3, 4.5);
     Vector3D vScalar_lhs = v1 * scalar;
     ASSERT_EQ(vScalar_lhs, vExpected);
 }
 
-TEST(scalarTest, rhs) {
+TEST(scalarTest, vectorRhs) {
     Vector3D vExpected(6, 7.5, 9);
     Vector3D vScalar_rhs = scalar * v2;
     ASSERT_EQ(vScalar_rhs, vExpected);
