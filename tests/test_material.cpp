@@ -25,7 +25,7 @@ TEST(mutatorTest, materialBase) {
 	Material mBase(4, 14.184, "silver", "mercury");
 	Material mExpected(1, 19.30, "gold yellow", "gold");
 	mBase.setId(1);
-	mBase.setDensity(10);
+	mBase.setDensity(19.30);
 	mBase.setColour("gold yellow");
     mBase.setName("gold");
 
