@@ -1,37 +1,71 @@
-#pragma once
+#ifndef CELL_H
+#define CELL_H
 
-#include <sstream>
 #include <vector>
+#include "vector3d.h"
 
-#include "vector.h"
-
-enum class Shape {
-    HEXAHEDRAL, PYRAMIDAL, TETRAHEDRAL
-};
-
-std::ostream &operator<<(std::ostream &os, const Shape &shape);
-
-class Material {
-public:
-    friend std::ostream &operator<<(std::ostream &os, const Material &mat);
-
-    friend std::istream &operator>>(std::istream &in, Material &out);
-
-    int density = -1;
-    std::string colour;
-    std::string name;
-};
-
+/**
+ * Shape defined by 2 or more vertices (Vector3D).
+ */
 class Cell {
-public:
-    Cell() :
-        material(), shape(Shape::HEXAHEDRAL) {};
-    Cell(Shape shape, Material material) :
-            shape(shape), material(material), vertices() {}
+    protected:
+        std::vector<Vector3D> vertices;
+        double volume;
+        double weight;
+        // Vector3D centreOfGravity;
 
-    friend std::ostream &operator<<(std::ostream &os, const Cell &cell);
+        void updateVolume(); // Update volume only when the size changes
+    
+    public:
+        Cell();
+        ~Cell();
 
-    Shape shape;
-    Material material;
-    std::vector<Vector3D> vertices;
+		// Accessors
+		virtual double getVolume();
+        virtual double getWeight();
+        // Vector3D getCentreOfGravity();
 };
+
+/**
+ * Pyramid cell, defined by 5 vertices.
+ */
+class Pyramid : public Cell {
+    public:
+        Pyramid(std::vector<Vector3D> &vertices);
+        ~Pyramid();
+
+		// Accessors
+		virtual double getVolume();
+        virtual double getWeight();
+        // Vector3D getCentreOfGravity();
+};
+
+/**
+ * Hexahedron cell, defined by 8 vertices.
+ */
+class Hexahedron : public Cell {
+    public:
+        Hexahedron(std::vector<Vector3D> &vertices);
+        ~Hexahedron();
+
+		// Accessors
+		virtual double getVolume();
+        virtual double getWeight();
+        // Vector3D getCentreOfGravity();
+};
+
+/**
+ * Tetrahedron cell, defined by 4 vertices.
+ */
+class Tetrahedron : public Cell {
+    public:
+        Tetrahedron(std::vector<Vector3D> &vertices);
+        ~Tetrahedron();
+
+		// Accessors
+		virtual double getVolume();
+        virtual double getWeight();
+        // Vector3D getCentreOfGravity();
+};
+
+#endif /* CELL_H */

@@ -1,3 +1,7 @@
+## Project week 3:
+- Renamed vector-related files to vector3d to avoid clashing with the standard
+vector library
+
 ## Project week 2:
 
 - Project structure was finalised and implemented

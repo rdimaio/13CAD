@@ -23,10 +23,10 @@ TEST(accessorTest, materialBase) {
 
 TEST(mutatorTest, materialBase) {
 	Material mBase(4, 14.184, "silver", "mercury");
-	Material mExpected(1, 19.30, "gold", "gold");
+	Material mExpected(1, 19.30, "yellow gold", "gold");
 	mBase.setId(1);
 	mBase.setDensity(19.30);
-	mBase.setColour("gold");
+	mBase.setColour("yellow gold");
     mBase.setName("gold");
 
 	ASSERT_EQ(mBase, mExpected);

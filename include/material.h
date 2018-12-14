@@ -15,6 +15,8 @@ class Material {
 
 	public:
 		Material(); // Empty initialisation case
+		// maybe just do:
+		// Material(double id = 0.0, double density = 0.0, etc.)
 		Material(double id, double density, std::string colour, std::string name);
 		~Material();
   
@@ -35,4 +37,4 @@ class Material {
 		friend bool operator==(const Material& lhsMaterial, const Material& rhsMaterial);
 };
 
-#endif
+#endif /* MATERIAL_H */

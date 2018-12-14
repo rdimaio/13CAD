@@ -1,4 +1,5 @@
-#include "vector.h"
+#include "vector3d.h"
+#include <cmath>
 
 Vector3D::Vector3D(float x, float y, float z) {
     this->x = x;
@@ -89,4 +90,15 @@ Vector3D Vector3D::cross(Vector3D rhsVector) {
 
 std::ostream& operator<<(std::ostream& os, Vector3D &v) {
 return os << "[" << v.x << "," << v.y << "," << v.z << "]";
+}
+
+double Vector3D::distance(Vector3D &v2) {
+    // Distance between two 3D points:
+    // sqrt((x2-x1)^2+(y2-y1)^2+(z2-z1)^2)
+    double xDiff = v2.getX() - this->getX();
+    double yDiff = v2.getY() - this->getY();
+    double zDiff = v2.getZ() - this->getZ();
+
+    double distance = sqrt(xDiff*xDiff + yDiff*yDiff + zDiff*zDiff);
+    return distance;
 }

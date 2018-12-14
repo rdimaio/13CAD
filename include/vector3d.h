@@ -39,6 +39,9 @@ class Vector3D {
         // Scalar multiplication
         Vector3D operator*(float scalar); // Vector on lhs
         friend Vector3D operator*(float scalar, Vector3D v); // Vector on rhs
+
+        // Functions
+        double distance(Vector3D &v2); // Distance from vertex
 };
 
-#endif
+#endif /* VECTOR_H */

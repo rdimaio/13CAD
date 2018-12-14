@@ -8,6 +8,11 @@
 
 ### TODOs
 - Implement Doxygen
+- Maybe change all floats to doubles
+- Maybe typedef an array of vector3D like:
+```typedef std::vector<int> int_vec_t;``` source:  https://www.codeguru.com/cpp/cpp/cpp_mfc/stl/article.php/c4027/C-Tutorial-A-Beginners-Guide-to-stdvector-Part-1.htmhttps://www.codeguru.com/cpp/cpp/cpp_mfc/stl/article.php/c4027/C-Tutorial-A-Beginners-Guide-to-stdvector-Part-1.htm
+- Maybe add static const ints for number of verteces of each shape in cell.h
+like this: https://stackoverflow.com/questions/5620256/understanding-how-to-correctly-treat-c-class-constants
 
 ## Library structure
 The library's structure is a slightly modified version of [this answer](https://stackoverflow.com/a/1398594):
@@ -55,6 +60,10 @@ git commit -m "Updated vector.cpp"
 - Class names must be capitalised (e.g. ```class Vector```, ```class Shape```)
 - Functions and variables follow the ```camelCase``` naming convention (e.g. ```getVolume()```, ```sampleVariable```. 
 See [this](https://en.wikipedia.org/wiki/Camel_case) for more details.)
+- Use include guards in header files (like ```#ifndef```) instead of ```#pragma once```.
+The latter is not in the C++ standard, and might not be supported by some compilers;
+our goal is portability, so it's better if we stick to the standard.
+Refer to the existing header files to make sure that you understand what an include guard is.
 - Always try to comment **above** the block of code you're commenting, not to the side.
 Side comments are okay if you're just explaining something specific about that line of code.
 - For multi-line comments, use /* */. For single-line comments, use //.

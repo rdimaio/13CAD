@@ -7,6 +7,38 @@
 #include <sstream>
 #include "cell.h"
 #include "iostream"
+#include <vector>
+#include "vector3d.h"
+
+Pyramid::Pyramid(std::vector<Vector3D> &vertices) {
+    for (int i = 0; i < 5; i++) {
+        this->vertices.push_back(vertices[i]);
+    }
+}
+
+Pyramid::~Pyramid(){}
+
+double Pyramid::getVolume() {
+    //length = vertices[0].distance(vertices[1]);
+    //width = vertices[1].distance(vertices[2]);
+    //height = 
+}
+
+Hexahedron::Hexahedron(std::vector<Vector3D> &vertices) {
+    for (int i = 0; i < 8; i++) {
+        this->vertices.push_back(vertices[i]);
+    }
+}
+
+Hexahedron::~Hexahedron(){}
+
+Tetrahedron::Tetrahedron(std::vector<Vector3D> &vertices) {
+    for (int i = 0; i < 4; i++) {
+        this->vertices.push_back(vertices[i]);
+    }
+}
+
+Tetrahedron::~Tetrahedron(){}
 
 std::ostream &operator<<(std::ostream &os, const Cell &cell)
 {

@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include "vector.h"
+#include "vector3d.h"
 
 // Test parameters
 float scalar = 1.5;
