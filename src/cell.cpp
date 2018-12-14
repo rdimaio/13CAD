@@ -40,6 +40,7 @@ Tetrahedron::Tetrahedron(std::vector<Vector3D> &vertices) {
 
 Tetrahedron::~Tetrahedron(){}
 
+/*
 std::ostream &operator<<(std::ostream &os, const Cell &cell)
 {
     os << cell.shape << "cell made of " << cell.material << "with " << cell.vertices.size() << "vertices";
@@ -77,3 +78,4 @@ std::ostream &operator<<(std::ostream &out, const Material &mat)
     out << mat.name << "with a density of " << mat.density << "with colour " <<  mat.colour;
     return out;
 }
+*/

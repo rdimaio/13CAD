@@ -1,53 +1,95 @@
+#include <sstream>
 #include <iostream>
 #include <fstream>
-#include <sstream>
-#include <Model.h>
-#include <iostream>
+#include <vector>
+#include <string>
+
+#include "model.h"
 
 //Code to read file line by line 
 //Read first letter and sort into Cell, Material, Vector 
 
+Model::Model(std::string filename) {
+	std::ifstream modelFile(filename);
+	std::string line;
+	
+	if (modelFile.is_open()) {
+		// Read file line by line
+		while (std::getline(modelFile, line)) {
+			// Check first character
+    		switch (line[0]) {
 
+				// Cell case
+				case 'c':
+					int id = int(line[2]);
 
+					// Resize vector if necessary
+					if (id >= this->cells.size()) {
+						this->cells.resize(id+1);
+					}
 
-void Model::loadFromFile(const char *filename) {  // or string class?
+					this->cells[id] = parseCell(line);				
+					break;
 
-	// open file
+				// Vertex case
+				case 'v':
+					int id = int(line[2]);
 
-	// loop thru each line4
-		// decide is line cell/model/vector etc
-		// process line and create new class of correct type
-	if (lineType == CELL) {
-		Cell c;
+					// Resize vector if necessary
+					if (id >= this->vertices.size()) {
+						this->vertices.resize(id+1);
+					}
 
-		c.id = [value read from file...0];
-		c.
+					this->vertices[id] = parseVertex(line);
+					break;
 
-			this->cells.push_back(c);
+				// Material case
+				case 'm':
+					int id = int(line[2]);
 
+					// Resize vector if necessary
+					if (id >= this->materials.size()) {
+						this->materials.resize(id+1);
+					}
+
+					this->materials[id] = parseMaterial(line);
+					break;
+			}
+		}
+		modelFile.close();
 	}
-		// add class to arrays
 }
 
-//Cell code
-void Model::setCell( int i, Cell &c ) {
-	// set cell with id i to be equal to c
-
+std::vector<std::string> Model::splitString(std::string line) {
+	std::vector<std::string> strings; 
+	std::istringstream f(line);
+	std::string s;
+	
+	// Split string into space-separated words
+	while (std::getline(f, s, ' ')) {
+        strings.push_back(s);
+    }
+	return strings;
 }
 
+Material Model::parseMaterial(std::string line) {
 
-Cell Model::sgetCell(int i) {
-	// get cell with id i 
-
+	std::vector<std::string> strings = splitString(line);
+	// strings id:
+	// 0 - m
+	// 1 - ID
+	// 2 - Density
+	// 3 - Colour
+	// 4 - Name
+	
+	int id = std::stoi(strings[1]);
+	double density = std::stod(strings[2]);
+	std::string colour = strings[3];
+	std::string name = strings[4];
+	Material m(id, density, colour, name);
+	return m;
 }
 
-/*
-//Materia Code
-SetMaterial{};
-GetMaterial{};
+Vector3D Model::parseVertex(std::string line) {
 
-
-//Vector Code 
-SetVector{};
-GetCell{};
-*/
+}

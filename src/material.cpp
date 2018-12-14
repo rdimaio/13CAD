@@ -5,11 +5,11 @@
 Material::Material(){ 
 
     // Initialise variables
-    this->id=0.0;
+    this->id=0;
     this->density=0.0;
 }
 
-Material::Material(double id, double density, std::string column, std::string name){
+Material::Material(int id, double density, std::string column, std::string name){
     this->id = id;
     this->density = density;
     this->colour = column;
@@ -18,7 +18,7 @@ Material::Material(double id, double density, std::string column, std::string na
 
 Material::~Material(){}
 
-double Material::getId(){
+int Material::getId(){
     return this->id;
 }
 
@@ -34,7 +34,7 @@ std::string Material::getName(){
     return this->name;
 }
 
-void Material::setId(double id){
+void Material::setId(int id){
     this->id = id;
 }
 

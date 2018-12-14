@@ -8,7 +8,7 @@
  */
 class Material {
 	private:
-		double id;
+		int id;
 		double density;
 		std::string colour;
 		std::string name;
@@ -17,17 +17,17 @@ class Material {
 		Material(); // Empty initialisation case
 		// maybe just do:
 		// Material(double id = 0.0, double density = 0.0, etc.)
-		Material(double id, double density, std::string colour, std::string name);
+		Material(int id, double density, std::string colour, std::string name);
 		~Material();
   
 		// Accessors
-		double getId();
+		int getId();
 		double getDensity();
 		std::string getColour();
 		std::string getName();
 
 		// Mutators
-		void setId(double id);
+		void setId(int id);
 		void setDensity(double density);
 		void setColour(std::string column);
 		void setName(std::string name);

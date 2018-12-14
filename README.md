@@ -6,13 +6,19 @@
 // H62PEP - Group 13
 ```
 
-### TODOs
+## TODOs
 - Implement Doxygen
 - Maybe change all floats to doubles
 - Maybe typedef an array of vector3D like:
 ```typedef std::vector<int> int_vec_t;``` source:  https://www.codeguru.com/cpp/cpp/cpp_mfc/stl/article.php/c4027/C-Tutorial-A-Beginners-Guide-to-stdvector-Part-1.htmhttps://www.codeguru.com/cpp/cpp/cpp_mfc/stl/article.php/c4027/C-Tutorial-A-Beginners-Guide-to-stdvector-Part-1.htm
-- Maybe add static const ints for number of verteces of each shape in cell.h
+
+### Cell
+- Maybe add static const ints that hold the number of verteces of each shape in cell.h
 like this: https://stackoverflow.com/questions/5620256/understanding-how-to-correctly-treat-c-class-constants
+
+### Model
+- Maybe make it so that the save feature saves the comments from the original file too
+- Make it so that an empty cell/material/model is stored in new vector positions when the vector is resized
 
 ## Library structure
 The library's structure is a slightly modified version of [this answer](https://stackoverflow.com/a/1398594):
