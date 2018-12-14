@@ -94,6 +94,10 @@ Vector3D Model::parseVertex(std::string line) {
 
 }
 
+Cell Model::parseCell(std::string line) {
+
+}
+
 std::vector<Material> Model::getMaterials() {
 	return this->materials;
 }
