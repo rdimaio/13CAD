@@ -18,10 +18,10 @@ Model::Model(std::string filename) {
 		while (std::getline(modelFile, line)) {
 			// Check first character
     		switch (line[0]) {
-
+				int id;
 				// Cell case
 				case 'c':
-					int id = int(line[2]);
+					id = line[2] - '0'; 
 
 					// Resize vector if necessary
 					if (id >= this->cells.size()) {
@@ -33,7 +33,7 @@ Model::Model(std::string filename) {
 
 				// Vertex case
 				case 'v':
-					int id = int(line[2]);
+					id = line[2] - '0'; 
 
 					// Resize vector if necessary
 					if (id >= this->vertices.size()) {
@@ -45,7 +45,7 @@ Model::Model(std::string filename) {
 
 				// Material case
 				case 'm':
-					int id = int(line[2]);
+					id = line[2] - '0'; 
 
 					// Resize vector if necessary
 					if (id >= this->materials.size()) {
