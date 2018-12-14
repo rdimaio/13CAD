@@ -21,6 +21,18 @@
 Cell::Cell() {}
 Cell::~Cell() {}
 
+double Cell::getVolume() {}
+
+double Cell::getMass() {
+    double volume = this->getVolume();
+    double density = this->material.getDensity();
+    double mass = density * volume;
+    return mass;
+}
+
+std::vector<Vector3D> Cell::getVertices() {
+    return this->vertices;
+}
 
 Pyramid::Pyramid(std::vector<Vector3D> &vertices, Material &material) {
     for (int i = 0; i < 5; i++) {
@@ -72,11 +84,4 @@ double Tetrahedron::getVolume() {
     double volume = scalar/6;
 
     return volume;
-}
-
-double Tetrahedron::getMass() {
-    double volume = this->getVolume();
-    double density = this->material.getDensity();
-    double mass = density * volume;
-    return mass;
 }
