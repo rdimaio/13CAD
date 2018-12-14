@@ -22,10 +22,11 @@ Cell::Cell() {}
 Cell::~Cell() {}
 
 
-Pyramid::Pyramid(std::vector<Vector3D> &vertices) {
+Pyramid::Pyramid(std::vector<Vector3D> &vertices, Material &material) {
     for (int i = 0; i < 5; i++) {
         this->vertices.push_back(vertices[i]);
     }
+    this->material = material;
 }
 
 Pyramid::Pyramid() {}
@@ -37,19 +38,21 @@ Pyramid::~Pyramid() {}
 //    //height = 
 //}
 
-Hexahedron::Hexahedron(std::vector<Vector3D> &vertices) {
+Hexahedron::Hexahedron(std::vector<Vector3D> &vertices, Material &material) {
     for (int i = 0; i < 8; i++) {
         this->vertices.push_back(vertices[i]);
     }
+    this->material = material;
 }
 
 Hexahedron::Hexahedron() {}
 Hexahedron::~Hexahedron() {}
 
-Tetrahedron::Tetrahedron(std::vector<Vector3D> &vertices) {
+Tetrahedron::Tetrahedron(std::vector<Vector3D> &vertices, Material &material) {
     for (int i = 0; i < 4; i++) {
         this->vertices.push_back(vertices[i]);
     }
+    this->material = material;
 }
 
 Tetrahedron::Tetrahedron() {}
@@ -71,42 +74,9 @@ double Tetrahedron::getVolume() {
     return volume;
 }
 
-/*
-std::ostream &operator<<(std::ostream &os, const Cell &cell)
-{
-    os << cell.shape << "cell made of " << cell.material << "with " << cell.vertices.size() << "vertices";
-    return os;
+double Tetrahedron::getMass() {
+    double volume = this->getVolume();
+    double density = this->material.getDensity();
+    double mass = density * volume;
+    return mass;
 }
-
-std::ostream &operator<<(std::ostream &os, const Shape &shape)
-{
-    switch (shape) {
-		case Shape::HEXAHEDRAL:
-            os << "Hexahedral";
-            break;
-		case Shape::PYRAMIDAL:
-            os << "Pyramidal";
-            break;
-		case Shape::TETRAHEDRAL:
-            os << "Tetrahedral";
-            break;
-		default:
-            os << "Broken shape";
-    }
-    return os;
-}
-
-std::istream &operator>>(std::istream &in, Material &out)
-{
-    in >> out.density;
-    in >> out.colour;
-    in >> out.name;
-    return in;
-}
-
-std::ostream &operator<<(std::ostream &out, const Material &mat)
-{
-    out << mat.name << "with a density of " << mat.density << "with colour " <<  mat.colour;
-    return out;
-}
-*/

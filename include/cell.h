@@ -11,6 +11,7 @@
 
 #include <vector>
 #include "vector3d.h"
+#include "material.h"
 
 /**
  * Shape defined by 2 or more vertices (Vector3D).
@@ -18,21 +19,18 @@
 class Cell {
     protected:
         std::vector<Vector3D> vertices; // Vertices that define the cell
-        double volume;
-        double weight;
-        // Vector3D centreOfGravity;
-
-        //void updateVolume(); // Update volume only when the size changes
+        Material material;
+        //double volume;
+        //double weight;
     
     public:
         Cell();
         ~Cell();
 
 		// Accessors
-		//virtual double getVolume();
-        //virtual double getWeight();
-        //std::vector<Vector3D> getVertices();
-        // Vector3D getCentreOfGravity();
+		virtual double getVolume();
+        virtual double getMass();
+        std::vector<Vector3D> getVertices();
 };
 
 /**
@@ -41,7 +39,7 @@ class Cell {
 class Pyramid : public Cell {
     public:
         Pyramid();
-        Pyramid(std::vector<Vector3D> &vertices);
+        Pyramid(std::vector<Vector3D> &vertices, Material &material);
         ~Pyramid();
 
 		// Accessors
@@ -56,7 +54,7 @@ class Pyramid : public Cell {
 class Hexahedron : public Cell {
     public:
         Hexahedron();
-        Hexahedron(std::vector<Vector3D> &vertices);
+        Hexahedron(std::vector<Vector3D> &vertices, Material &material);
         ~Hexahedron();
 
 		// Accessors
@@ -71,12 +69,12 @@ class Hexahedron : public Cell {
 class Tetrahedron : public Cell {
     public:
         Tetrahedron();
-        Tetrahedron(std::vector<Vector3D> &vertices);
+        Tetrahedron(std::vector<Vector3D> &vertices, Material &material);
         ~Tetrahedron();
 
 		// Accessors
 		virtual double getVolume();
-        //virtual double getWeight();
+        virtual double getMass();
         // Vector3D getCentreOfGravity();
 };
 

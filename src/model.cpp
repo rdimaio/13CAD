@@ -120,6 +120,9 @@ void Model::parseCell(std::string line) {
 	// 3 - Material ID
 	// 4 and onwards - IDs of vertices which define the cell
 
+	int matId = std::stoi(strings[3]);
+	Material mat = this->materials[matId];
+
 	std::vector<Vector3D> vertices;
 
 	// Fill vertices ID with the required IDs
@@ -128,24 +131,23 @@ void Model::parseCell(std::string line) {
 		Vector3D vertex = this->vertices[vertexId];
 		vertices.push_back(vertex);
 	}
-
 	// Check cell type
 	// Note: curly braces are to prevent initializators from leaking in
 	// other cases (also causes compiler error)
     switch (strings[2][0]) {
 		// Hexahedral case
 		case 'h': {
-			Hexahedron(vertices);		
+			Hexahedron(vertices, mat);		
 			break;
 		}
 		// Pyramid case
 		case 'p': {
-			Pyramid(vertices);
+			Pyramid(vertices, mat);
 			break;
 		}
 		// Tetrahedral case
 		case 't': {
-			Tetrahedron(vertices);
+			Tetrahedron(vertices, mat);
 			break;
 		}
 	}
@@ -167,3 +169,8 @@ std::vector<Vector3D> Model::getVertices() {
 std::vector<Cell> Model::getCells() {
 	return this->cells;
 }
+
+// Save model to specified filename
+//void Model::saveToFile(std::string filename) {
+//	std::vector<Material> materials = this.getMaterials();
+//}

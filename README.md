@@ -9,6 +9,7 @@
 ## TODOs
 - Implement Doxygen
 - Maybe change all floats to doubles
+- Maybe change all parameters so that they are received by reference
 - Maybe typedef an array of vector3D like:
 ```typedef std::vector<int> int_vec_t;``` source:  https://www.codeguru.com/cpp/cpp/cpp_mfc/stl/article.php/c4027/C-Tutorial-A-Beginners-Guide-to-stdvector-Part-1.htmhttps://www.codeguru.com/cpp/cpp/cpp_mfc/stl/article.php/c4027/C-Tutorial-A-Beginners-Guide-to-stdvector-Part-1.htm
 

@@ -21,14 +21,17 @@ class Model {
     private:
         std::string filename;
     
+        // Vectors that hold the model's information
         std::vector<Vector3D> vertices;
         std::vector<Material> materials;
         std::vector<Cell> cells;
     
+        // Parsing functions
         void parseVertex(std::string line);
         void parseMaterial(std::string line);
         void parseCell(std::string line);
 
+        // Misc functions
         std::vector<std::string> splitString(std::string line);
     
     public:
@@ -42,6 +45,12 @@ class Model {
         std::vector<Material> getMaterials();
         std::vector<Vector3D> getVertices();
         std::vector<Cell> getCells();
+        //int getMaterialCount();
+        //int getVerticesCount();
+        //int getCellCount();
+//
+        //// Misc functions
+        //void saveToFile(std::string filename);
 
     
 };
