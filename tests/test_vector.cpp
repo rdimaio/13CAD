@@ -76,3 +76,18 @@ TEST(scalarTest, vectorRhs) {
     Vector3D vScalar_rhs = scalar * v2;
     ASSERT_EQ(vScalar_rhs, vExpected);
 }
+
+TEST(distanceTest, vectorBase) {
+    double distanceExpected = 5.19615;
+    double distanceObtained = v1.distance(v2);
+    ASSERT_NEAR(distanceObtained, distanceExpected, 0.009);
+}
+
+TEST(midpointTest, vectorBase) {
+    Vector3D midpointExpected(2.5, 3.5, 4.5);
+    Vector3D midpointObtained = v1.midpoint(v2);
+
+    ASSERT_NEAR(midpointObtained.getX(), midpointExpected.getX(), 0.009);
+    ASSERT_NEAR(midpointObtained.getY(), midpointExpected.getY(), 0.009);
+    ASSERT_NEAR(midpointObtained.getZ(), midpointExpected.getZ(), 0.009);
+}

@@ -29,6 +29,11 @@ class Cell {
 		virtual double getVolume();
         double getMass();
         std::vector<Vector3D> getVertices();
+
+        /**
+         * Get the centre of gravity of the cell based on the vertices
+         */
+        Vector3D getCentre();
 };
 
 /**

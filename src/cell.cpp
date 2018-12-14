@@ -28,6 +28,25 @@ std::vector<Vector3D> Cell::getVertices() {
     return this->vertices;
 }
 
+Vector3D Cell::getCentre() {
+    double x_sum = 0;
+	double y_sum = 0;
+	double z_sum = 0;
+
+	for (int i = 0; i < this->vertices.size(); i++) {
+		x_sum += this->vertices[i].getX();
+		y_sum += this->vertices[i].getY();
+		z_sum += this->vertices[i].getZ();
+	}
+
+	double x = x_sum / this->vertices.size();
+	double y = y_sum / this->vertices.size();
+	double z = z_sum / this->vertices.size();
+
+	Vector3D centre(x, y, z);
+	return centre;
+}
+
 Pyramid::Pyramid(std::vector<Vector3D> &vertices, Material &material) {
     for (int i = 0; i < 5; i++) {
         this->vertices.push_back(vertices[i]);
