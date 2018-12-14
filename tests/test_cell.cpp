@@ -34,6 +34,28 @@ TEST(volumeTest, pyramidBase) {
     ASSERT_NEAR(volume, expectedVolume, 0.009);
 }
 
+TEST(massTest, pyramidBase) {
+    double expectedMass = 23840;
+    std::vector<Vector3D> vertices;
+    Vector3D v1(0.0, 0.0, 0.0);
+    Vector3D v2(0.0, -2.0, 0.0);
+    Vector3D v3(2.0, -2.0, 0.0);
+    Vector3D v4(2.0, 0.0, 0.0);
+    Vector3D v5(1.0, -1.0, 2.0);
+    vertices.push_back(v1);
+    vertices.push_back(v2);
+    vertices.push_back(v3);
+    vertices.push_back(v4);
+    vertices.push_back(v5);
+
+    Pyramid pyra(vertices, m0);
+
+    double mass = pyra.getMass();
+
+    ASSERT_NEAR(mass, expectedMass, 0.009);
+}
+
+
 TEST(volumeTest, tetrahedronBase) {
     double expectedVolume = 1.33;
     std::vector<Vector3D> vertices;

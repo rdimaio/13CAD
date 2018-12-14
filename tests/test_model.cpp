@@ -23,3 +23,36 @@ TEST(modelTest, modelBase) {
 	ASSERT_EQ(name1, "cu\r");
     ASSERT_EQ(name2, "pkg_plastic\r");
 }
+
+TEST(materialCountTest, modelBase) {
+
+    int countExpected = 2;
+
+	Model mod("tests/ExampleModel.mod");
+
+    int countObtained = mod.getMaterialCount();
+
+	ASSERT_EQ(countObtained, countExpected);
+}
+
+TEST(vertexCountTest, modelBase) {
+
+    int countExpected = 301;
+
+	Model mod("tests/ExampleModel.mod");
+
+    int countObtained = mod.getVertexCount();
+
+	ASSERT_EQ(countObtained, countExpected);
+}
+
+TEST(cellCountTest, modelBase) {
+
+    int countExpected = 129;
+
+	Model mod("tests/ExampleModel.mod");
+
+    int countObtained = mod.getCellCount();
+
+	ASSERT_EQ(countObtained, countExpected);
+}

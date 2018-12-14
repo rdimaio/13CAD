@@ -120,6 +120,7 @@ void Model::parseCell(std::string line) {
 	// 3 - Material ID
 	// 4 and onwards - IDs of vertices which define the cell
 
+	int id = std::stoi(strings[1]);
 	int matId = std::stoi(strings[3]);
 	Material mat = this->materials[matId];
 
@@ -131,27 +132,35 @@ void Model::parseCell(std::string line) {
 		Vector3D vertex = this->vertices[vertexId];
 		vertices.push_back(vertex);
 	}
+
+	// Resize cells vector if necessary
+	if (id >= this->cells.size()) {
+		this->cells.resize(id+1);
+	}
+
 	// Check cell type
 	// Note: curly braces are to prevent initializators from leaking in
 	// other cases (also causes compiler error)
     switch (strings[2][0]) {
 		// Hexahedral case
 		case 'h': {
-			Hexahedron(vertices, mat);		
+			Hexahedron c(vertices, mat);
+			this->cells[id] = c;		
 			break;
 		}
 		// Pyramid case
 		case 'p': {
-			Pyramid(vertices, mat);
+			Pyramid c(vertices, mat);
+			this->cells[id] = c;
 			break;
 		}
 		// Tetrahedral case
 		case 't': {
-			Tetrahedron(vertices, mat);
+			Tetrahedron c(vertices, mat);
+			this->cells[id] = c;
 			break;
 		}
 	}
-
 }
 
 std::string Model::getFilename() {
@@ -169,6 +178,22 @@ std::vector<Vector3D> Model::getVertices() {
 std::vector<Cell> Model::getCells() {
 	return this->cells;
 }
+
+int Model::getMaterialCount() {
+	int count = this->materials.size();
+	return count;
+}
+
+int Model::getVertexCount() {
+	int count = this->vertices.size();
+	return count;
+}
+
+int Model::getCellCount() {
+	int count = this->cells.size();
+	return count;
+}
+
 
 // Save model to specified filename
 //void Model::saveToFile(std::string filename) {

@@ -20,8 +20,6 @@ class Cell {
     protected:
         std::vector<Vector3D> vertices; // Vertices that define the cell
         Material material;
-        //double volume;
-        //double weight;
     
     public:
         Cell();
@@ -56,9 +54,7 @@ class Hexahedron : public Cell {
         ~Hexahedron();
 
 		// Accessors
-		//virtual double getVolume();
-        //virtual double getWeight();
-        // Vector3D getCentreOfGravity();
+	    virtual double getVolume();
 };
 
 /**

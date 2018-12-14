@@ -45,10 +45,10 @@ class Model {
         std::vector<Material> getMaterials();
         std::vector<Vector3D> getVertices();
         std::vector<Cell> getCells();
-        //int getMaterialCount();
-        //int getVerticesCount();
-        //int getCellCount();
-//
+        int getMaterialCount();
+        int getVertexCount();
+        int getCellCount();
+
         //// Misc functions
         //void saveToFile(std::string filename);
 

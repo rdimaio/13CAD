@@ -6,12 +6,6 @@
  * @version 1.0 20/11/18
  */
 
-// a cell is defined by a line beginning with a 'c'. The second parameter
-// the cell index, the third is a character (either h - hexahedral, p -
-// pyramid, t - tetrahedral). Thie 4th in the index of a material that the
-// cell is made of and the remaining  numbers state which node defines
-// each corner.
-
 #include <sstream>
 #include "cell.h"
 #include "iostream"
@@ -65,6 +59,10 @@ Hexahedron::Hexahedron(std::vector<Vector3D> &vertices, Material &material) {
 Hexahedron::Hexahedron() {}
 
 Hexahedron::~Hexahedron() {}
+
+double Hexahedron::getVolume() {
+    
+}
 
 Tetrahedron::Tetrahedron(std::vector<Vector3D> &vertices, Material &material) {
     for (int i = 0; i < 4; i++) {
