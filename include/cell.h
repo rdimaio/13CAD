@@ -35,8 +35,8 @@ class Pyramid : public Cell {
         ~Pyramid();
 
 		// Accessors
-		virtual double getVolume();
-        virtual double getWeight();
+		// virtual double getVolume();
+        // virtual double getWeight();
         // Vector3D getCentreOfGravity();
 };
 
