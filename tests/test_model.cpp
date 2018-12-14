@@ -15,3 +15,4 @@ TEST(modelTest, modelBase) {
 
 	ASSERT_EQ(name1, "test");
     ASSERT_EQ(name2, "pkg_plastic");
+}
