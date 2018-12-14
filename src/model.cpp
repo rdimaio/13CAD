@@ -93,3 +93,7 @@ Material Model::parseMaterial(std::string line) {
 Vector3D Model::parseVertex(std::string line) {
 
 }
+
+std::vector<Material> Model::getMaterials() {
+	return this->materials;
+}

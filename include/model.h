@@ -32,7 +32,7 @@ class Model {
         ~Model() = default;
         Model(std::string filename);
 
-        
+        std::vector<Material> getMaterials();
     
 };
 

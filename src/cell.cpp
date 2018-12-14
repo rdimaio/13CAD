@@ -22,11 +22,11 @@ Pyramid::Pyramid(std::vector<Vector3D> &vertices) {
 
 Pyramid::~Pyramid(){}
 
-double Pyramid::getVolume() {
-    //length = vertices[0].distance(vertices[1]);
-    //width = vertices[1].distance(vertices[2]);
-    //height = 
-}
+//double Pyramid::getVolume() {
+//    //length = vertices[0].distance(vertices[1]);
+//    //width = vertices[1].distance(vertices[2]);
+//    //height = 
+//}
 
 Hexahedron::Hexahedron(std::vector<Vector3D> &vertices) {
     for (int i = 0; i < 8; i++) {

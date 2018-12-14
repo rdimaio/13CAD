@@ -14,15 +14,15 @@ class Cell {
         double weight;
         // Vector3D centreOfGravity;
 
-        void updateVolume(); // Update volume only when the size changes
+        //void updateVolume(); // Update volume only when the size changes
     
     public:
         Cell();
         ~Cell();
 
 		// Accessors
-		virtual double getVolume();
-        virtual double getWeight();
+		//virtual double getVolume();
+        //virtual double getWeight();
         // Vector3D getCentreOfGravity();
 };
 
@@ -49,8 +49,8 @@ class Hexahedron : public Cell {
         ~Hexahedron();
 
 		// Accessors
-		virtual double getVolume();
-        virtual double getWeight();
+		//virtual double getVolume();
+        //virtual double getWeight();
         // Vector3D getCentreOfGravity();
 };
 
@@ -63,8 +63,8 @@ class Tetrahedron : public Cell {
         ~Tetrahedron();
 
 		// Accessors
-		virtual double getVolume();
-        virtual double getWeight();
+		//virtual double getVolume();
+        //virtual double getWeight();
         // Vector3D getCentreOfGravity();
 };
 
