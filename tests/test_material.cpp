@@ -1,3 +1,10 @@
+/**
+ * @file test_material.cpp
+ * @brief Unit tests for the Material class
+ * @author Riccardo Di Maio
+ * @version 1.0 10/12/18
+ */
+
 #include <gtest/gtest.h>
 #include "material.h"
 

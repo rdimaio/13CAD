@@ -1,3 +1,10 @@
+/**
+ * @file vector3d.h
+ * @brief Header file for the Vector3D class
+ * @author Riccardo Di Maio
+ * @version 1.0 08/11/18
+ */
+
 #ifndef VECTOR_H
 #define VECTOR_H
 

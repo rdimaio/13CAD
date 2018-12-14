@@ -1,3 +1,10 @@
+/**
+ * @file test_vector.cpp
+ * @brief Unit tests for the Vector class
+ * @author Riccardo Di Maio
+ * @version 1.0 15/11/18
+ */
+
 #include <gtest/gtest.h>
 #include "vector3d.h"
 

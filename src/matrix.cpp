@@ -1,3 +1,10 @@
+/**
+ * @file matrix.cpp
+ * @brief Source file for the Matrix class
+ * @author Riccardo Di Maio
+ * @version 1.0 14/12/18
+ */
+
 #include "matrix.h"
 #include "vector3d.h"
 #include <vector>

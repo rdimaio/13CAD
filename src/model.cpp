@@ -1,3 +1,10 @@
+/**
+ * @file model.cpp
+ * @brief Source file for the Model class
+ * @author Daniel Msimuko
+ * @version 1.0 08/12/18
+ */
+
 #include <sstream>
 #include <iostream>
 #include <fstream>

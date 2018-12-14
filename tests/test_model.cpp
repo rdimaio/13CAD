@@ -1,3 +1,10 @@
+/**
+ * @file test_model.cpp
+ * @brief Unit tests for the Model class
+ * @author Riccardo Di Maio
+ * @version 1.0 12/12/18
+ */
+
 #include <gtest/gtest.h>
 #include "model.h"
 #include "material.h"

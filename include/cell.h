@@ -1,3 +1,11 @@
+/**
+ * @file cell.h
+ * @brief Header file for the Cell class and subclasses
+ * @author Zong Lei
+ * @author Nandi Guo
+ * @version 1.0 20/11/18
+ */
+
 #ifndef CELL_H
 #define CELL_H
 

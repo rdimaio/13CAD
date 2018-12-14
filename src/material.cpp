@@ -1,5 +1,11 @@
-#include "material.h"
+/**
+ * @file material.cpp
+ * @brief Source file for the Material class
+ * @author Tanchanok Srisung
+ * @version 1.0 15/11/18
+ */
 
+#include "material.h"
 #include <string>
 
 Material::Material(){ 

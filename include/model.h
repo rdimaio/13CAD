@@ -1,3 +1,10 @@
+/**
+ * @file model.cpp
+ * @brief Header file for the Model class
+ * @author Daniel Msimuko
+ * @version 1.0 08/12/18
+ */
+
 #ifndef MODEL_H
 #define MODEL_H
 

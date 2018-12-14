@@ -1,3 +1,10 @@
+/**
+ * @file test_cell.cpp
+ * @brief Unit tests for the Cell class and subclasses
+ * @author Riccardo Di Maio
+ * @version 1.0 14/12/18
+ */
+
 #include <gtest/gtest.h>
 #include "cell.h"
 #include "vector3d.h"
@@ -18,5 +25,5 @@ TEST(volumeTest, tetrahedronBase) {
 
     double volume = tetra.getVolume();
 
-    ASSERT_EQ(volume, expectedVolume);
+    ASSERT_DOUBLE_EQ(volume, expectedVolume);
 }

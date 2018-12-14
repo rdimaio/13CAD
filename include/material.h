@@ -1,3 +1,10 @@
+/**
+ * @file material.h
+ * @brief Header file for the Material class
+ * @author Tanchanok Srisung
+ * @version 1.0 15/11/18
+ */
+
 #ifndef MATERIAL_H
 #define MATERIAL_H
 

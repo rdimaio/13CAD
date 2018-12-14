@@ -1,3 +1,10 @@
+/**
+ * @file vector3d.cpp
+ * @brief Source file for the Vector3D class
+ * @author Riccardo Di Maio
+ * @version 1.0 08/11/18
+ */
+
 #include "vector3d.h"
 #include <cmath>
 

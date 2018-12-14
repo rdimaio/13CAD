@@ -1,3 +1,10 @@
+/**
+ * @file matrix.h
+ * @brief Header file for the Matrix class
+ * @author Riccardo Di Maio
+ * @version 1.0 14/12/18
+ */
+
 #ifndef MATRIX_H
 #define MATRIX_H
 
