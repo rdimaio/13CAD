@@ -18,41 +18,23 @@ Model::Model(std::string filename) {
 		while (std::getline(modelFile, line)) {
 			// Check first character
     		switch (line[0]) {
-				int id;
 				// Cell case
 				case 'c':
-					id = line[2] - '0'; 
 
-					// Resize vector if necessary
-					if (id >= this->cells.size()) {
-						this->cells.resize(id+1);
-					}
-
-					this->cells[id] = parseCell(line);				
+					//parseCell(line);				
 					break;
 
 				// Vertex case
 				case 'v':
-					id = line[2] - '0'; 
-
-					// Resize vector if necessary
-					if (id >= this->vertices.size()) {
-						this->vertices.resize(id+1);
-					}
-
-					this->vertices[id] = parseVertex(line);
+					
+					parseVertex(line);
 					break;
 
 				// Material case
 				case 'm':
-					id = line[2] - '0'; 
 
-					// Resize vector if necessary
-					if (id >= this->materials.size()) {
-						this->materials.resize(id+1);
-					}
+					parseMaterial(line);
 
-					this->materials[id] = parseMaterial(line);
 					break;
 			}
 		}
@@ -72,7 +54,7 @@ std::vector<std::string> Model::splitString(std::string line) {
 	return strings;
 }
 
-Material Model::parseMaterial(std::string line) {
+void Model::parseMaterial(std::string line) {
 
 	std::vector<std::string> strings = splitString(line);
 	// strings id:
@@ -87,17 +69,48 @@ Material Model::parseMaterial(std::string line) {
 	std::string colour = strings[3];
 	std::string name = strings[4];
 	Material m(id, density, colour, name);
-	return m;
+	
+	if (id >= this->materials.size()) {
+		this->materials.resize(id+1);
+	}
+	
+	this->materials[id] = m;
 }
 
-Vector3D Model::parseVertex(std::string line) {
+void Model::parseVertex(std::string line) {
+	std::vector<std::string> strings = splitString(line);
+	// strings id:
+	// 0 - v
+	// 1 - ID
+	// 2 - x
+	// 3 - y
+	// 4 - z
+	
+	int id = std::stoi(strings[1]);
+	float x = std::stod(strings[2]);
+	float y = std::stod(strings[3]);
+	float z = std::stod(strings[4]);
+	
+	Vector3D v(x, y, z);
+	
+	if (id >= this->vertices.size()) {
+		this->vertices.resize(id+1);
+	}
+	
+	this->vertices[id] = v;
 
 }
 
-Cell Model::parseCell(std::string line) {
+void Model::parseCell(std::string line) {
+
+	
 
 }
 
 std::vector<Material> Model::getMaterials() {
 	return this->materials;
+}
+
+std::vector<Vector3D> Model::getVertices() {
+	return this->vertices;
 }

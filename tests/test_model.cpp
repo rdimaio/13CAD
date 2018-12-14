@@ -6,9 +6,9 @@
 
 TEST(modelTest, modelBase) {
 
-	Model m("tests/ExampleModel.mod");
+	Model mod("tests/ExampleModel.mod");
 
-    std::vector<Material> materials = m.getMaterials();
+    std::vector<Material> materials = mod.getMaterials();
 
     std::string name1 = materials[0].getName();
     std::string name2 = materials[1].getName();

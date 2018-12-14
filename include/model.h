@@ -22,9 +22,9 @@ class Model {
         std::vector<Material> materials;
         std::vector<Cell> cells;
     
-        Vector3D parseVertex(std::string line);
-        Material parseMaterial(std::string line);
-        Cell parseCell(std::string line);
+        void parseVertex(std::string line);
+        void parseMaterial(std::string line);
+        void parseCell(std::string line);
         std::vector<std::string> splitString(std::string line);
     
     public:
@@ -33,6 +33,7 @@ class Model {
         Model(std::string filename);
 
         std::vector<Material> getMaterials();
+        std::vector<Vector3D> getVertices();
     
 };
 
