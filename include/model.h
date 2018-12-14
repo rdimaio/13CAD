@@ -49,6 +49,17 @@ class Model {
         int getVertexCount();
         int getCellCount();
 
+        /**
+         * Return a string with the total number of cells
+         * and, for each cell, its ID and type
+         */
+        std::string getCellList();
+
+        /**
+         * Get the centre of the model based on the vertices
+         */
+        Vector3D getCentre();
+
         //// Misc functions
         //void saveToFile(std::string filename);
 

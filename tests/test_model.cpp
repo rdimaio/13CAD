@@ -24,6 +24,20 @@ TEST(modelTest, modelBase) {
     ASSERT_EQ(name2, "pkg_plastic\r");
 }
 
+TEST(centreTest, modelBase) {
+    // [0.00498937,0.00236761,0.00150169]
+    Vector3D centreExpected(0.00498937, 0.00236761, 0.00150169);
+
+	Model mod("tests/ExampleModel.mod");
+
+    Vector3D centreObtained = mod.getCentre();
+
+
+	ASSERT_NEAR(centreObtained.getX(), centreExpected.getX(), 0.009);
+    ASSERT_NEAR(centreObtained.getY(), centreExpected.getY(), 0.009);
+    ASSERT_NEAR(centreObtained.getZ(), centreExpected.getZ(), 0.009);
+}
+
 TEST(materialCountTest, modelBase) {
 
     int countExpected = 2;

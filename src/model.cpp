@@ -194,6 +194,26 @@ int Model::getCellCount() {
 	return count;
 }
 
+std::string Model::getCellList() {}
+
+Vector3D Model::getCentre() {
+	double x_sum = 0;
+	double y_sum = 0;
+	double z_sum = 0;
+
+	for (int i = 0; i < this->vertices.size(); i++) {
+		x_sum += this->vertices[i].getX();
+		y_sum += this->vertices[i].getY();
+		z_sum += this->vertices[i].getZ();
+	}
+
+	double x = x_sum / this->vertices.size();
+	double y = y_sum / this->vertices.size();
+	double z = z_sum / this->vertices.size();
+
+	Vector3D centre(x, y, z);
+	return centre;
+}
 
 // Save model to specified filename
 //void Model::saveToFile(std::string filename) {
