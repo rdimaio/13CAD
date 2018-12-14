@@ -17,7 +17,7 @@
  */
 class Cell {
     protected:
-        std::vector<Vector3D> vertices;
+        std::vector<Vector3D> vertices; // Vertices that define the cell
         double volume;
         double weight;
         // Vector3D centreOfGravity;

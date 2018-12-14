@@ -25,5 +25,5 @@ TEST(volumeTest, tetrahedronBase) {
 
     double volume = tetra.getVolume();
 
-    ASSERT_DOUBLE_EQ(volume, expectedVolume);
+    ASSERT_NEAR(volume, expectedVolume, 0.001);
 }
