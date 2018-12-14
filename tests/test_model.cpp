@@ -12,5 +12,5 @@ TEST(modelTest, modelBase) {
 
     std::string name1 = materials[0].getName();
 
-	ASSERT_EQ(name1, "cu");
+	ASSERT_EQ(name1, "test");
 }
