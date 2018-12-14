@@ -11,7 +11,7 @@
 #include <vector>
 #include <string>
 
-TEST(modelTest, modelBase) {
+TEST(parseMaterialTest, modelBase) {
 
 	Model mod("tests/ExampleModel.mod");
 
@@ -19,9 +19,21 @@ TEST(modelTest, modelBase) {
 
     std::string name1 = materials[0].getName();
     std::string name2 = materials[1].getName();
+    std::string colour1 = materials[0].getColour();
+    std::string colour2 = materials[1].getColour();
+    int id1 = materials[0].getId();
+    int id2 = materials[1].getId();
+    double density1 = materials[0].getDensity();
+    double density2 = materials[1].getDensity();
 
 	ASSERT_EQ(name1, "cu\r");
     ASSERT_EQ(name2, "pkg_plastic\r");
+    ASSERT_EQ(colour1, "b87333");
+    ASSERT_EQ(colour2, "000000");
+    ASSERT_EQ(id1, 0);
+    ASSERT_EQ(id2, 1);
+    ASSERT_EQ(density1, 8940);
+    ASSERT_EQ(density2, 100);
 }
 
 TEST(centreTest, modelBase) {
@@ -36,6 +48,17 @@ TEST(centreTest, modelBase) {
     ASSERT_NEAR(centreObtained.getY(), centreExpected.getY(), 0.009);
     ASSERT_NEAR(centreObtained.getZ(), centreExpected.getZ(), 0.009);
 }
+
+//TEST(accessorTest, modelBase) {
+//
+//    std::string filenameExpected = "tests/ExampleModel.mod";
+//
+//	Model mod("tests/ExampleModel.mod");
+//
+//    std::string filenameObtained = mod.getFilename();
+//
+//	ASSERT_EQ(filenameExpected, filenameObtained);
+//}
 
 TEST(materialCountTest, modelBase) {
 
