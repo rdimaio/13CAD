@@ -10,6 +10,10 @@
 #include <vector>
 #include "vector3d.h"
 
+Cell::Cell(){}
+Cell::~Cell(){}
+
+
 Pyramid::Pyramid(std::vector<Vector3D> &vertices) {
     for (int i = 0; i < 5; i++) {
         this->vertices.push_back(vertices[i]);
