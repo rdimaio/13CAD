@@ -15,6 +15,7 @@ class Vector3D {
         float z;
     
     public:
+        Vector3D();
         Vector3D(float x, float y, float z);
         ~Vector3D();
 
