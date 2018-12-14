@@ -42,13 +42,18 @@ Pyramid::Pyramid(std::vector<Vector3D> &vertices, Material &material) {
 }
 
 Pyramid::Pyramid() {}
+
 Pyramid::~Pyramid() {}
 
-//double Pyramid::getVolume() {
-//    //length = vertices[0].distance(vertices[1]);
-//    //width = vertices[1].distance(vertices[2]);
-//    //height = 
-//}
+double Pyramid::getVolume() {
+    double length = vertices[0].distance(vertices[1]);
+    double width = vertices[1].distance(vertices[2]);
+    Vector3D baseCentre = vertices[0].midpoint(vertices[2]);
+    double height = baseCentre.distance(vertices[4]);
+
+    double volume = (length * width * height) / 3;
+    return volume;
+}
 
 Hexahedron::Hexahedron(std::vector<Vector3D> &vertices, Material &material) {
     for (int i = 0; i < 8; i++) {
@@ -58,6 +63,7 @@ Hexahedron::Hexahedron(std::vector<Vector3D> &vertices, Material &material) {
 }
 
 Hexahedron::Hexahedron() {}
+
 Hexahedron::~Hexahedron() {}
 
 Tetrahedron::Tetrahedron(std::vector<Vector3D> &vertices, Material &material) {
@@ -68,6 +74,7 @@ Tetrahedron::Tetrahedron(std::vector<Vector3D> &vertices, Material &material) {
 }
 
 Tetrahedron::Tetrahedron() {}
+
 Tetrahedron::~Tetrahedron() {}
 
 double Tetrahedron::getVolume() {

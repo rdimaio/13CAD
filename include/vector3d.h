@@ -50,8 +50,9 @@ class Vector3D {
         Vector3D operator*(double scalar); // Vector on lhs
         friend Vector3D operator*(double scalar, Vector3D v); // Vector on rhs
 
-        // Functions
+        // Misc functions
         double distance(Vector3D &v2); // Distance from vertex
+        Vector3D midpoint(Vector3D &v2); // Midpoint between two vertices
 };
 
 #endif /* VECTOR_H */

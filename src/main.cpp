@@ -20,6 +20,9 @@ int main()
     //std::cout << vertices[5].getZ() << std::endl;
     //std::cout << vertices.size() << std::endl;
 
+    // Test parameters
+Material m0(0, 8940, "b87333", "cu");
+
     std::vector<Vector3D> vertices;
     Vector3D v1(5.0, 0.0, 0.0);
     Vector3D v2(5.0, 1.0, 1.0);
@@ -30,11 +33,13 @@ int main()
     vertices.push_back(v3);
     vertices.push_back(v4);
 
-    Tetrahedron tetra(vertices);
+    Tetrahedron tetra(vertices, m0);
 
     double volume = tetra.getVolume();
-
+    double mass = tetra.getMass();
     std::cout << volume << std::endl;
+
+    std::cout << mass << std::endl;
 
     return 0;
 

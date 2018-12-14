@@ -29,7 +29,7 @@ class Cell {
 
 		// Accessors
 		virtual double getVolume();
-        virtual double getMass();
+        double getMass();
         std::vector<Vector3D> getVertices();
 };
 
@@ -43,9 +43,7 @@ class Pyramid : public Cell {
         ~Pyramid();
 
 		// Accessors
-		// virtual double getVolume();
-        // virtual double getWeight();
-        // Vector3D getCentreOfGravity();
+		virtual double getVolume();
 };
 
 /**
@@ -74,8 +72,6 @@ class Tetrahedron : public Cell {
 
 		// Accessors
 		virtual double getVolume();
-        virtual double getMass();
-        // Vector3D getCentreOfGravity();
 };
 
 #endif /* CELL_H */

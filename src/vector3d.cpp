@@ -117,3 +117,14 @@ double Vector3D::distance(Vector3D &v2) {
     double distance = sqrt(xDiff*xDiff + yDiff*yDiff + zDiff*zDiff);
     return distance;
 }
+
+Vector3D Vector3D::midpoint(Vector3D &v2) {
+
+    double x = (this->getX() + v2.getX()) / 2;
+    double y = (this->getY() + v2.getY()) / 2;
+    double z = (this->getZ() + v2.getZ()) / 2;
+
+    Vector3D vMid(x, y, z);
+
+    return vMid;
+}
