@@ -36,6 +36,27 @@ TEST(parseMaterialTest, modelBase) {
     ASSERT_EQ(density2, 100);
 }
 
+TEST(parseVertexTest, modelBase) {
+
+	Model mod("tests/ExampleModel.mod");
+
+    std::vector<Vector3D> vertices = mod.getVertices();
+
+    double x1 = vertices[0].getX();
+    double x2 = vertices[1].getX();
+    double y1 = vertices[0].getY();
+    double y2 = vertices[1].getY();
+    double z1 = vertices[0].getZ();
+    double z2 = vertices[1].getZ();
+
+    ASSERT_NEAR(x1, 0.00195, 0.009);
+    ASSERT_NEAR(y1, 0.00115, 0.009);
+    ASSERT_NEAR(z1, 0.0015, 0.009);
+    ASSERT_NEAR(x2, 0.00295, 0.009);
+    ASSERT_NEAR(y2, 0.00115, 0.009);
+    ASSERT_NEAR(z2, 0.0015, 0.009);
+}
+
 TEST(centreTest, modelBase) {
     // [0.00498937,0.00236761,0.00150169]
     Vector3D centreExpected(0.00498937, 0.00236761, 0.00150169);
