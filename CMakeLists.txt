@@ -13,7 +13,7 @@ set(SOURCES
     src/cell.cpp
     src/material.cpp
     src/model.cpp
-    src/vector.cpp)
+    src/vector3d.cpp)
 
 option(TESTING "Testing mode" OFF) #OFF by default
 
