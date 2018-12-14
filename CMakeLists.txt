@@ -12,6 +12,7 @@ include_directories( include/
 set(SOURCES 
     src/cell.cpp
     src/material.cpp
+    src/matrix.cpp
     src/model.cpp
     src/vector3d.cpp)
 

@@ -23,6 +23,7 @@ class Cell {
 		// Accessors
 		//virtual double getVolume();
         //virtual double getWeight();
+        //std::vector<Vector3D> getVertices();
         // Vector3D getCentreOfGravity();
 };
 
@@ -31,6 +32,7 @@ class Cell {
  */
 class Pyramid : public Cell {
     public:
+        Pyramid();
         Pyramid(std::vector<Vector3D> &vertices);
         ~Pyramid();
 
@@ -45,6 +47,7 @@ class Pyramid : public Cell {
  */
 class Hexahedron : public Cell {
     public:
+        Hexahedron();
         Hexahedron(std::vector<Vector3D> &vertices);
         ~Hexahedron();
 
@@ -59,11 +62,12 @@ class Hexahedron : public Cell {
  */
 class Tetrahedron : public Cell {
     public:
+        Tetrahedron();
         Tetrahedron(std::vector<Vector3D> &vertices);
         ~Tetrahedron();
 
 		// Accessors
-		//virtual double getVolume();
+		virtual double getVolume();
         //virtual double getWeight();
         // Vector3D getCentreOfGravity();
 };

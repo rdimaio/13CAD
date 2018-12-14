@@ -9,7 +9,7 @@ Vector3D::Vector3D(){
 }
 
 
-Vector3D::Vector3D(float x, float y, float z) {
+Vector3D::Vector3D(double x, double y, double z) {
     this->x = x;
     this->y = y;
     this->z = z;
@@ -17,27 +17,27 @@ Vector3D::Vector3D(float x, float y, float z) {
 
 Vector3D::~Vector3D(){}
 
-float Vector3D::getX() {
+double Vector3D::getX() {
 	return this->x;
 }
 
-float Vector3D::getY() {
+double Vector3D::getY() {
 	return this->y;
 }
 
-float Vector3D::getZ() {
+double Vector3D::getZ() {
 	return this->z;
 }
 
-void Vector3D::setX(float x) {
+void Vector3D::setX(double x) {
 	this->x = x;
 }
 
-void Vector3D::setY(float y) {
+void Vector3D::setY(double y) {
 	this->y = y;
 }
 
-void Vector3D::setZ(float z) {
+void Vector3D::setZ(double z) {
 	this->z = z;
 }
 
@@ -63,7 +63,7 @@ bool operator==(const Vector3D& lhsVector, const Vector3D& rhsVector) {
 /**
  * Scalar multiplication - vector on lhs
  */
-Vector3D Vector3D::operator*(float scalar) {
+Vector3D Vector3D::operator*(double scalar) {
     Vector3D result(this->x * scalar, this->y * scalar, this->z * scalar);
     return result;
 }
@@ -71,7 +71,7 @@ Vector3D Vector3D::operator*(float scalar) {
 /**
  * Scalar multiplication - vector on rhs
  */
-Vector3D operator*(float scalar, Vector3D v) {
+Vector3D operator*(double scalar, Vector3D v) {
     Vector3D result(v.x * scalar, v.y * scalar, v.z * scalar);
     return result;
 }
@@ -79,8 +79,8 @@ Vector3D operator*(float scalar, Vector3D v) {
 /**
  *  Dot product
  */
-float Vector3D::dot(Vector3D rhsVector) {
-    float result = this->x * rhsVector.x + this->y * rhsVector.y + this->z * rhsVector.z;
+double Vector3D::dot(Vector3D rhsVector) {
+    double result = this->x * rhsVector.x + this->y * rhsVector.y + this->z * rhsVector.z;
     return result;
 }
 
@@ -88,9 +88,9 @@ float Vector3D::dot(Vector3D rhsVector) {
  *  Cross product
  */
 Vector3D Vector3D::cross(Vector3D rhsVector) {
-    float xResult = this->y * rhsVector.z - this->z * rhsVector.y;
-    float yResult = this->z * rhsVector.x - this->x * rhsVector.z;
-    float zResult = this->x * rhsVector.y - this->y * rhsVector.x;
+    double xResult = this->y * rhsVector.z - this->z * rhsVector.y;
+    double yResult = this->z * rhsVector.x - this->x * rhsVector.z;
+    double zResult = this->x * rhsVector.y - this->y * rhsVector.x;
 
     Vector3D result(xResult, yResult, zResult);
     return result;

@@ -4,10 +4,9 @@
 #include <vector>
 #include <string>
 
+#include "vector3d.h"
+#include "cell.h"
 #include "model.h"
-
-//Code to read file line by line 
-//Read first letter and sort into Cell, Material, Vector 
 
 Model::Model(std::string filename) {
 	std::ifstream modelFile(filename);
@@ -20,21 +19,17 @@ Model::Model(std::string filename) {
     		switch (line[0]) {
 				// Cell case
 				case 'c':
-
-					//parseCell(line);				
+					parseCell(line);				
 					break;
 
 				// Vertex case
 				case 'v':
-					
 					parseVertex(line);
 					break;
 
 				// Material case
 				case 'm':
-
 					parseMaterial(line);
-
 					break;
 			}
 		}
@@ -42,6 +37,9 @@ Model::Model(std::string filename) {
 	}
 }
 
+/**
+ * Split string into space-separated words.
+ */
 std::vector<std::string> Model::splitString(std::string line) {
 	std::vector<std::string> strings; 
 	std::istringstream f(line);
@@ -57,7 +55,7 @@ std::vector<std::string> Model::splitString(std::string line) {
 void Model::parseMaterial(std::string line) {
 
 	std::vector<std::string> strings = splitString(line);
-	// strings id:
+	// Strings index:
 	// 0 - m
 	// 1 - ID
 	// 2 - Density
@@ -68,8 +66,10 @@ void Model::parseMaterial(std::string line) {
 	double density = std::stod(strings[2]);
 	std::string colour = strings[3];
 	std::string name = strings[4];
+
 	Material m(id, density, colour, name);
 	
+	// Resize materials vector if necessary
 	if (id >= this->materials.size()) {
 		this->materials.resize(id+1);
 	}
@@ -79,7 +79,7 @@ void Model::parseMaterial(std::string line) {
 
 void Model::parseVertex(std::string line) {
 	std::vector<std::string> strings = splitString(line);
-	// strings id:
+	// Strings index:
 	// 0 - v
 	// 1 - ID
 	// 2 - x
@@ -93,18 +93,60 @@ void Model::parseVertex(std::string line) {
 	
 	Vector3D v(x, y, z);
 	
+	// Resize vertices vector if necessary
 	if (id >= this->vertices.size()) {
 		this->vertices.resize(id+1);
 	}
 	
 	this->vertices[id] = v;
-
 }
 
 void Model::parseCell(std::string line) {
+	std::vector<std::string> strings = splitString(line);
+	// Strings index:
+	// 0 - c
+	// 1 - ID
+	// 2 - cell type:
+	//	   h - hexahedral
+	//	   p - pyramid
+	//     t - tetrahedral
+	// 3 - Material ID
+	// 4 and onwards - IDs of vertices which define the cell
 
-	
+	std::vector<Vector3D> vertices;
 
+	// Fill vertices ID with the required IDs
+	for (int i = 4; i < strings.size(); i++) {
+		int vertexId = std::stoi(strings[i]);
+		Vector3D vertex = this->vertices[vertexId];
+		vertices.push_back(vertex);
+	}
+
+	// Check cell type
+	// Note: curly braces are to prevent initializators from leaking in
+	// other cases (also causes compiler error)
+    switch (strings[2][0]) {
+		// Hexahedral case
+		case 'h': {
+			Hexahedron(vertices);		
+			break;
+		}
+		// Pyramid case
+		case 'p': {
+			Pyramid(vertices);
+			break;
+		}
+		// Tetrahedral case
+		case 't': {
+			Tetrahedron(vertices);
+			break;
+		}
+	}
+
+}
+
+std::string Model::getFilename() {
+	return this->filename;
 }
 
 std::vector<Material> Model::getMaterials() {
@@ -113,4 +155,8 @@ std::vector<Material> Model::getMaterials() {
 
 std::vector<Vector3D> Model::getVertices() {
 	return this->vertices;
+}
+
+std::vector<Cell> Model::getCells() {
+	return this->cells;
 }

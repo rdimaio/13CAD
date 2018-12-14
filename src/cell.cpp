@@ -10,8 +10,8 @@
 #include <vector>
 #include "vector3d.h"
 
-Cell::Cell(){}
-Cell::~Cell(){}
+Cell::Cell() {}
+Cell::~Cell() {}
 
 
 Pyramid::Pyramid(std::vector<Vector3D> &vertices) {
@@ -20,7 +20,8 @@ Pyramid::Pyramid(std::vector<Vector3D> &vertices) {
     }
 }
 
-Pyramid::~Pyramid(){}
+Pyramid::Pyramid() {}
+Pyramid::~Pyramid() {}
 
 //double Pyramid::getVolume() {
 //    //length = vertices[0].distance(vertices[1]);
@@ -34,7 +35,8 @@ Hexahedron::Hexahedron(std::vector<Vector3D> &vertices) {
     }
 }
 
-Hexahedron::~Hexahedron(){}
+Hexahedron::Hexahedron() {}
+Hexahedron::~Hexahedron() {}
 
 Tetrahedron::Tetrahedron(std::vector<Vector3D> &vertices) {
     for (int i = 0; i < 4; i++) {
@@ -42,7 +44,24 @@ Tetrahedron::Tetrahedron(std::vector<Vector3D> &vertices) {
     }
 }
 
-Tetrahedron::~Tetrahedron(){}
+Tetrahedron::Tetrahedron() {}
+Tetrahedron::~Tetrahedron() {}
+
+double Tetrahedron::getVolume() {
+    // Source: http://mathworld.wolfram.com/Tetrahedron.html
+
+    Vector3D va = this->vertices[1] - this->vertices[0];
+    Vector3D vb = this->vertices[2] - this->vertices[0];
+    Vector3D vc = this->vertices[3] - this->vertices[0];
+
+    Vector3D vCross = vb.cross(vc);
+
+    double scalar = va.dot(vCross);
+
+    double volume = scalar/6;
+
+    return volume;
+}
 
 /*
 std::ostream &operator<<(std::ostream &os, const Cell &cell)
