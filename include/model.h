@@ -60,8 +60,10 @@ class Model {
          */
         Vector3D getCentre();
 
-        //// Misc functions
-        //void saveToFile(std::string filename);
+        // Misc functions
+        // Copy current model to another file (just copies the contents of the input file)
+        void copyToFile(std::string filename);
+        void saveToFile(std::string filename);
 
     
 };

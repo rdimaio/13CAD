@@ -216,6 +216,8 @@ Vector3D Model::getCentre() {
 }
 
 // Save model to specified filename
-//void Model::saveToFile(std::string filename) {
-//	std::vector<Material> materials = this.getMaterials();
-//}
+void Model::copyToFile(std::string filename) {
+	std::ifstream inFile(this->filename, std::ios::binary);
+	std::ofstream outFile(filename, std::ios::binary);
+	outFile << inFile.rdbuf();
+}
