@@ -10,5 +10,8 @@
 
 int main()
 {
+    Model mod("tests/ExampleModel.mod");
+    mod.saveToFile("tests/test.mod");
+    
     return 0;
 }

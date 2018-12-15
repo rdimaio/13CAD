@@ -5,6 +5,7 @@
  * @version 1.0 08/12/18
  */
 
+#include <algorithm>
 #include <sstream>
 #include <iostream>
 #include <fstream>
@@ -73,6 +74,12 @@ void Model::parseMaterial(std::string line) {
 	double density = std::stod(strings[2]);
 	std::string colour = strings[3];
 	std::string name = strings[4];
+	
+	// Strip the end of line character '\r' from the name string
+	// The reason why this happens is that the name of the material
+	// is the only time a string that happens to be at the end of the line
+	// gets parsed.
+	name.erase(std::remove(name.begin(), name.end(), '\r'), name.end());
 
 	Material m(id, density, colour, name);
 	
@@ -215,9 +222,70 @@ Vector3D Model::getCentre() {
 	return centre;
 }
 
-// Save model to specified filename
+// Copy model to specified filename
 void Model::copyToFile(std::string filename) {
 	std::ifstream inFile(this->filename, std::ios::binary);
 	std::ofstream outFile(filename, std::ios::binary);
 	outFile << inFile.rdbuf();
+}
+
+// Save model to specified filename
+void Model::saveToFile(std::string filename) {
+	std::ofstream outFile(filename);
+	std::string line;
+
+	if (outFile.is_open()) {
+		// Save materials
+		outFile << "### MATERIALS ###\n";
+		for (int i = 0; i < this->materials.size(); i++) {
+			// Obtain information about the material
+			std::vector<std::string> mStrings;
+			// Strings index:
+			// 0 - ID
+			// 1 - Density
+			// 2 - Colour
+			// 3 - Name			
+			mStrings.push_back(std::to_string(this->materials[i].getId()));
+			mStrings.push_back(std::to_string(this->materials[i].getDensity()));
+			mStrings.push_back(this->materials[i].getColour());
+			mStrings.push_back(this->materials[i].getName());
+
+			// Save the material to file
+			outFile << "m ";
+
+			for (int j = 0; j < mStrings.size(); j++) {
+				outFile << mStrings[j] << " ";
+			}
+
+			outFile << "\n";
+		}
+
+		// Separator
+		outFile << "\n";
+
+		// Save vertices
+		outFile << "### VERTICES ###\n";
+		for (int i = 0; i < this->vertices.size(); i++) {
+			// Obtain information about the material
+			std::vector<std::string> vStrings;
+			// Strings index:
+			// 0 - v
+			// 1 - ID
+			// 2 - x
+			// 3 - y
+			// 4 - z
+			vStrings.push_back(std::to_string(i));
+			vStrings.push_back(std::to_string(this->vertices[i].getX()));
+			vStrings.push_back(std::to_string(this->vertices[i].getY()));
+			vStrings.push_back(std::to_string(this->vertices[i].getZ()));
+
+			for (int j = 0; j < vStrings.size(); j++) {
+				outFile << vStrings[j] << " ";
+			}
+
+			outFile << "\n";
+		}
+
+		outFile.close();
+	}
 }
