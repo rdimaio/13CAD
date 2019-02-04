@@ -134,3 +134,4 @@ in case the latest commit breaks the tests in any way.
 ## Useful links
 
 - [An excellent and very brief git guide](http://rogerdudler.github.io/git-guide/)
+- [A working example of Qt and VTK working together. It's very useful to check if VTK and Qt work.](https://vtk.org/Wiki/VTK/Examples/Cxx/Qt/SideBySideRenderWindowsQt)
