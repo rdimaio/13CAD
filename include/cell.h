@@ -18,7 +18,14 @@
  */
 class Cell {
     protected:
-        std::vector<Vector3D> vertices; // Vertices that define the cell
+        /**
+         * Vertices that define the cell
+         */
+        std::vector<Vector3D> vertices;
+        
+        /**
+         * Material that the cell is made of
+         */
         Material material;
     
     public:
@@ -26,8 +33,20 @@ class Cell {
         ~Cell();
 
 		// Accessors
+        
+        /**
+         * Get volume of the cell
+         */
 		virtual double getVolume();
+
+        /**
+         * Get mass of the cell
+         */
         double getMass();
+
+        /**
+         * Get vertices of the cell as a std::vector<Vector3D>
+         */
         std::vector<Vector3D> getVertices();
 
         /**

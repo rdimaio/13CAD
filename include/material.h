@@ -15,9 +15,25 @@
  */
 class Material {
 	private:
+
+		/**
+		 * ID that uniquely identifies the material
+		 */
 		int id;
+
+		/**
+		 * Density of the material
+		 */
 		double density;
+
+		/**
+		 * Colour of the material
+		 */
 		std::string colour;
+
+		/**
+		 * Name of the material
+		 */
 		std::string name;
 
 	public:
@@ -28,19 +44,55 @@ class Material {
 		~Material();
   
 		// Accessors
+
+		/**
+		 * Return material's ID
+		 */
 		int getId();
+
+		/**
+		 * Return material's density
+		 */
 		double getDensity();
+
+		/**
+		 * Return material's colour
+		 */
 		std::string getColour();
+
+		/**
+		 * Return material's name
+		 */
 		std::string getName();
 
 		// Mutators
+
+		/**
+		 * Set material's ID
+		 */
 		void setId(int id);
+
+		/**
+		 * Set material's density
+		 */
 		void setDensity(double density);
-		void setColour(std::string column);
+
+		/**
+		 * Set material's colour
+		 */
+		void setColour(std::string colour);
+
+		/**
+		 * Set material's name
+		 */
 		void setName(std::string name);
 
 		// Operator overloading
         // Note: rhs stands for right hand side
+
+		/**
+		 * Equality operator between two materials
+		 */
 		friend bool operator==(const Material& lhsMaterial, const Material& rhsMaterial);
 };
 

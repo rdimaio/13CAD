@@ -1,4 +1,10 @@
 #!/bin/sh
+# Shell script to automatically generate and deploy docs using Doxygen.
+# Travis CI requires a 'full access to private repositories' token,
+# which can be obtained on GitHub. Afterwards, it must be input
+# in the Travis CI settings section for that repository's page,
+# as an environment variable called 'GH_REPO_TOKEN'.
+# Source: https://gist.github.com/vidavidorra/548ffbcdae99d752da02
 __AUTHOR__="Jeroen de Bruijn"
 set -e
 mkdir code_docs

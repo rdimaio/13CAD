@@ -19,19 +19,47 @@
  */
 class Model {
     private:
+        /**
+         * Name of file to load
+         */
         std::string filename;
     
-        // Vectors that hold the model's information
+        /**
+         * std::vector of vertices loaded from file
+         */
         std::vector<Vector3D> vertices;
+
+        /**
+         * std::vector of materials loaded from file
+         */
         std::vector<Material> materials;
+        
+        /**
+         * std::vector of cells loaded from file
+         */
         std::vector<Cell> cells;
     
         // Parsing functions
+
+        /**
+         * Parse vertex string
+         */
         void parseVertex(std::string line);
+
+        /**
+         * Parse material string
+         */
         void parseMaterial(std::string line);
+        
+        /**
+         * Parse cell string
+         */
         void parseCell(std::string line);
 
         // Misc functions
+        /**
+         * Split string into space-separated words
+         */
         std::vector<std::string> splitString(std::string line);
     
     public:
@@ -41,12 +69,40 @@ class Model {
         Model(std::string filename);
 
         // Accessors
+
+        /**
+         * Get model's filename
+         */
         std::string getFilename();
+
+        /**
+         * Get list of materials as a std::vector
+         */
         std::vector<Material> getMaterials();
+
+        /**
+         * Get list of vertices as a std::vector
+         */
         std::vector<Vector3D> getVertices();
+
+        /**
+         * Get list of cells as a std::vector
+         */
         std::vector<Cell> getCells();
+
+        /**
+         * Get total number of materials
+         */
         int getMaterialCount();
+
+        /**
+         * Get total number of vertices
+         */
         int getVertexCount();
+
+        /**
+         * Get total number of cells
+         */
         int getCellCount();
 
         /**
@@ -61,8 +117,15 @@ class Model {
         Vector3D getCentre();
 
         // Misc functions
-        // Copy current model to another file (just copies the contents of the input file)
+
+        /**
+         * Copy current model to another file (just copies the contents of the input file)
+         */
         void copyToFile(std::string filename);
+
+        /**
+         * Save current model to file
+         */
         void saveToFile(std::string filename);
 
     
