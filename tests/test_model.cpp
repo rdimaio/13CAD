@@ -26,8 +26,8 @@ TEST(parseMaterialTest, modelBase) {
     double density1 = materials[0].getDensity();
     double density2 = materials[1].getDensity();
 
-	ASSERT_EQ(name1, "cu\r");
-    ASSERT_EQ(name2, "pkg_plastic\r");
+	ASSERT_EQ(name1, "cu");
+    ASSERT_EQ(name2, "pkg_plastic");
     ASSERT_EQ(colour1, "b87333");
     ASSERT_EQ(colour2, "000000");
     ASSERT_EQ(id1, 0);
