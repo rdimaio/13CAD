@@ -266,21 +266,63 @@ void Model::saveToFile(std::string filename) {
 		// Save vertices
 		outFile << "### VERTICES ###\n";
 		for (int i = 0; i < this->vertices.size(); i++) {
-			// Obtain information about the material
+			// Obtain information about the vector
 			std::vector<std::string> vStrings;
 			// Strings index:
-			// 0 - v
-			// 1 - ID
-			// 2 - x
-			// 3 - y
-			// 4 - z
+			// 0 - ID
+			// 1 - x
+			// 2 - y
+			// 3 - z
 			vStrings.push_back(std::to_string(i));
 			vStrings.push_back(std::to_string(this->vertices[i].getX()));
 			vStrings.push_back(std::to_string(this->vertices[i].getY()));
 			vStrings.push_back(std::to_string(this->vertices[i].getZ()));
 
+			// Save the vector to file
+			outFile << "v ";
+
 			for (int j = 0; j < vStrings.size(); j++) {
 				outFile << vStrings[j] << " ";
+			}
+
+			outFile << "\n";
+		}
+
+		// Separator
+		outFile << "\n";
+
+		// Save cells
+		outFile << "### CELLS ###\n";
+		for (int i = 0; i < this->cells.size(); i++) {
+			// Obtain information about the cell
+			std::vector<std::string> cStrings;
+			std::vector<Vector3D> cVertices = this->cells[i].getVertices();
+			// Strings index:
+			// 0 - ID
+			// 1 - cell type:
+			//	   h - hexahedral
+			//	   p - pyramid
+			//     t - tetrahedral
+			// 2 - Material ID
+			// 3 and onwards - IDs of vertices which define the cell
+			cStrings.push_back(std::to_string(i));
+
+
+			// TODO: Implement vertex index saving in cells, right now only
+			// the coordinates are saved; this causes me to be unable to
+			// save cells properly
+			// // Get vertices c
+			// for (int l = 0; l < cVertices.size(); l++) {
+			// 	cStrings.push_back(std::to_string(cVertices[l].getX()));
+			// 	cStrings.push_back(std::to_string(cVertices[l].getY()));
+			// 	cStrings.push_back(std::to_string(cVertices[l].getZ()));
+			// }
+
+			// Save the cell to file
+			outFile << "c ";
+
+			for (int j = 0; j < cStrings.size(); j++) {
+				outFile << cStrings[j] << " ";
 			}
 
 			outFile << "\n";

@@ -25,6 +25,9 @@ class Vector3D {
     
     public:
         Vector3D();
+        // version that holds the id as well
+        // Vector3D(int id, double x, double y, double z);
+        // make this constructor hold a NULL in the id variable
         Vector3D(double x, double y, double z);
         ~Vector3D();
 
