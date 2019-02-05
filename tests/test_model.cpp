@@ -57,6 +57,11 @@ TEST(parseVertexTest, modelBase) {
     ASSERT_NEAR(z2, 0.0015, 0.009);
 }
 
+TEST(parseCellTest, modelBase) {
+
+	// TODO: see from tests above
+}
+
 TEST(centreTest, modelBase) {
     // [0.00498937,0.00236761,0.00150169]
     Vector3D centreExpected(0.00498937, 0.00236761, 0.00150169);

@@ -6,6 +6,34 @@
 // H62PEP - Group 13
 ```
 
+## TODOs
+- Fix indentation in GitHub being different from how it should be
+- Where I left off: test_model.cpp, implementing parseCellTest. Maybe
+I should change the way cell behaves, because right now it's holding the entire material,
+but maybe it doesn't need it.
+- Add IDs to all classes; right now, saving is not really feasible.
+Might need to change the way vector ID is saved in saveToFile in model.
+- Implement Doxygen
+- Maybe change vectors so that they hold their IDs too (might be important for cells,
+as right now in model.cpp the vertices' coordinates are assigned and the vertices IDs
+are lost when not looking at it from the model's perspective.
+- Maybe change all floats to doubles
+- Maybe change all parameters so that they are received by reference
+- Maybe typedef an array of vector3D like:
+```typedef std::vector<int> int_vec_t;``` source:  https://www.codeguru.com/cpp/cpp/cpp_mfc/stl/article.php/c4027/C-Tutorial-A-Beginners-Guide-to-stdvector-Part-1.htmhttps://www.codeguru.com/cpp/cpp/cpp_mfc/stl/article.php/c4027/C-Tutorial-A-Beginners-Guide-to-stdvector-Part-1.htm
+
+### Cell
+- Maybe add static const ints that hold the number of verteces of each shape in cell.h
+like this: https://stackoverflow.com/questions/5620256/understanding-how-to-correctly-treat-c-class-constants
+
+### Model
+- Do something about the \r that gets read when parsing; make it so that the
+parser ignores that altogether
+- Maybe make it so that the save feature checks whether the input model file is
+still present; if it isn't, instead of copying from it, it goes through the
+loaded points and parses them to the output file
+- Make it so that an empty cell/material/model is stored in new vector positions when the vector is resized
+
 ## Library structure
 The library's structure is a slightly modified version of [this answer](https://stackoverflow.com/a/1398594):
 
@@ -134,3 +162,4 @@ in case the latest commit breaks the tests in any way.
 ## Useful links
 
 - [An excellent and very brief git guide](http://rogerdudler.github.io/git-guide/)
+- [A working example of Qt and VTK working together. It's very useful to check if VTK and Qt work.](https://vtk.org/Wiki/VTK/Examples/Cxx/Qt/SideBySideRenderWindowsQt)
