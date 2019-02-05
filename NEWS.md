@@ -1,3 +1,9 @@
+# Term 2
+## Project week 1:
+- Initial user interface draft was created
+
+
+# Term 1
 ## Project week 3:
 - Renamed vector-related files to vector3d to avoid clashing with the standard
 vector library
