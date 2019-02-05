@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.6"/>
-<title>My Project: /home/travis/build/rdimaio/ModelLoader/include/vector3d.h Source File</title>
+<title>3D Simulation Software: /home/travis/build/rdimaio/ModelLoader/include/vector3d.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -22,8 +22,9 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">My Project
+   <div id="projectname">3D Simulation Software
    </div>
+   <div id="projectbrief">CAD-like software based on C++, Qt and VTK.</div>
   </td>
  </tr>
  </tbody>
@@ -67,7 +68,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Friends</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -98,48 +99,84 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;    </div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;    <span class="keyword">protected</span>:</div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;        <span class="comment">// Spatial coordinates</span></div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;        <span class="keywordtype">double</span> x;</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;        <span class="keywordtype">double</span> y;</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;        <span class="keywordtype">double</span> z;</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    </div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;        <a class="code" href="classVector3D.html">Vector3D</a>();</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;        <span class="comment">// version that holds the id as well</span></div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;        <span class="comment">// Vector3D(int id, double x, double y, double z);</span></div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;        <span class="comment">// make this constructor hold a NULL in the id variable</span></div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;        <a class="code" href="classVector3D.html">Vector3D</a>(<span class="keywordtype">double</span> x, <span class="keywordtype">double</span> y, <span class="keywordtype">double</span> z);</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;        ~<a class="code" href="classVector3D.html">Vector3D</a>();</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;        <span class="comment">// Accessors</span></div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;        <span class="keywordtype">double</span> getX();</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;        <span class="keywordtype">double</span> getY();</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;        <span class="keywordtype">double</span> getZ();</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;        </div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;        <span class="comment">// Mutators</span></div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;        <span class="keywordtype">void</span> setX(<span class="keywordtype">double</span> x);</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;        <span class="keywordtype">void</span> setY(<span class="keywordtype">double</span> y);</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;        <span class="keywordtype">void</span> setZ(<span class="keywordtype">double</span> z);</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;        <span class="comment">// Operator overloading</span></div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;        <span class="comment">// Note: rhs stands for right hand side</span></div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;        <a class="code" href="classVector3D.html">Vector3D</a> operator+(<a class="code" href="classVector3D.html">Vector3D</a> rhsVector);</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;        <a class="code" href="classVector3D.html">Vector3D</a> operator-(<a class="code" href="classVector3D.html">Vector3D</a> rhsVector);</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;        <span class="keyword">friend</span> <span class="keywordtype">bool</span> operator==(<span class="keyword">const</span> <a class="code" href="classVector3D.html">Vector3D</a>&amp; lhsVector, <span class="keyword">const</span> <a class="code" href="classVector3D.html">Vector3D</a>&amp; rhsVector);</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        <span class="keywordtype">double</span> dot(<a class="code" href="classVector3D.html">Vector3D</a> rhsVector); <span class="comment">// Dot product</span></div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        <a class="code" href="classVector3D.html">Vector3D</a> cross(<a class="code" href="classVector3D.html">Vector3D</a> rhsVector); <span class="comment">// Cross product</span></div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;        <span class="keyword">friend</span> std::ostream&amp; operator&lt;&lt;(std::ostream&amp; os, <a class="code" href="classVector3D.html">Vector3D</a> &amp;v); <span class="comment">// cout</span></div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;        <span class="comment">// Scalar multiplication</span></div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;        <a class="code" href="classVector3D.html">Vector3D</a> operator*(<span class="keywordtype">double</span> scalar); <span class="comment">// Vector on lhs</span></div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;        <span class="keyword">friend</span> <a class="code" href="classVector3D.html">Vector3D</a> operator*(<span class="keywordtype">double</span> scalar, <a class="code" href="classVector3D.html">Vector3D</a> v); <span class="comment">// Vector on rhs</span></div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;        <span class="comment">// Misc functions</span></div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;        <span class="keywordtype">double</span> distance(<a class="code" href="classVector3D.html">Vector3D</a> &amp;v2); <span class="comment">// Distance from vertex</span></div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;        <a class="code" href="classVector3D.html">Vector3D</a> midpoint(<a class="code" href="classVector3D.html">Vector3D</a> &amp;v2); <span class="comment">// Midpoint between two vertices</span></div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;};</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* VECTOR_H */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;</div>
+<div class="line"><a name="l00026"></a><span class="lineno"><a class="line" href="classVector3D.html#a3c086dfccfc57dd996e9b8600098a430">   26</a></span>&#160;        <span class="keywordtype">double</span> <a class="code" href="classVector3D.html#a3c086dfccfc57dd996e9b8600098a430">x</a>;</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;        </div>
+<div class="line"><a name="l00031"></a><span class="lineno"><a class="line" href="classVector3D.html#adcec384756103d26d1181e45d5a0fd78">   31</a></span>&#160;        <span class="keywordtype">double</span> <a class="code" href="classVector3D.html#adcec384756103d26d1181e45d5a0fd78">y</a>;</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;        </div>
+<div class="line"><a name="l00036"></a><span class="lineno"><a class="line" href="classVector3D.html#a7321f3ff785f275c4d83f7d1b951752a">   36</a></span>&#160;        <span class="keywordtype">double</span> <a class="code" href="classVector3D.html#a7321f3ff785f275c4d83f7d1b951752a">z</a>;</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    </div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;        <a class="code" href="classVector3D.html">Vector3D</a>();</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;        <span class="comment">// version that holds the id as well</span></div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;        <span class="comment">// Vector3D(int id, double x, double y, double z);</span></div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;        <span class="comment">// make this constructor hold a NULL in the id variable</span></div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        <a class="code" href="classVector3D.html">Vector3D</a>(<span class="keywordtype">double</span> <a class="code" href="classVector3D.html#a3c086dfccfc57dd996e9b8600098a430">x</a>, <span class="keywordtype">double</span> <a class="code" href="classVector3D.html#adcec384756103d26d1181e45d5a0fd78">y</a>, <span class="keywordtype">double</span> <a class="code" href="classVector3D.html#a7321f3ff785f275c4d83f7d1b951752a">z</a>);</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;        ~<a class="code" href="classVector3D.html">Vector3D</a>();</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;        <span class="comment">// Accessors</span></div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;        <span class="keywordtype">double</span> <a class="code" href="classVector3D.html#aa9eaf29045bf32b95c5c7bcb2b8b68d7">getX</a>();</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;        <span class="keywordtype">double</span> <a class="code" href="classVector3D.html#aa3ffff17b886274a58417dfe4bb4c4a2">getY</a>();</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;        </div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;        <span class="keywordtype">double</span> <a class="code" href="classVector3D.html#ab0dcbf253ff78856eccb5ea74d080fc7">getZ</a>();</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        </div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;        <span class="comment">// Mutators</span></div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classVector3D.html#a32b5b166189ccb48ee1e7a4cbea1719e">setX</a>(<span class="keywordtype">double</span> <a class="code" href="classVector3D.html#a3c086dfccfc57dd996e9b8600098a430">x</a>);</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classVector3D.html#a7a1ec37357274ad482062b1b35928bbf">setY</a>(<span class="keywordtype">double</span> <a class="code" href="classVector3D.html#adcec384756103d26d1181e45d5a0fd78">y</a>);</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;        </div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classVector3D.html#afc123137fab8bc02c4cdc12af684fdc9">setZ</a>(<span class="keywordtype">double</span> <a class="code" href="classVector3D.html#a7321f3ff785f275c4d83f7d1b951752a">z</a>);</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;        <span class="comment">// Operator overloading</span></div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;        <span class="comment">// Note: rhs stands for right hand side</span></div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;        <a class="code" href="classVector3D.html">Vector3D</a> <a class="code" href="classVector3D.html#aa7668bb9a784940dcc9252aa7ebe8b62">operator+</a>(<a class="code" href="classVector3D.html">Vector3D</a> rhsVector);</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;        <a class="code" href="classVector3D.html">Vector3D</a> <a class="code" href="classVector3D.html#a22668e242a3eb010d2055ce70d3ed054">operator-</a>(<a class="code" href="classVector3D.html">Vector3D</a> rhsVector);</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;        </div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;        <span class="keyword">friend</span> <span class="keywordtype">bool</span> <a class="code" href="classVector3D.html#ac522c21bf1be991d6fc22312f7ce5fb1">operator==</a>(<span class="keyword">const</span> <a class="code" href="classVector3D.html">Vector3D</a>&amp; lhsVector, <span class="keyword">const</span> <a class="code" href="classVector3D.html">Vector3D</a>&amp; rhsVector);</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;        </div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;        <span class="keywordtype">double</span> <a class="code" href="classVector3D.html#a60cbc3615e83adf0871f102ef3c123bc">dot</a>(<a class="code" href="classVector3D.html">Vector3D</a> rhsVector);</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;        <a class="code" href="classVector3D.html">Vector3D</a> <a class="code" href="classVector3D.html#a80a738917811cf38870764f34241dac6">cross</a>(<a class="code" href="classVector3D.html">Vector3D</a> rhsVector);</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;        <a class="code" href="classVector3D.html">Vector3D</a> <a class="code" href="classVector3D.html#a07cb34672e196c774c628d408ea3ac1f">operator*</a>(<span class="keywordtype">double</span> scalar);</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;        <span class="keyword">friend</span> <a class="code" href="classVector3D.html">Vector3D</a> <a class="code" href="classVector3D.html#a07cb34672e196c774c628d408ea3ac1f">operator*</a>(<span class="keywordtype">double</span> scalar, <a class="code" href="classVector3D.html">Vector3D</a> v);</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;        <span class="keyword">friend</span> std::ostream&amp; <a class="code" href="classVector3D.html#a45b8872c1a1f9cd64e0966bf8f33523b">operator&lt;&lt;</a>(std::ostream&amp; os, <a class="code" href="classVector3D.html">Vector3D</a> &amp;v); <span class="comment">// cout</span></div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;        <span class="comment">// Misc functions</span></div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;</div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;        <span class="keywordtype">double</span> <a class="code" href="classVector3D.html#a77e2e594279e45f3fc2712d1d0b1e10b">distance</a>(<a class="code" href="classVector3D.html">Vector3D</a> &amp;v2);</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;</div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;        <a class="code" href="classVector3D.html">Vector3D</a> <a class="code" href="classVector3D.html#af0b9ec109fc76cb3a68a910c45860d1b">midpoint</a>(<a class="code" href="classVector3D.html">Vector3D</a> &amp;v2);</div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;};</div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;</div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* VECTOR_H */</span><span class="preprocessor"></span></div>
+<div class="ttc" id="classVector3D_html_a80a738917811cf38870764f34241dac6"><div class="ttname"><a href="classVector3D.html#a80a738917811cf38870764f34241dac6">Vector3D::cross</a></div><div class="ttdeci">Vector3D cross(Vector3D rhsVector)</div></div>
+<div class="ttc" id="classVector3D_html_a32b5b166189ccb48ee1e7a4cbea1719e"><div class="ttname"><a href="classVector3D.html#a32b5b166189ccb48ee1e7a4cbea1719e">Vector3D::setX</a></div><div class="ttdeci">void setX(double x)</div></div>
 <div class="ttc" id="classMatrix3x3_html"><div class="ttname"><a href="classMatrix3x3.html">Matrix3x3</a></div><div class="ttdef"><b>Definition:</b> matrix.h:17</div></div>
+<div class="ttc" id="classVector3D_html_a7321f3ff785f275c4d83f7d1b951752a"><div class="ttname"><a href="classVector3D.html#a7321f3ff785f275c4d83f7d1b951752a">Vector3D::z</a></div><div class="ttdeci">double z</div><div class="ttdef"><b>Definition:</b> vector3d.h:36</div></div>
+<div class="ttc" id="classVector3D_html_aa7668bb9a784940dcc9252aa7ebe8b62"><div class="ttname"><a href="classVector3D.html#aa7668bb9a784940dcc9252aa7ebe8b62">Vector3D::operator+</a></div><div class="ttdeci">Vector3D operator+(Vector3D rhsVector)</div></div>
+<div class="ttc" id="classVector3D_html_a60cbc3615e83adf0871f102ef3c123bc"><div class="ttname"><a href="classVector3D.html#a60cbc3615e83adf0871f102ef3c123bc">Vector3D::dot</a></div><div class="ttdeci">double dot(Vector3D rhsVector)</div></div>
+<div class="ttc" id="classVector3D_html_a45b8872c1a1f9cd64e0966bf8f33523b"><div class="ttname"><a href="classVector3D.html#a45b8872c1a1f9cd64e0966bf8f33523b">Vector3D::operator&lt;&lt;</a></div><div class="ttdeci">friend std::ostream &amp; operator&lt;&lt;(std::ostream &amp;os, Vector3D &amp;v)</div></div>
+<div class="ttc" id="classVector3D_html_af0b9ec109fc76cb3a68a910c45860d1b"><div class="ttname"><a href="classVector3D.html#af0b9ec109fc76cb3a68a910c45860d1b">Vector3D::midpoint</a></div><div class="ttdeci">Vector3D midpoint(Vector3D &amp;v2)</div></div>
+<div class="ttc" id="classVector3D_html_a07cb34672e196c774c628d408ea3ac1f"><div class="ttname"><a href="classVector3D.html#a07cb34672e196c774c628d408ea3ac1f">Vector3D::operator*</a></div><div class="ttdeci">Vector3D operator*(double scalar)</div></div>
+<div class="ttc" id="classVector3D_html_aa3ffff17b886274a58417dfe4bb4c4a2"><div class="ttname"><a href="classVector3D.html#aa3ffff17b886274a58417dfe4bb4c4a2">Vector3D::getY</a></div><div class="ttdeci">double getY()</div></div>
+<div class="ttc" id="classVector3D_html_ab0dcbf253ff78856eccb5ea74d080fc7"><div class="ttname"><a href="classVector3D.html#ab0dcbf253ff78856eccb5ea74d080fc7">Vector3D::getZ</a></div><div class="ttdeci">double getZ()</div></div>
 <div class="ttc" id="classVector3D_html"><div class="ttname"><a href="classVector3D.html">Vector3D</a></div><div class="ttdef"><b>Definition:</b> vector3d.h:17</div></div>
+<div class="ttc" id="classVector3D_html_afc123137fab8bc02c4cdc12af684fdc9"><div class="ttname"><a href="classVector3D.html#afc123137fab8bc02c4cdc12af684fdc9">Vector3D::setZ</a></div><div class="ttdeci">void setZ(double z)</div></div>
+<div class="ttc" id="classVector3D_html_adcec384756103d26d1181e45d5a0fd78"><div class="ttname"><a href="classVector3D.html#adcec384756103d26d1181e45d5a0fd78">Vector3D::y</a></div><div class="ttdeci">double y</div><div class="ttdef"><b>Definition:</b> vector3d.h:31</div></div>
+<div class="ttc" id="classVector3D_html_aa9eaf29045bf32b95c5c7bcb2b8b68d7"><div class="ttname"><a href="classVector3D.html#aa9eaf29045bf32b95c5c7bcb2b8b68d7">Vector3D::getX</a></div><div class="ttdeci">double getX()</div></div>
+<div class="ttc" id="classVector3D_html_a7a1ec37357274ad482062b1b35928bbf"><div class="ttname"><a href="classVector3D.html#a7a1ec37357274ad482062b1b35928bbf">Vector3D::setY</a></div><div class="ttdeci">void setY(double y)</div></div>
+<div class="ttc" id="classVector3D_html_ac522c21bf1be991d6fc22312f7ce5fb1"><div class="ttname"><a href="classVector3D.html#ac522c21bf1be991d6fc22312f7ce5fb1">Vector3D::operator==</a></div><div class="ttdeci">friend bool operator==(const Vector3D &amp;lhsVector, const Vector3D &amp;rhsVector)</div></div>
+<div class="ttc" id="classVector3D_html_a22668e242a3eb010d2055ce70d3ed054"><div class="ttname"><a href="classVector3D.html#a22668e242a3eb010d2055ce70d3ed054">Vector3D::operator-</a></div><div class="ttdeci">Vector3D operator-(Vector3D rhsVector)</div></div>
+<div class="ttc" id="classVector3D_html_a77e2e594279e45f3fc2712d1d0b1e10b"><div class="ttname"><a href="classVector3D.html#a77e2e594279e45f3fc2712d1d0b1e10b">Vector3D::distance</a></div><div class="ttdeci">double distance(Vector3D &amp;v2)</div></div>
+<div class="ttc" id="classVector3D_html_a3c086dfccfc57dd996e9b8600098a430"><div class="ttname"><a href="classVector3D.html#a3c086dfccfc57dd996e9b8600098a430">Vector3D::x</a></div><div class="ttdeci">double x</div><div class="ttdef"><b>Definition:</b> vector3d.h:26</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

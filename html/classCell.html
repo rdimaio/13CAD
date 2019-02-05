@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.6"/>
-<title>My Project: Cell Class Reference</title>
+<title>3D Simulation Software: Cell Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -22,8 +22,9 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">My Project
+   <div id="projectname">3D Simulation Software
    </div>
+   <div id="projectbrief">CAD-like software based on C++, Qt and VTK.</div>
   </td>
  </tr>
  </tbody>
@@ -70,7 +71,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Friends</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -105,25 +106,20 @@ Inheritance diagram for Cell:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a4ca5d1d8ea0a578ff520d2eea389d217"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4ca5d1d8ea0a578ff520d2eea389d217"></a>
-virtual double&#160;</td><td class="memItemRight" valign="bottom"><b>getVolume</b> ()</td></tr>
+<tr class="memitem:a4ca5d1d8ea0a578ff520d2eea389d217"><td class="memItemLeft" align="right" valign="top">virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCell.html#a4ca5d1d8ea0a578ff520d2eea389d217">getVolume</a> ()</td></tr>
 <tr class="separator:a4ca5d1d8ea0a578ff520d2eea389d217"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afddd8cc5cabef0dd943b4fa21019c95e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afddd8cc5cabef0dd943b4fa21019c95e"></a>
-double&#160;</td><td class="memItemRight" valign="bottom"><b>getMass</b> ()</td></tr>
+<tr class="memitem:afddd8cc5cabef0dd943b4fa21019c95e"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCell.html#afddd8cc5cabef0dd943b4fa21019c95e">getMass</a> ()</td></tr>
 <tr class="separator:afddd8cc5cabef0dd943b4fa21019c95e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac1bdb6bdfd9fee9c6f65c9a115e7d850"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac1bdb6bdfd9fee9c6f65c9a115e7d850"></a>
-std::vector&lt; <a class="el" href="classVector3D.html">Vector3D</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>getVertices</b> ()</td></tr>
+<tr class="memitem:ac1bdb6bdfd9fee9c6f65c9a115e7d850"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="classVector3D.html">Vector3D</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCell.html#ac1bdb6bdfd9fee9c6f65c9a115e7d850">getVertices</a> ()</td></tr>
 <tr class="separator:ac1bdb6bdfd9fee9c6f65c9a115e7d850"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5c465eeceb71663c09d5760a8084586f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classVector3D.html">Vector3D</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCell.html#a5c465eeceb71663c09d5760a8084586f">getCentre</a> ()</td></tr>
 <tr class="separator:a5c465eeceb71663c09d5760a8084586f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
-<tr class="memitem:a71cac84693be6a01a97e097e7433271d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a71cac84693be6a01a97e097e7433271d"></a>
-std::vector&lt; <a class="el" href="classVector3D.html">Vector3D</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>vertices</b></td></tr>
+<tr class="memitem:a71cac84693be6a01a97e097e7433271d"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="classVector3D.html">Vector3D</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCell.html#a71cac84693be6a01a97e097e7433271d">vertices</a></td></tr>
 <tr class="separator:a71cac84693be6a01a97e097e7433271d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:affa982d31e4c42fe7bb58b9ac81d443f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="affa982d31e4c42fe7bb58b9ac81d443f"></a>
-<a class="el" href="classMaterial.html">Material</a>&#160;</td><td class="memItemRight" valign="bottom"><b>material</b></td></tr>
+<tr class="memitem:affa982d31e4c42fe7bb58b9ac81d443f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classMaterial.html">Material</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCell.html#affa982d31e4c42fe7bb58b9ac81d443f">material</a></td></tr>
 <tr class="separator:affa982d31e4c42fe7bb58b9ac81d443f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -142,6 +138,107 @@ std::vector&lt; <a class="el" href="classVector3D.html">Vector3D</a> &gt;&#160;<
       </table>
 </div><div class="memdoc">
 <p>Get the centre of gravity of the cell based on the vertices </p>
+
+</div>
+</div>
+<a class="anchor" id="afddd8cc5cabef0dd943b4fa21019c95e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double Cell::getMass </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Get mass of the cell </p>
+
+</div>
+</div>
+<a class="anchor" id="ac1bdb6bdfd9fee9c6f65c9a115e7d850"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;<a class="el" href="classVector3D.html">Vector3D</a>&gt; Cell::getVertices </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Get vertices of the cell as a std::vector&lt;Vector3D&gt; </p>
+
+</div>
+</div>
+<a class="anchor" id="a4ca5d1d8ea0a578ff520d2eea389d217"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual double Cell::getVolume </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Get volume of the cell </p>
+
+<p>Reimplemented in <a class="el" href="classTetrahedron.html#a23de8eb8f8a7d6dc847779d23de59d72">Tetrahedron</a>, <a class="el" href="classHexahedron.html#ac4a20b74fb9189c76c3b300f3e4facd8">Hexahedron</a>, and <a class="el" href="classPyramid.html#aceaa825551fabfe9526c9aeef237ec6e">Pyramid</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a class="anchor" id="affa982d31e4c42fe7bb58b9ac81d443f"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classMaterial.html">Material</a> Cell::material</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p><a class="el" href="classMaterial.html">Material</a> that the cell is made of </p>
+
+</div>
+</div>
+<a class="anchor" id="a71cac84693be6a01a97e097e7433271d"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;<a class="el" href="classVector3D.html">Vector3D</a>&gt; Cell::vertices</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Vertices that define the cell </p>
 
 </div>
 </div>

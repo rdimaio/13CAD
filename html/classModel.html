@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.6"/>
-<title>My Project: Model Class Reference</title>
+<title>3D Simulation Software: Model Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -22,8 +22,9 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">My Project
+   <div id="projectname">3D Simulation Software
    </div>
+   <div id="projectbrief">CAD-like software based on C++, Qt and VTK.</div>
   </td>
  </tr>
  </tbody>
@@ -70,7 +71,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Friends</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -96,41 +97,65 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a73b800dd9e7f64a4ddbfd380b19f97e0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a73b800dd9e7f64a4ddbfd380b19f97e0"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>Model</b> (std::string filename)</td></tr>
 <tr class="separator:a73b800dd9e7f64a4ddbfd380b19f97e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad889226e160aad623a2e490ad4a65d58"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad889226e160aad623a2e490ad4a65d58"></a>
-std::string&#160;</td><td class="memItemRight" valign="bottom"><b>getFilename</b> ()</td></tr>
+<tr class="memitem:ad889226e160aad623a2e490ad4a65d58"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classModel.html#ad889226e160aad623a2e490ad4a65d58">getFilename</a> ()</td></tr>
 <tr class="separator:ad889226e160aad623a2e490ad4a65d58"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7fb041f8ba06b70fb670c2c86b696a08"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7fb041f8ba06b70fb670c2c86b696a08"></a>
-std::vector&lt; <a class="el" href="classMaterial.html">Material</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>getMaterials</b> ()</td></tr>
+<tr class="memitem:a7fb041f8ba06b70fb670c2c86b696a08"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="classMaterial.html">Material</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classModel.html#a7fb041f8ba06b70fb670c2c86b696a08">getMaterials</a> ()</td></tr>
 <tr class="separator:a7fb041f8ba06b70fb670c2c86b696a08"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abc40c3e8ffbbfb4281321f869178f5c8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abc40c3e8ffbbfb4281321f869178f5c8"></a>
-std::vector&lt; <a class="el" href="classVector3D.html">Vector3D</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>getVertices</b> ()</td></tr>
+<tr class="memitem:abc40c3e8ffbbfb4281321f869178f5c8"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="classVector3D.html">Vector3D</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classModel.html#abc40c3e8ffbbfb4281321f869178f5c8">getVertices</a> ()</td></tr>
 <tr class="separator:abc40c3e8ffbbfb4281321f869178f5c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a475b5b3af9cf7bfff12d9fe15565397c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a475b5b3af9cf7bfff12d9fe15565397c"></a>
-std::vector&lt; <a class="el" href="classCell.html">Cell</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>getCells</b> ()</td></tr>
+<tr class="memitem:a475b5b3af9cf7bfff12d9fe15565397c"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="classCell.html">Cell</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classModel.html#a475b5b3af9cf7bfff12d9fe15565397c">getCells</a> ()</td></tr>
 <tr class="separator:a475b5b3af9cf7bfff12d9fe15565397c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a007ada8785b274d14d8ff91dd66aeab5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a007ada8785b274d14d8ff91dd66aeab5"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>getMaterialCount</b> ()</td></tr>
+<tr class="memitem:a007ada8785b274d14d8ff91dd66aeab5"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classModel.html#a007ada8785b274d14d8ff91dd66aeab5">getMaterialCount</a> ()</td></tr>
 <tr class="separator:a007ada8785b274d14d8ff91dd66aeab5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a340e965b5e3e3e724de1158b8bdb910b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a340e965b5e3e3e724de1158b8bdb910b"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>getVertexCount</b> ()</td></tr>
+<tr class="memitem:a340e965b5e3e3e724de1158b8bdb910b"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classModel.html#a340e965b5e3e3e724de1158b8bdb910b">getVertexCount</a> ()</td></tr>
 <tr class="separator:a340e965b5e3e3e724de1158b8bdb910b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abbf72e8d4738ae62bdf70f9096a47f2a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abbf72e8d4738ae62bdf70f9096a47f2a"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>getCellCount</b> ()</td></tr>
+<tr class="memitem:abbf72e8d4738ae62bdf70f9096a47f2a"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classModel.html#abbf72e8d4738ae62bdf70f9096a47f2a">getCellCount</a> ()</td></tr>
 <tr class="separator:abbf72e8d4738ae62bdf70f9096a47f2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9d356a536c25ccb26c4f29faf4a28cc5"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classModel.html#a9d356a536c25ccb26c4f29faf4a28cc5">getCellList</a> ()</td></tr>
 <tr class="separator:a9d356a536c25ccb26c4f29faf4a28cc5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4d8fe19177b80e671317f8cd0dd2d274"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classVector3D.html">Vector3D</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classModel.html#a4d8fe19177b80e671317f8cd0dd2d274">getCentre</a> ()</td></tr>
 <tr class="separator:a4d8fe19177b80e671317f8cd0dd2d274"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aeacc24eab0c8749b43d0a7bb7cbf6d47"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aeacc24eab0c8749b43d0a7bb7cbf6d47"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>copyToFile</b> (std::string filename)</td></tr>
+<tr class="memitem:aeacc24eab0c8749b43d0a7bb7cbf6d47"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classModel.html#aeacc24eab0c8749b43d0a7bb7cbf6d47">copyToFile</a> (std::string filename)</td></tr>
 <tr class="separator:aeacc24eab0c8749b43d0a7bb7cbf6d47"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8d959d80bb3ff0d8efe2b86a5b6fb3b4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8d959d80bb3ff0d8efe2b86a5b6fb3b4"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>saveToFile</b> (std::string filename)</td></tr>
+<tr class="memitem:a8d959d80bb3ff0d8efe2b86a5b6fb3b4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classModel.html#a8d959d80bb3ff0d8efe2b86a5b6fb3b4">saveToFile</a> (std::string filename)</td></tr>
 <tr class="separator:a8d959d80bb3ff0d8efe2b86a5b6fb3b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p><a class="el" href="classModel.html">Model</a> that loads vectors and cells from files. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="aeacc24eab0c8749b43d0a7bb7cbf6d47"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Model::copyToFile </td>
+          <td>(</td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>filename</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Copy current model to another file (just copies the contents of the input file) </p>
+
+</div>
+</div>
+<a class="anchor" id="abbf72e8d4738ae62bdf70f9096a47f2a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int Model::getCellCount </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Get total number of cells </p>
+
+</div>
+</div>
 <a class="anchor" id="a9d356a536c25ccb26c4f29faf4a28cc5"></a>
 <div class="memitem">
 <div class="memproto">
@@ -147,6 +172,22 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>saveToFile</b> (std::
 
 </div>
 </div>
+<a class="anchor" id="a475b5b3af9cf7bfff12d9fe15565397c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;<a class="el" href="classCell.html">Cell</a>&gt; Model::getCells </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Get list of cells as a std::vector </p>
+
+</div>
+</div>
 <a class="anchor" id="a4d8fe19177b80e671317f8cd0dd2d274"></a>
 <div class="memitem">
 <div class="memproto">
@@ -160,6 +201,103 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>saveToFile</b> (std::
       </table>
 </div><div class="memdoc">
 <p>Get the centre of the model based on the vertices </p>
+
+</div>
+</div>
+<a class="anchor" id="ad889226e160aad623a2e490ad4a65d58"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string Model::getFilename </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Get model's filename </p>
+
+</div>
+</div>
+<a class="anchor" id="a007ada8785b274d14d8ff91dd66aeab5"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int Model::getMaterialCount </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Get total number of materials </p>
+
+</div>
+</div>
+<a class="anchor" id="a7fb041f8ba06b70fb670c2c86b696a08"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;<a class="el" href="classMaterial.html">Material</a>&gt; Model::getMaterials </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Get list of materials as a std::vector </p>
+
+</div>
+</div>
+<a class="anchor" id="a340e965b5e3e3e724de1158b8bdb910b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int Model::getVertexCount </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Get total number of vertices </p>
+
+</div>
+</div>
+<a class="anchor" id="abc40c3e8ffbbfb4281321f869178f5c8"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;<a class="el" href="classVector3D.html">Vector3D</a>&gt; Model::getVertices </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Get list of vertices as a std::vector </p>
+
+</div>
+</div>
+<a class="anchor" id="a8d959d80bb3ff0d8efe2b86a5b6fb3b4"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Model::saveToFile </td>
+          <td>(</td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>filename</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Save current model to file </p>
 
 </div>
 </div>

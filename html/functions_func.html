@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.6"/>
-<title>My Project: Class Members - Functions</title>
+<title>3D Simulation Software: Class Members - Functions</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -22,8 +22,9 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">My Project
+   <div id="projectname">3D Simulation Software
    </div>
+   <div id="projectbrief">CAD-like software based on C++, Qt and VTK.</div>
   </td>
  </tr>
  </tbody>
@@ -69,6 +70,18 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     <ul class="tablist">
       <li><a href="functions.html"><span>All</span></a></li>
       <li class="current"><a href="functions_func.html"><span>Functions</span></a></li>
+      <li><a href="functions_vars.html"><span>Variables</span></a></li>
+      <li><a href="functions_rela.html"><span>Related&#160;Functions</span></a></li>
+    </ul>
+  </div>
+  <div id="navrow4" class="tabs3">
+    <ul class="tablist">
+      <li><a href="#index_c"><span>c</span></a></li>
+      <li><a href="#index_d"><span>d</span></a></li>
+      <li><a href="#index_g"><span>g</span></a></li>
+      <li><a href="#index_m"><span>m</span></a></li>
+      <li><a href="#index_o"><span>o</span></a></li>
+      <li class="current"><a href="#index_s"><span>s</span></a></li>
     </ul>
   </div>
 </div><!-- top -->
@@ -77,7 +90,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Friends</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -87,13 +100,138 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div>
 
 <div class="contents">
-&#160;<ul>
+&#160;
+
+<h3><a class="anchor" id="index_c"></a>- c -</h3><ul>
+<li>copyToFile()
+: <a class="el" href="classModel.html#aeacc24eab0c8749b43d0a7bb7cbf6d47">Model</a>
+</li>
+<li>cross()
+: <a class="el" href="classVector3D.html#a80a738917811cf38870764f34241dac6">Vector3D</a>
+</li>
+</ul>
+
+
+<h3><a class="anchor" id="index_d"></a>- d -</h3><ul>
+<li>distance()
+: <a class="el" href="classVector3D.html#a77e2e594279e45f3fc2712d1d0b1e10b">Vector3D</a>
+</li>
+<li>dot()
+: <a class="el" href="classVector3D.html#a60cbc3615e83adf0871f102ef3c123bc">Vector3D</a>
+</li>
+</ul>
+
+
+<h3><a class="anchor" id="index_g"></a>- g -</h3><ul>
+<li>getCellCount()
+: <a class="el" href="classModel.html#abbf72e8d4738ae62bdf70f9096a47f2a">Model</a>
+</li>
 <li>getCellList()
 : <a class="el" href="classModel.html#a9d356a536c25ccb26c4f29faf4a28cc5">Model</a>
+</li>
+<li>getCells()
+: <a class="el" href="classModel.html#a475b5b3af9cf7bfff12d9fe15565397c">Model</a>
 </li>
 <li>getCentre()
 : <a class="el" href="classCell.html#a5c465eeceb71663c09d5760a8084586f">Cell</a>
 , <a class="el" href="classModel.html#a4d8fe19177b80e671317f8cd0dd2d274">Model</a>
+</li>
+<li>getColour()
+: <a class="el" href="classMaterial.html#a03bf341e13914c16d7a4c6158a1550bc">Material</a>
+</li>
+<li>getDensity()
+: <a class="el" href="classMaterial.html#a3601b084de60ca17f7deda89567a2a7f">Material</a>
+</li>
+<li>getFilename()
+: <a class="el" href="classModel.html#ad889226e160aad623a2e490ad4a65d58">Model</a>
+</li>
+<li>getId()
+: <a class="el" href="classMaterial.html#aeb2e7dc58e15549cb66dcf4348c5d3af">Material</a>
+</li>
+<li>getMass()
+: <a class="el" href="classCell.html#afddd8cc5cabef0dd943b4fa21019c95e">Cell</a>
+</li>
+<li>getMaterialCount()
+: <a class="el" href="classModel.html#a007ada8785b274d14d8ff91dd66aeab5">Model</a>
+</li>
+<li>getMaterials()
+: <a class="el" href="classModel.html#a7fb041f8ba06b70fb670c2c86b696a08">Model</a>
+</li>
+<li>getName()
+: <a class="el" href="classMaterial.html#a6dd6278a55af611612d999c7d3ab63f3">Material</a>
+</li>
+<li>getVertexCount()
+: <a class="el" href="classModel.html#a340e965b5e3e3e724de1158b8bdb910b">Model</a>
+</li>
+<li>getVertices()
+: <a class="el" href="classCell.html#ac1bdb6bdfd9fee9c6f65c9a115e7d850">Cell</a>
+, <a class="el" href="classModel.html#abc40c3e8ffbbfb4281321f869178f5c8">Model</a>
+</li>
+<li>getVolume()
+: <a class="el" href="classCell.html#a4ca5d1d8ea0a578ff520d2eea389d217">Cell</a>
+, <a class="el" href="classHexahedron.html#ac4a20b74fb9189c76c3b300f3e4facd8">Hexahedron</a>
+, <a class="el" href="classPyramid.html#aceaa825551fabfe9526c9aeef237ec6e">Pyramid</a>
+, <a class="el" href="classTetrahedron.html#a23de8eb8f8a7d6dc847779d23de59d72">Tetrahedron</a>
+</li>
+<li>getX()
+: <a class="el" href="classVector3D.html#aa9eaf29045bf32b95c5c7bcb2b8b68d7">Vector3D</a>
+</li>
+<li>getY()
+: <a class="el" href="classVector3D.html#aa3ffff17b886274a58417dfe4bb4c4a2">Vector3D</a>
+</li>
+<li>getZ()
+: <a class="el" href="classVector3D.html#ab0dcbf253ff78856eccb5ea74d080fc7">Vector3D</a>
+</li>
+</ul>
+
+
+<h3><a class="anchor" id="index_m"></a>- m -</h3><ul>
+<li>midpoint()
+: <a class="el" href="classVector3D.html#af0b9ec109fc76cb3a68a910c45860d1b">Vector3D</a>
+</li>
+</ul>
+
+
+<h3><a class="anchor" id="index_o"></a>- o -</h3><ul>
+<li>operator*()
+: <a class="el" href="classVector3D.html#a07cb34672e196c774c628d408ea3ac1f">Vector3D</a>
+</li>
+<li>operator+()
+: <a class="el" href="classVector3D.html#aa7668bb9a784940dcc9252aa7ebe8b62">Vector3D</a>
+</li>
+<li>operator-()
+: <a class="el" href="classVector3D.html#a22668e242a3eb010d2055ce70d3ed054">Vector3D</a>
+</li>
+</ul>
+
+
+<h3><a class="anchor" id="index_s"></a>- s -</h3><ul>
+<li>saveToFile()
+: <a class="el" href="classModel.html#a8d959d80bb3ff0d8efe2b86a5b6fb3b4">Model</a>
+</li>
+<li>setColour()
+: <a class="el" href="classMaterial.html#a952a9a4cd7dc59b8ae60c785e7eddab6">Material</a>
+</li>
+<li>setDensity()
+: <a class="el" href="classMaterial.html#af69052530ff348e10bb73fe6790d7b9a">Material</a>
+</li>
+<li>setDiagonal()
+: <a class="el" href="classMatrix3x3.html#a0b9f2f7137c232f6246a4cc474138e45">Matrix3x3</a>
+</li>
+<li>setId()
+: <a class="el" href="classMaterial.html#afba388b17b8669ad0b3503c1d8e059a7">Material</a>
+</li>
+<li>setName()
+: <a class="el" href="classMaterial.html#a8d3228e94c92ffffc1c5a9504ee5fd90">Material</a>
+</li>
+<li>setX()
+: <a class="el" href="classVector3D.html#a32b5b166189ccb48ee1e7a4cbea1719e">Vector3D</a>
+</li>
+<li>setY()
+: <a class="el" href="classVector3D.html#a7a1ec37357274ad482062b1b35928bbf">Vector3D</a>
+</li>
+<li>setZ()
+: <a class="el" href="classVector3D.html#afc123137fab8bc02c4cdc12af684fdc9">Vector3D</a>
 </li>
 </ul>
 </div><!-- contents -->
