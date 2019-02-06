@@ -1,5 +1,5 @@
 /**
- * @file model.cpp
+ * @file model.h
  * @brief Header file for the Model class
  * @author Daniel Msimuko
  * @version 1.0 08/12/18

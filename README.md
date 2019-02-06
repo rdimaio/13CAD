@@ -13,7 +13,7 @@ I should change the way cell behaves, because right now it's holding the entire 
 but maybe it doesn't need it.
 - Add IDs to all classes; right now, saving is not really feasible.
 Might need to change the way vector ID is saved in saveToFile in model.
-- Implement Doxygen
+- Implement the things at the end of worksheet 6
 - Maybe change vectors so that they hold their IDs too (might be important for cells,
 as right now in model.cpp the vertices' coordinates are assigned and the vertices IDs
 are lost when not looking at it from the model's perspective.
@@ -109,6 +109,8 @@ of the library (the alternative would be having to navigate
 through dozens of source files and reading comments).
 We are going to use **Doxygen** to automate our documentation.
 
+The documentation for our project can be found [here](https://rdimaio.github.io/ModelLoader/html/).
+
 ## Doxygen
 [Doxygen](http://www.doxygen.org/) is a tool that generates documentation from
 the comments in source code. There are several ways to mark a comment so that
@@ -162,4 +164,6 @@ in case the latest commit breaks the tests in any way.
 ## Useful links
 
 - [An excellent and very brief git guide](http://rogerdudler.github.io/git-guide/)
-- [A working example of Qt and VTK working together. It's very useful to check if VTK and Qt work.](https://vtk.org/Wiki/VTK/Examples/Cxx/Qt/SideBySideRenderWindowsQt)
+- [A working example of Qt and VTK working together.](https://vtk.org/Wiki/VTK/Examples/Cxx/Qt/SideBySideRenderWindowsQt)
+It's very useful to check if everything is installed correctly; just follow
+the instructions at the end of the page to build and run it.
