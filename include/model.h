@@ -1,50 +1,134 @@
-#pragma once
+/**
+ * @file model.h
+ * @brief Header file for the Model class
+ * @author Daniel Msimuko
+ * @version 1.0 08/12/18
+ */
 
-#include <map>
+#ifndef MODEL_H
+#define MODEL_H
 
-#include "vector.h"
+#include <string>
+
+#include "vector3d.h"
 #include "cell.h"
-#include "Result.h"
+#include "material.h"
 
+/**
+ * Model that loads vectors and cells from files.
+ */
+class Model {
+    private:
+        /**
+         * Name of file to load
+         */
+        std::string filename;
+    
+        /**
+         * std::vector of vertices loaded from file
+         */
+        std::vector<Vector3D> vertices;
 
-class Model
-{
-private:
-    std::string fileName;
-    std::map<int, Vector3D> vertices;
-    std::map<int, Material> materials;
-    std::map<int, Cell> cells;
+        /**
+         * std::vector of materials loaded from file
+         */
+        std::vector<Material> materials;
+        
+        /**
+         * std::vector of cells loaded from file
+         */
+        std::vector<Cell> cells;
+    
+        // Parsing functions
 
-    bool parseVertex(std::string line, std::string& error);
+        /**
+         * Parse vertex string
+         */
+        void parseVertex(std::string line);
 
-    bool parseMaterial(std::string line, std::string& error);
+        /**
+         * Parse material string
+         */
+        void parseMaterial(std::string line);
+        
+        /**
+         * Parse cell string
+         */
+        void parseCell(std::string line);
 
-    bool parseCell(std::string line, std::string& error);
+        // Misc functions
+        /**
+         * Split string into space-separated words
+         */
+        std::vector<std::string> splitString(std::string line);
+    
+    public:
+        Model() = default;
+        ~Model() = default;
+        // Loads model from file
+        Model(std::string filename);
 
-public:
-    Model() = default;
-    ~Model() = default;
+        // Accessors
 
-    explicit Model(std::string fileName);
+        /**
+         * Get model's filename
+         */
+        std::string getFilename();
 
-    Result<Model> load();
+        /**
+         * Get list of materials as a std::vector
+         */
+        std::vector<Material> getMaterials();
 
-    uint64_t numVertices();
+        /**
+         * Get list of vertices as a std::vector
+         */
+        std::vector<Vector3D> getVertices();
 
-    uint64_t numCells();
+        /**
+         * Get list of cells as a std::vector
+         */
+        std::vector<Cell> getCells();
 
-    uint64_t numMaterials();
+        /**
+         * Get total number of materials
+         */
+        int getMaterialCount();
 
-    void describeCells();
+        /**
+         * Get total number of vertices
+         */
+        int getVertexCount();
 
-    void describeVertices();
+        /**
+         * Get total number of cells
+         */
+        int getCellCount();
 
-    void describeMaterials();
+        /**
+         * Return a string with the total number of cells
+         * and, for each cell, its ID and type
+         */
+        std::string getCellList();
 
-    std::vector<int> cellIDs();
+        /**
+         * Get the centre of the model based on the vertices
+         */
+        Vector3D getCentre();
 
-    bool cellExists(int id);
+        // Misc functions
 
-    Result<Cell> getCell(int id);
+        /**
+         * Copy current model to another file (just copies the contents of the input file)
+         */
+        void copyToFile(std::string filename);
 
+        /**
+         * Save current model to file
+         */
+        void saveToFile(std::string filename);
+
+    
 };
+
+#endif /* MODEL_H */
