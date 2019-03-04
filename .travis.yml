@@ -7,6 +7,18 @@ compiler:
   - gcc
   - clang
 
+branches:
+  except:
+    - gh-pages
+
+# Variables for Doxygen: where to find the source on and where to send
+# the generated documentation.
+env:
+  global:
+    - GH_REPO_NAME: ModelLoader
+    - DOXYFILE: $TRAVIS_BUILD_DIR/Doxyfile
+    - GH_REPO_REF: github.com/rdimaio/ModelLoader.git
+
 matrix:
   include:
     # works on Trusty
@@ -23,11 +35,19 @@ matrix:
 before_install:
     - eval "${MATRIX_EVAL}"
 
-branches:
-  except:
-    - gh-pages
+addons:
+  apt:
+    packages:
+      - doxygen
+      - graphviz
 
 script:
   - cmake -DTESTING=ON .
   - make 
   - ./Test_ModelLoader
+
+# If successful, generate and deploy docs
+after_success:
+  - cd $TRAVIS_BUILD_DIR
+  - chmod +x docs-gen-deploy.sh
+  - ./docs-gen-deploy.sh

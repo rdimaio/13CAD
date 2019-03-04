@@ -1,45 +1,65 @@
-#include "material.h"
+/**
+ * @file material.cpp
+ * @brief Source file for the Material class
+ * @author Tanchanok Srisung
+ * @version 1.0 15/11/18
+ */
 
-Material::Material(){ //class
-  //set member variables to nor state but the string is already equal nor state
-  this->ID=0.0;//initialize
-  this->Density=0.0;//initialize
+#include "material.h"
+#include <string>
+
+Material::Material(){ 
+
+    // Initialise variables
+    this->id=0;
+    this->density=0.0;
 }
 
-Material::Material( double aID, double Den, string Col, string aName){
-    this->ID = aID;
-    this->Density = Den;
-    this->Colour = Col;
-    this->Name = aName;
-  }
+Material::Material(int id, double density, std::string column, std::string name){
+    this->id = id;
+    this->density = density;
+    this->colour = column;
+    this->name = name;
+}
 
 Material::~Material(){}
 
-double Material::getID(){
-    return this->ID;
-  }
+int Material::getId(){
+    return this->id;
+}
+
 double Material::getDensity(){
-    return this->Density;
-  }
-string Material::getColour(){
-    return this->Colour;
-  }
-string Material::getName(){
-    return this->Name;
-  }
+    return this->density;
+}
 
-void Material::setID(double aID){
-    this->ID = aID;
-  }
+std::string Material::getColour(){
+    return this->colour;
+}
 
-void Material::setDensity(double Den){
-    this->Density = Den;
-  }
+std::string Material::getName(){
+    return this->name;
+}
 
-void Material::setColour(string Col){
-    this->Colour = Col;
-  }
+void Material::setId(int id){
+    this->id = id;
+}
 
-void Material::setName(string aName){
-    this->Name = aName;
-  }
+void Material::setDensity(double density){
+    this->density = density;
+}
+
+void Material::setColour(std::string colour){
+    this->colour = colour;
+}
+
+void Material::setName(std::string name){
+    this->name = name;
+}
+
+bool operator==(const Material& lhsMaterial, const Material& rhsMaterial) {
+        if (lhsMaterial.id == rhsMaterial.id && lhsMaterial.density == rhsMaterial.density && lhsMaterial.colour == rhsMaterial.colour && lhsMaterial.name == rhsMaterial.name) {
+        return true;
+    } else {
+        return false;
+    }
+}
