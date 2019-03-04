@@ -37,6 +37,9 @@
 ModelLoader
 Test_ModelLoader
 
+# GoogleTest
+googletest*
+
 ### CMake ###
 CMakeCache.txt
 CMakeFiles
@@ -47,5 +50,8 @@ cmake_install.cmake
 install_manifest.txt
 compile_commands.json
 CTestTestfile.cmake
+
+# IDEs
+.vscode
 
 # End of https://www.gitignore.io/api/c++

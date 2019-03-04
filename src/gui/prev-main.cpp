@@ -1,15 +1,9 @@
-#include <iostream>
-#include <string>
-#include <vector>
-#include "cell.h"
-#include "material.h"
-#include "matrix.h"
-#include "model.h"
-#include "vector3d.h"
+// main.cpp-------------------------------------------------------------------
 #include <QApplication>
 #include <QSurfaceFormat>
 #include <QVTKOpenGLWidget.h>
-#include "gui/mainwindow.h"
+
+#include "mainwindow.h"
 
 int main( int argc, char** argv )
 {
@@ -23,3 +17,4 @@ int main( int argc, char** argv )
 
   return a.exec();
 }
+// /main.cpp------------------------------------------------------------------
