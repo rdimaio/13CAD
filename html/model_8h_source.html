@@ -101,59 +101,65 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    <span class="keyword">private</span>:</div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;        std::string filename;</div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    </div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;        std::vector&lt;Vector3D&gt; vertices;</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;        <span class="keywordtype">bool</span> isSTL;</div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;        std::vector&lt;Material&gt; materials;</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;        </div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;        std::vector&lt;Cell&gt; cells;</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    </div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;        <span class="comment">// Parsing functions</span></div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;        <span class="keywordtype">void</span> parseVertex(std::string line);</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;        std::vector&lt;Vector3D&gt; vertices;</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;        std::vector&lt;Material&gt; materials;</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;        </div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;        std::vector&lt;Cell&gt; cells;</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    </div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;        <span class="comment">// Parsing functions</span></div>
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;        <span class="keywordtype">void</span> parseMaterial(std::string line);</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;        </div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;        <span class="keywordtype">void</span> parseCell(std::string line);</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        <span class="comment">// Misc functions</span></div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;<span class="comment"></span>        std::vector&lt;std::string&gt; splitString(std::string line);</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    </div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;        <a class="code" href="classModel.html">Model</a>() = <span class="keywordflow">default</span>;</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        ~<a class="code" href="classModel.html">Model</a>() = <span class="keywordflow">default</span>;</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;        <span class="comment">// Loads model from file</span></div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        <a class="code" href="classModel.html">Model</a>(std::string filename);</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;        <span class="comment">// Accessors</span></div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;        std::string <a class="code" href="classModel.html#ad889226e160aad623a2e490ad4a65d58">getFilename</a>();</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;        std::vector&lt;Material&gt; <a class="code" href="classModel.html#a7fb041f8ba06b70fb670c2c86b696a08">getMaterials</a>();</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;        <span class="keywordtype">void</span> parseVertex(std::string line);</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;        <span class="keywordtype">void</span> parseMaterial(std::string line);</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;        </div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        <span class="keywordtype">void</span> parseCell(std::string line);</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;        <span class="comment">// Misc functions</span></div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;<span class="comment"></span>        std::vector&lt;std::string&gt; splitString(std::string line);</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        </div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;        <span class="keywordtype">bool</span> isExtension(<span class="keyword">const</span> std::string &amp;str, <span class="keyword">const</span> std::string &amp;suffix);</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    </div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;        <a class="code" href="classModel.html">Model</a>() = <span class="keywordflow">default</span>;</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;        ~<a class="code" href="classModel.html">Model</a>() = <span class="keywordflow">default</span>;</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;        <span class="comment">// Loads model from file</span></div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;        <a class="code" href="classModel.html">Model</a>(std::string filename);</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;        <span class="comment">// Accessors</span></div>
 <div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;        std::vector&lt;Vector3D&gt; <a class="code" href="classModel.html#abc40c3e8ffbbfb4281321f869178f5c8">getVertices</a>();</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;        std::string <a class="code" href="classModel.html#ad889226e160aad623a2e490ad4a65d58">getFilename</a>();</div>
 <div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;        std::vector&lt;Cell&gt; <a class="code" href="classModel.html#a475b5b3af9cf7bfff12d9fe15565397c">getCells</a>();</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;        <span class="keywordtype">bool</span> <a class="code" href="classModel.html#a7fcb94402abc1f1916a485c38f7bdb53">getIsSTL</a>();</div>
 <div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;        <span class="keywordtype">int</span> <a class="code" href="classModel.html#a007ada8785b274d14d8ff91dd66aeab5">getMaterialCount</a>();</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;        std::vector&lt;Material&gt; <a class="code" href="classModel.html#a7fb041f8ba06b70fb670c2c86b696a08">getMaterials</a>();</div>
 <div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;        <span class="keywordtype">int</span> <a class="code" href="classModel.html#a340e965b5e3e3e724de1158b8bdb910b">getVertexCount</a>();</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;        std::vector&lt;Vector3D&gt; <a class="code" href="classModel.html#abc40c3e8ffbbfb4281321f869178f5c8">getVertices</a>();</div>
 <div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;        <span class="keywordtype">int</span> <a class="code" href="classModel.html#abbf72e8d4738ae62bdf70f9096a47f2a">getCellCount</a>();</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;        std::vector&lt;Cell&gt; <a class="code" href="classModel.html#a475b5b3af9cf7bfff12d9fe15565397c">getCells</a>();</div>
 <div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;</div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;        std::string <a class="code" href="classModel.html#a9d356a536c25ccb26c4f29faf4a28cc5">getCellList</a>();</div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;</div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;        <a class="code" href="classVector3D.html">Vector3D</a> <a class="code" href="classModel.html#a4d8fe19177b80e671317f8cd0dd2d274">getCentre</a>();</div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;</div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;        <span class="comment">// Misc functions</span></div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;</div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classModel.html#aeacc24eab0c8749b43d0a7bb7cbf6d47">copyToFile</a>(std::string filename);</div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;</div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classModel.html#a8d959d80bb3ff0d8efe2b86a5b6fb3b4">saveToFile</a>(std::string filename);</div>
-<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;</div>
-<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;    </div>
-<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;};</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;        <span class="keywordtype">int</span> <a class="code" href="classModel.html#a007ada8785b274d14d8ff91dd66aeab5">getMaterialCount</a>();</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;        <span class="keywordtype">int</span> <a class="code" href="classModel.html#a340e965b5e3e3e724de1158b8bdb910b">getVertexCount</a>();</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;        <span class="keywordtype">int</span> <a class="code" href="classModel.html#abbf72e8d4738ae62bdf70f9096a47f2a">getCellCount</a>();</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;</div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;        std::string <a class="code" href="classModel.html#a9d356a536c25ccb26c4f29faf4a28cc5">getCellList</a>();</div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;</div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;        <a class="code" href="classVector3D.html">Vector3D</a> <a class="code" href="classModel.html#a4d8fe19177b80e671317f8cd0dd2d274">getCentre</a>();</div>
 <div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;</div>
-<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* MODEL_H */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;        <span class="comment">// Misc functions</span></div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;</div>
+<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classModel.html#aeacc24eab0c8749b43d0a7bb7cbf6d47">copyToFile</a>(std::string filename);</div>
+<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;</div>
+<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classModel.html#a8d959d80bb3ff0d8efe2b86a5b6fb3b4">saveToFile</a>(std::string filename);</div>
+<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;</div>
+<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;    </div>
+<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;};</div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;</div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* MODEL_H */</span><span class="preprocessor"></span></div>
 <div class="ttc" id="classModel_html_a475b5b3af9cf7bfff12d9fe15565397c"><div class="ttname"><a href="classModel.html#a475b5b3af9cf7bfff12d9fe15565397c">Model::getCells</a></div><div class="ttdeci">std::vector&lt; Cell &gt; getCells()</div></div>
 <div class="ttc" id="classModel_html_a4d8fe19177b80e671317f8cd0dd2d274"><div class="ttname"><a href="classModel.html#a4d8fe19177b80e671317f8cd0dd2d274">Model::getCentre</a></div><div class="ttdeci">Vector3D getCentre()</div></div>
 <div class="ttc" id="material_8h_html"><div class="ttname"><a href="material_8h.html">material.h</a></div><div class="ttdoc">Header file for the Material class. </div></div>
@@ -167,6 +173,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="ttc" id="classModel_html_aeacc24eab0c8749b43d0a7bb7cbf6d47"><div class="ttname"><a href="classModel.html#aeacc24eab0c8749b43d0a7bb7cbf6d47">Model::copyToFile</a></div><div class="ttdeci">void copyToFile(std::string filename)</div></div>
 <div class="ttc" id="classModel_html"><div class="ttname"><a href="classModel.html">Model</a></div><div class="ttdef"><b>Definition:</b> model.h:20</div></div>
 <div class="ttc" id="classModel_html_a9d356a536c25ccb26c4f29faf4a28cc5"><div class="ttname"><a href="classModel.html#a9d356a536c25ccb26c4f29faf4a28cc5">Model::getCellList</a></div><div class="ttdeci">std::string getCellList()</div></div>
+<div class="ttc" id="classModel_html_a7fcb94402abc1f1916a485c38f7bdb53"><div class="ttname"><a href="classModel.html#a7fcb94402abc1f1916a485c38f7bdb53">Model::getIsSTL</a></div><div class="ttdeci">bool getIsSTL()</div></div>
 <div class="ttc" id="classModel_html_ad889226e160aad623a2e490ad4a65d58"><div class="ttname"><a href="classModel.html#ad889226e160aad623a2e490ad4a65d58">Model::getFilename</a></div><div class="ttdeci">std::string getFilename()</div></div>
 <div class="ttc" id="classModel_html_a8d959d80bb3ff0d8efe2b86a5b6fb3b4"><div class="ttname"><a href="classModel.html#a8d959d80bb3ff0d8efe2b86a5b6fb3b4">Model::saveToFile</a></div><div class="ttdeci">void saveToFile(std::string filename)</div></div>
 <div class="ttc" id="classModel_html_abbf72e8d4738ae62bdf70f9096a47f2a"><div class="ttname"><a href="classModel.html#abbf72e8d4738ae62bdf70f9096a47f2a">Model::getCellCount</a></div><div class="ttdeci">int getCellCount()</div></div>
