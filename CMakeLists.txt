@@ -87,7 +87,14 @@ else()
     qt5_add_resources( QRC_Srcs ${ICONS} )
 
     # Also link to VTK
-    find_package( VTK REQUIRED )
+    # find_package( VTK REQUIRED)
+    find_package(VTK REQUIRED)
+  if (NOT VTK_FOUND)
+    message("Skipping ReadSTL: ${VTK_NOT_FOUND_MESSAGE}")
+    return ()
+  endif()
+  message (STATUS "VTK_VERSION: ${VTK_VERSION}")
+
     include( ${VTK_USE_FILE} )
 
     # Append main.cpp
