@@ -1,6 +1,15 @@
 # ModelLoader/CMakeLists.txt
-cmake_minimum_required( VERSION 2.8 )
+cmake_minimum_required(VERSION 3.3 FATAL_ERROR)
 set(CMAKE_CXX_STANDARD 14)
+
+foreach(p
+    CMP0071 # 3.10: Let AUTOMOC and AUTOUIC process GENERATED files
+    )
+  if(POLICY ${p})
+    cmake_policy(SET ${p} NEW)
+  endif()
+endforeach()
+
 project(ModelLoader)
 set(TEST_PROJECT_NAME Test_ModelLoader)
 
@@ -8,13 +17,41 @@ include_directories( include/
     src/
 )
 
+# The CMake build process might generate some new files in the current
+# directory. This makes sure they can be found.
+set( CMAKE_INCLUDE_CURRENT_DIR ON )
+
+
+# This allows CMake to run one of Qt's build tools called moc
+# if it is needed. moc.exe can be found in Qt's bin directory.
+# We'll look at what moc does later.
+set( CMAKE_AUTOMOC ON )
+set( CMAKE_AUTOUIC ON )
+
+# Find the Qt widgets package. This locates the relevant include and
+# lib directories, and the necessary static libraries for linking.
+find_package( Qt5Widgets )
+
+set( UIS src/gui/mainwindow.ui )
+qt5_wrap_ui( UI_Srcs ${UIS} )
+
+set( ICONS src/gui/Icons/icons.qrc )
+qt5_add_resources( QRC_Srcs ${ICONS} )
+
+# Also link to VTK
+find_package( VTK REQUIRED )
+include( ${VTK_USE_FILE} )
+
 # Set all sources manually (except for main.cpp)
 set(SOURCES 
     src/cell.cpp
     src/material.cpp
     src/matrix.cpp
     src/model.cpp
-    src/vector3d.cpp)
+    src/vector3d.cpp
+    src/gui/mainwindow.cpp 
+		src/gui/mainwindow.h 
+		src/gui/mainwindow.ui)
 
 option(TESTING "Testing mode" OFF) #OFF by default
 
@@ -53,11 +90,18 @@ if(TESTING)
 
     file(GLOB TEST_SOURCES "tests/*.cpp")
     add_executable(${TEST_PROJECT_NAME} ${TEST_SOURCES} ${SOURCES})
-    target_link_libraries(${TEST_PROJECT_NAME} gtest_main pthread)
+    target_link_libraries(${TEST_PROJECT_NAME} gtest_main pthread
+    Qt5::Widgets ${VTK_LIBRARIES})
 else()
     # Append main.cpp
     list(APPEND SOURCES src/main.cpp)
-    add_executable(${PROJECT_NAME} ${SOURCES})
+    add_executable(${PROJECT_NAME} MACOSX_BUNDLE 
+    ${SOURCES}
+    ${UI_Srcs}
+    ${QRC_Srcs}
+    )
+
+    target_link_libraries(${PROJECT_NAME} Qt5::Widgets ${VTK_LIBRARIES})
 endif(TESTING)
 
 unset(TESTING CACHE)
