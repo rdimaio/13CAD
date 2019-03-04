@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\Johnny\ModelLoader\build\googletest-download\CMakeFiles\dab9c82959bbc2eef2c77db2f71d9ca8\googletest-mkdir.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\Johnny\ModelLoader\build\googletest-download\CMakeFiles\dab9c82959bbc2eef2c77db2f71d9ca8\googletest-download.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\Johnny\ModelLoader\build\googletest-download\CMakeFiles\dab9c82959bbc2eef2c77db2f71d9ca8\googletest-update.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\Johnny\ModelLoader\build\googletest-download\CMakeFiles\dab9c82959bbc2eef2c77db2f71d9ca8\googletest-patch.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\Johnny\ModelLoader\build\googletest-download\CMakeFiles\dab9c82959bbc2eef2c77db2f71d9ca8\googletest-configure.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\Johnny\ModelLoader\build\googletest-download\CMakeFiles\dab9c82959bbc2eef2c77db2f71d9ca8\googletest-build.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\Johnny\ModelLoader\build\googletest-download\CMakeFiles\dab9c82959bbc2eef2c77db2f71d9ca8\googletest-install.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\Johnny\ModelLoader\build\googletest-download\CMakeFiles\dab9c82959bbc2eef2c77db2f71d9ca8\googletest-test.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\Johnny\ModelLoader\build\googletest-download\CMakeFiles\d462602c3f90580fa09f258cecbefcd1\googletest-complete.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\Johnny\ModelLoader\build\googletest-download\CMakeFiles\b458926b9ca2030ee98eee20cbd2c387\googletest.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\Johnny\ModelLoader\build\googletest-download\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="C:\Users\Johnny\ModelLoader\build\googletest-download\CMakeFiles\googletest" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{90D8F4B6-CDAD-35B6-AA55-C6A2F0241BE3}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

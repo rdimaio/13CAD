@@ -1,10 +1,13 @@
 #include "vector.h"
+#include "model.h"
+#include "cell.h"
 #include <gtest/gtest.h>
 
 // Test parameters
 float scalar = 1.5;
 Vector3D v1(1, 2, 3);
 Vector3D v2(4, 5, 6);
+Cell v1(h, 0, 0, 1, 2, 3, 4, 5, 6, 7);
 
 TEST(accessorTest, base) {
 	float xExpected = 1;
