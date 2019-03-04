@@ -11,6 +11,7 @@
 - Where I left off: test_model.cpp, implementing parseCellTest. Maybe
 I should change the way cell behaves, because right now it's holding the entire material,
 but maybe it doesn't need it.
+- Move main from src to src/gui in case something fails (might work better there)
 - Add IDs to all classes; right now, saving is not really feasible.
 Might need to change the way vector ID is saved in saveToFile in model.
 - Implement the things at the end of worksheet 6
