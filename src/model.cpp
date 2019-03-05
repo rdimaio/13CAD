@@ -111,9 +111,9 @@ void Model::parseVertex(std::string line) {
 	// 4 - z
 	
 	int id = std::stoi(strings[1]);
-	float x = std::stod(strings[2]);
-	float y = std::stod(strings[3]);
-	float z = std::stod(strings[4]);
+	double x = std::stod(strings[2]);
+	double y = std::stod(strings[3]);
+	double z = std::stod(strings[4]);
 	
 	Vector3D v(x, y, z);
 	
