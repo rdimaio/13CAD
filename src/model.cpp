@@ -44,6 +44,7 @@ Model::Model(std::string filename) {
 						break;
 				}
 			}
+			// Close file
 			modelFile.close();
 		}
 	} else {

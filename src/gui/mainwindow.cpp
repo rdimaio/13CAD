@@ -13,6 +13,14 @@
 #include <vtkNew.h>
 #include <vtkGenericOpenGLRenderWindow.h>
 
+#include <vtkCellArray.h>
+#include <vtkCellType.h>
+#include <vtkPoints.h>
+
+#include <vtkUnstructuredGrid.h>
+#include <vtkPyramid.h>
+#include <vtkTetra.h>
+
 // STL reading libraries
 #include <vtkSTLReader.h>
 #include <vtkPolyDataMapper.h>
@@ -32,7 +40,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 	//std::string inputFilename = "src/gui/test.stl";
 	std::string inputFilename = "tests/ExampleModel.mod";
 	// Load model
-  	Model model(inputFilename);
+  	Model mod1(inputFilename);
 
 	// Now need to create a VTK render window and link it to the QtVTK widget
 	vtkNew<vtkGenericOpenGLRenderWindow> renderWindow;
@@ -40,7 +48,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
 	vtkSmartPointer<vtkActor> actor;
 
-	if (model.getIsSTL()) {
+	if (mod1.getIsSTL()) {
   	// Visualize
 	vtkSmartPointer<vtkSTLReader> reader =
 	vtkSmartPointer<vtkSTLReader>::New();
@@ -56,18 +64,70 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 	actor->SetMapper(mapper);
 
 	} else {
-		// Now use the VTK libraries to render something. To start with you can copy-paste the cube example code, there are comments to show where the code must be modified.
-		//--------------------------------------------- Code From Example 1 --------------------------------------------------------------------------
-		// Create a cube using a vtkCubeSource
-		vtkSmartPointer<vtkCubeSource> cubeSource = vtkSmartPointer<vtkCubeSource>::New();
+		// ONLY ONE ACTOR, ONE MAPPER, AND ONE READER.
+		// 1. MAKE UNSTRUCTURED GRID
+		// 2. PUT POINTS IN IT
+		// 3. MAKE CELL, PUT IT IN ARRAY
+		// 4. LOOP OVER
+		// 5. AT THE END, MAKE ACTOR
 
-		// Create a mapper that will hold the cube's geometry in a format suitable for rendering
-		vtkSmartPointer<vtkDataSetMapper> mapper = vtkSmartPointer<vtkDataSetMapper>::New();
-		mapper->SetInputConnection( cubeSource->GetOutputPort() );
+		// Get vector of cells from the model
+		std::vector<Cell> modCells = mod1.getCells();
+		// Iterate over cells
+		for(std::vector<Cell>::iterator it = modCells.begin(); it != modCells.begin(); ++it) {
+			std::vector<Vector3D> cellVertices = it->getVertices();
+			vtkSmartPointer<vtkPoints> points = vtkSmartPointer<vtkPoints>::New();
+			// Pyramid
+			if (cellVertices.size() == 5) {
+				double p0[3] = {cellVertices[0].getX(), cellVertices[0].getY(), cellVertices[0].getZ()};
+  				double p1[3] = {cellVertices[1].getX(), cellVertices[1].getY(), cellVertices[1].getZ()};
+  				double p2[3] = {cellVertices[2].getX(), cellVertices[2].getY(), cellVertices[2].getZ()};
+  				double p3[3] = {cellVertices[3].getX(), cellVertices[3].getY(), cellVertices[3].getZ()};
+  				double p4[3] = {cellVertices[4].getX(), cellVertices[4].getY(), cellVertices[4].getZ()};
 
-		// Create an actor that is used to set the cube's properties for rendering and place it in the window
-		actor = vtkSmartPointer<vtkActor>::New();
-		actor->SetMapper(mapper);
+  				points->InsertNextPoint(p0);
+  				points->InsertNextPoint(p1);
+  				points->InsertNextPoint(p2);
+  				points->InsertNextPoint(p3);
+  				points->InsertNextPoint(p4);
+
+  				vtkSmartPointer<vtkPyramid> pyramid = vtkSmartPointer<vtkPyramid>::New();
+  				pyramid->GetPointIds()->SetId(0,0);
+  				pyramid->GetPointIds()->SetId(1,1);
+  				pyramid->GetPointIds()->SetId(2,2);
+  				pyramid->GetPointIds()->SetId(3,3);
+  				pyramid->GetPointIds()->SetId(4,4);
+
+  				
+
+  				vtkSmartPointer<vtkUnstructuredGrid> ug = 
+  				    vtkSmartPointer<vtkUnstructuredGrid>::New();
+  				ug->SetPoints(points);
+  				ug->InsertNextCell(pyramid->GetCellType(),pyramid->GetPointIds());
+2
+  				//Create an actor and mapper
+  				vtkSmartPointer<vtkNamedColors> colors =
+  				  vtkSmartPointer<vtkNamedColors>::New();
+  				vtkSmartPointer<vtkDataSetMapper> mapper = 
+  				    vtkSmartPointer<vtkDataSetMapper>::New();
+  				mapper->SetInputData(ug);
+				//vtkSmartPointer<vtkActor> actor = vtkSmartPointer<vtkActor>::New();
+  				actor->SetMapper(mapper);
+			} else if (cellVertices.size() == 4) { // Tetrahedron 
+				points->InsertNextPoint(0, 0, 0);
+  				points->InsertNextPoint(1, 0, 0);
+  				points->InsertNextPoint(1, 1, 0);
+				points->InsertNextPoint(1, 1, 0);
+
+
+			} else if (cellVertices.size() == 8) { // Hexahedron
+			
+			}
+		int i = 0;
+		if (i = 0) { 
+		break; 
+		}	
+		}
 	}
 
 	//actor->GetProperty()->EdgeVisibilityOn();
