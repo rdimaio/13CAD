@@ -164,3 +164,11 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
+void MainWindow::on_sa_clicked()
+{
+    QString filename = QFileDialog::getSaveFileName(this,tr("Save Image"),"",tr("Images (*.png)")); 
+        QScreen *screen = QGuiApplication::primaryScreen();
+        screen->grabWindow(ui->qvtkWidget->winId()).save(filename);
+
+}
+
