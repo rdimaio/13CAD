@@ -155,7 +155,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 	renderer->ResetCameraClippingRange();
 	
 	
-	ui->sa->setIcon(QIcon("C:/Users/90730/Desktop/Worksheet 5/worksheet6/2/Icons/filesave.png")); //choose the icon location
+	ui->sa->setIcon(QIcon("ModelLoader/src/gui/Icons/filesave.png")); //choose the icon location
 
 	// Render and interact
 	//renderWindow->Render();					// ###### Not needed with Qt ######
