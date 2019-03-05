@@ -1,6 +1,5 @@
 // VTK libraries
 #include <vtkSmartPointer.h>
-#include <vtkCubeSource.h>
 #include <vtkActor.h>
 #include <vtkProperty.h>
 #include <vtkCamera.h>
@@ -13,23 +12,23 @@
 #include <vtkNew.h>
 #include <vtkGenericOpenGLRenderWindow.h>
 
+// VTK libraries - cells
 #include <vtkCellArray.h>
 #include <vtkCellType.h>
 #include <vtkPoints.h>
-
 #include <vtkUnstructuredGrid.h>
-#include <vtkPyramid.h>
 #include <vtkTetra.h>
+#include <vtkPyramid.h>
 #include <vtkHexahedron.h>
 
-// STL reading libraries
+// VTK libraries - STL reading
 #include <vtkSTLReader.h>
 #include <vtkPolyDataMapper.h>
 
 // Qt headers
+#include <QDebug>
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include <QDebug>
 
 // Local headers
 #include "model.h"
@@ -37,30 +36,42 @@
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
 {
     // standard call to setup Qt UI (same as previously)
-    ui->setupUi( this );
+    ui->setupUi(this);
 	
-	//std::string inputFilename = "src/gui/test.stl";
-	std::string inputFilename = "tests/ExampleModel.mod";
+	std::string inputFilename = "tests/ExampleSTL.stl";
+	//std::string inputFilename = "tests/ExampleModel.mod";
+
 	// Load model
+	// (maybe only do model mod1 in case it's a .mod file, remove isstl from model,
+	// and check here, so that you don't construct a model in case it's stl.)
   	Model mod1(inputFilename);
 
-	// Now need to create a VTK render window and link it to the QtVTK widget
+	// Create a VTK render window and link it to the QtVTK widget
+	// (vtkWidget is the name gave to QtVTKOpenGLWidget in Qt Creator)
 	vtkNew<vtkGenericOpenGLRenderWindow> renderWindow;
-	ui->qvtkWidget->SetRenderWindow( renderWindow );			// note that vtkWidget is the name I gave to my QtVTKOpenGLWidget in Qt creator
+	ui->qvtkWidget->SetRenderWindow(renderWindow);
 
-	// Create a renderer, and render window
+	// Create a renderer and add it to the render window
 	vtkSmartPointer<vtkRenderer> renderer = vtkSmartPointer<vtkRenderer>::New();
-	vtkSmartPointer<vtkNamedColors> colors = vtkSmartPointer<vtkNamedColors>::New();
-	//vtkSmartPointer<vtkRenderWindow> renderWindow = vtkSmartPointer<vtkRenderWindow>::New();		// ###### We've already created the renderWindow this time ######
-	ui->qvtkWidget->GetRenderWindow()->AddRenderer(renderer);									// ###### ask the QtVTKOpenGLWidget for its renderWindow ######
+	ui->qvtkWidget->GetRenderWindow()->AddRenderer(renderer);
 
+	// Create colors
+	vtkSmartPointer<vtkNamedColors> colors = vtkSmartPointer<vtkNamedColors>::New();
+
+	// Create cell array to store the cells of the .mod file
 	vtkSmartPointer<vtkCellArray> cellArray = vtkSmartPointer<vtkCellArray>::New();
 
+	// Initialise vectors for mappers and actors
+	// .mod files have an actor/mapper per cell,
+	// while .stl files only require one actor/mapper for the entire file
+	std::vector<vtkSmartPointer<vtkDataSetMapper>> mappers;
+  	std::vector<vtkSmartPointer<vtkActor>> actors;
+
+	// Initialise vectors for .mod parsing
 	std::vector<vtkSmartPointer<vtkUnstructuredGrid>> unstructuredGrids;
   	std::vector<vtkSmartPointer<vtkTetra>> tetras;
+	std::vector<vtkSmartPointer<vtkPyramid>> pyras;
 	std::vector<vtkSmartPointer<vtkHexahedron>> hexas;
-  	std::vector<vtkSmartPointer<vtkDataSetMapper>> mappers;
-  	std::vector<vtkSmartPointer<vtkActor>> actors;
 	vtkSmartPointer<vtkPoints> points = vtkSmartPointer<vtkPoints>::New();
 
 	qInfo() << "Window successfully initialised"; // debug
@@ -69,21 +80,30 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 	
 	qInfo() << "Model is STL"; // debug
   	
-	// Visualize
 	actors.resize(1);
 	mappers.resize(1);
+	
+	// Visualize
 	vtkSmartPointer<vtkSTLReader> reader =
 	vtkSmartPointer<vtkSTLReader>::New();
 	reader->SetFileName(inputFilename.c_str());
 	reader->Update();
 
-	// WARNING: CHANGED POLYDATASET TO DATASET HERE, IT COULD BREAK
-  	mappers[0] = vtkSmartPointer<vtkDataSetMapper>::New();
-  	mappers[0]->SetInputConnection(reader->GetOutputPort());
+	// NOTE: datasetmapper is used instead of polydatamapper.
+	// Try to switch back to polydatamapper if there are any bugs.
+	
+	//vtkSmartPointer<vtkPolyDataMapper> poly_mapper =
+  	//vtkSmartPointer<vtkPolyDataMapper>::New();
+  	//poly_mapper->SetInputConnection(reader->GetOutputPort());
 
-	// Create an actor that is used to set the cube's properties for rendering and place it in the window
+	mappers[0] = vtkSmartPointer<vtkDataSetMapper>::New();
+	mappers[0]->SetInputConnection(reader->GetOutputPort());
+
+	
 	actors[0] = vtkSmartPointer<vtkActor>::New();
 	actors[0]->SetMapper(mappers[0]);
+	actors[0]->GetProperty()->SetColor(colors->GetColor3d("Red").GetData());
+	renderer->AddActor(actors[0]);
 
 	} else {
 
@@ -204,7 +224,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 	// Link a renderWindowInteractor to the renderer (this allows you to capture mouse movements etc)  ###### Not needed with Qt ######
 	//vtkSmartPointer<vtkRenderWindowInteractor> renderWindowInteractor = vtkSmartPointer<vtkRenderWindowInteractor>::New();
 	//renderWindowInteractor->SetRenderWindow( ui->vtkWidget->GetRenderWindow() );				
-	renderer->SetBackground( colors->GetColor3d("Green").GetData() );
+	renderer->SetBackground( colors->GetColor3d("Grey").GetData() );
 
 	// Setup the renderers's camera
 	renderer->ResetCamera();
