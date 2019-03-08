@@ -28,30 +28,13 @@ set( CMAKE_INCLUDE_CURRENT_DIR ON )
 set( CMAKE_AUTOMOC ON )
 set( CMAKE_AUTOUIC ON )
 
-# Find the Qt widgets package. This locates the relevant include and
-# lib directories, and the necessary static libraries for linking.
-find_package( Qt5Widgets )
-
-set( UIS src/gui/mainwindow.ui )
-qt5_wrap_ui( UI_Srcs ${UIS} )
-
-set( ICONS src/gui/Icons/icons.qrc )
-qt5_add_resources( QRC_Srcs ${ICONS} )
-
-# Also link to VTK
-find_package( VTK REQUIRED )
-include( ${VTK_USE_FILE} )
-
 # Set all sources manually (except for main.cpp)
 set(SOURCES 
     src/cell.cpp
     src/material.cpp
     src/matrix.cpp
     src/model.cpp
-    src/vector3d.cpp
-    src/gui/mainwindow.cpp 
-		src/gui/mainwindow.h 
-		src/gui/mainwindow.ui)
+    src/vector3d.cpp)
 
 option(TESTING "Testing mode" OFF) #OFF by default
 
@@ -90,11 +73,36 @@ if(TESTING)
 
     file(GLOB TEST_SOURCES "tests/*.cpp")
     add_executable(${TEST_PROJECT_NAME} ${TEST_SOURCES} ${SOURCES})
-    target_link_libraries(${TEST_PROJECT_NAME} gtest_main pthread
-    Qt5::Widgets ${VTK_LIBRARIES})
+    target_link_libraries(${TEST_PROJECT_NAME} gtest_main pthread)
 else()
+
+    # Find the Qt widgets package. This locates the relevant include and
+    # lib directories, and the necessary static libraries for linking.
+    find_package( Qt5Widgets )
+
+    set( UIS src/gui/mainwindow.ui )
+    qt5_wrap_ui( UI_Srcs ${UIS} )
+
+    set( ICONS src/gui/Icons/icons.qrc )
+    qt5_add_resources( QRC_Srcs ${ICONS} )
+
+    # Also link to VTK
+    # find_package( VTK REQUIRED)
+    find_package(VTK REQUIRED)
+  if (NOT VTK_FOUND)
+    message("Skipping ReadSTL: ${VTK_NOT_FOUND_MESSAGE}")
+    return ()
+  endif()
+  message (STATUS "VTK_VERSION: ${VTK_VERSION}")
+
+    include( ${VTK_USE_FILE} )
+
     # Append main.cpp
-    list(APPEND SOURCES src/main.cpp)
+    list(APPEND SOURCES 
+    src/main.cpp
+    src/gui/mainwindow.cpp 
+		src/gui/mainwindow.h 
+		src/gui/mainwindow.ui)
     add_executable(${PROJECT_NAME} MACOSX_BUNDLE 
     ${SOURCES}
     ${UI_Srcs}

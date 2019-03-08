@@ -25,6 +25,11 @@ class Model {
         std::string filename;
     
         /**
+         * True if the file is a STL file (.stl extension)
+         */
+        bool isSTL;
+
+        /**
          * std::vector of vertices loaded from file
          */
         std::vector<Vector3D> vertices;
@@ -61,6 +66,11 @@ class Model {
          * Split string into space-separated words
          */
         std::vector<std::string> splitString(std::string line);
+        
+        /**
+         * Return true if file is of that extension.
+         */
+        bool isExtension(const std::string &str, const std::string &suffix);
     
     public:
         Model() = default;
@@ -74,6 +84,11 @@ class Model {
          * Get model's filename
          */
         std::string getFilename();
+
+        /**
+         * Return true if model is a .STL file
+         */
+        bool getIsSTL();
 
         /**
          * Get list of materials as a std::vector
