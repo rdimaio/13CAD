@@ -19,11 +19,14 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 {
     // standard call to setup Qt UI (same as previously)
     ui->setupUi( this );
-	
+
+    connect( ui->modelButton, SIGNAL(clicked()), this, SLOT(handleModelButton()) );
+    connect( ui->backgButton, SIGNAL(clicked()), this, SLOT(handleBackgButton()) );
+
 	// Now need to create a VTK render window and link it to the QtVTK widget
 	vtkNew<vtkGenericOpenGLRenderWindow> renderWindow;
 	ui->qvtkWidget->SetRenderWindow( renderWindow );			// note that vtkWidget is the name I gave to my QtVTKOpenGLWidget in Qt creator
-	
+
 	// Now use the VTK libraries to render something. To start with you can copy-paste the cube example code, there are comments to show where the code must be modified.
 	//--------------------------------------------- Code From Example 1 --------------------------------------------------------------------------
 	// Create a cube using a vtkCubeSource
@@ -34,7 +37,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 	mapper->SetInputConnection( cubeSource->GetOutputPort() );
 
 	// Create an actor that is used to set the cube's properties for rendering and place it in the window
-	vtkSmartPointer<vtkActor> actor = vtkSmartPointer<vtkActor>::New();
+	actor = vtkSmartPointer<vtkActor>::New();
 	actor->SetMapper(mapper);
 	actor->GetProperty()->EdgeVisibilityOn();
 
@@ -42,13 +45,13 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 	actor->GetProperty()->SetColor( colors->GetColor3d("Red").GetData() );
 
 	// Create a renderer, and render window
-	vtkSmartPointer<vtkRenderer> renderer = vtkSmartPointer<vtkRenderer>::New();
+	renderer = vtkSmartPointer<vtkRenderer>::New();
 	//vtkSmartPointer<vtkRenderWindow> renderWindow = vtkSmartPointer<vtkRenderWindow>::New();		// ###### We've already created the renderWindow this time ######
 	ui->qvtkWidget->GetRenderWindow()->AddRenderer( renderer );									// ###### ask the QtVTKOpenGLWidget for its renderWindow ######
 
 	// Link a renderWindowInteractor to the renderer (this allows you to capture mouse movements etc)  ###### Not needed with Qt ######
 	//vtkSmartPointer<vtkRenderWindowInteractor> renderWindowInteractor = vtkSmartPointer<vtkRenderWindowInteractor>::New();
-	//renderWindowInteractor->SetRenderWindow( ui->vtkWidget->GetRenderWindow() );				
+	//renderWindowInteractor->SetRenderWindow( ui->vtkWidget->GetRenderWindow() );
 
 	// Add the actor to the scene
 	renderer->AddActor(actor);
