@@ -36,23 +36,12 @@
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
 {
     // standard call to setup Qt UI (same as previously)
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 5197a98ce878d61aa0f709ea4e0d9ba841fb6517
 
     ui->setupUi(this);
 
     connect( ui->modelButton, SIGNAL(clicked()), this, SLOT(handleModelButton()) );
     connect( ui->backgButton, SIGNAL(clicked()), this, SLOT(handleBackgButton()) );
 
-<<<<<<< HEAD
-=======
-    ui->setupUi(this);
-	
->>>>>>> 593b68d63f7ae869dfd46602ccf897d2d09ff1fc
-=======
->>>>>>> 5197a98ce878d61aa0f709ea4e0d9ba841fb6517
 	std::string inputFilename = "tests/ExampleSTL.stl";
 	//std::string inputFilename = "tests/ExampleModel.mod";
 
@@ -234,14 +223,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 	}
 
 	//actor->GetProperty()->EdgeVisibilityOn();
-
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-
->>>>>>> 593b68d63f7ae869dfd46602ccf897d2d09ff1fc
-=======
->>>>>>> 5197a98ce878d61aa0f709ea4e0d9ba841fb6517
+	
 	// Link a renderWindowInteractor to the renderer (this allows you to capture mouse movements etc)  ###### Not needed with Qt ######
 	//vtkSmartPointer<vtkRenderWindowInteractor> renderWindowInteractor = vtkSmartPointer<vtkRenderWindowInteractor>::New();
 	//renderWindowInteractor->SetRenderWindow( ui->vtkWidget->GetRenderWindow() );
