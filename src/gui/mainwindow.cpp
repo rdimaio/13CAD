@@ -36,8 +36,12 @@
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
 {
     // standard call to setup Qt UI (same as previously)
+
     ui->setupUi(this);
 	
+  connect( ui->modelButton, SIGNAL(clicked()), this, SLOT(handleModelButton()) );
+  connect( ui->backgButton, SIGNAL(clicked()), this, SLOT(handleBackgButton()) );
+  
 	std::string inputFilename = "tests/ExampleSTL.stl";
 	//std::string inputFilename = "tests/ExampleModel.mod";
 
@@ -52,7 +56,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 	ui->qvtkWidget->SetRenderWindow(renderWindow);
 
 	// Create a renderer and add it to the render window
-	vtkSmartPointer<vtkRenderer> renderer = vtkSmartPointer<vtkRenderer>::New();
+	renderer = vtkSmartPointer<vtkRenderer>::New();
 	ui->qvtkWidget->GetRenderWindow()->AddRenderer(renderer);
 
 	// Create colors
@@ -88,6 +92,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 	vtkSmartPointer<vtkSTLReader>::New();
 	reader->SetFileName(inputFilename.c_str());
 	reader->Update();
+
 
 	// NOTE: datasetmapper is used instead of polydatamapper.
 	// Try to switch back to polydatamapper if there are any bugs.
@@ -219,7 +224,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 	}
 
 	//actor->GetProperty()->EdgeVisibilityOn();
-
 
 	// Link a renderWindowInteractor to the renderer (this allows you to capture mouse movements etc)  ###### Not needed with Qt ######
 	//vtkSmartPointer<vtkRenderWindowInteractor> renderWindowInteractor = vtkSmartPointer<vtkRenderWindowInteractor>::New();
