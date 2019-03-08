@@ -37,7 +37,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 {
     // standard call to setup Qt UI (same as previously)
     ui->setupUi(this);
-	
+
+    connect( ui->modelButton, SIGNAL(clicked()), this, SLOT(handleModelButton()) );
+    connect( ui->backgButton, SIGNAL(clicked()), this, SLOT(handleBackgButton()) );
+
 	std::string inputFilename = "tests/ExampleSTL.stl";
 	//std::string inputFilename = "tests/ExampleModel.mod";
 
@@ -77,12 +80,12 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 	qInfo() << "Window successfully initialised"; // debug
 
 	if (mod1.getIsSTL()) {
-	
+
 	qInfo() << "Model is STL"; // debug
-  	
+
 	actors.resize(1);
 	mappers.resize(1);
-	
+
 	// Visualize
 	vtkSmartPointer<vtkSTLReader> reader =
 	vtkSmartPointer<vtkSTLReader>::New();
@@ -91,7 +94,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
 	// NOTE: datasetmapper is used instead of polydatamapper.
 	// Try to switch back to polydatamapper if there are any bugs.
-	
+
 	//vtkSmartPointer<vtkPolyDataMapper> poly_mapper =
   	//vtkSmartPointer<vtkPolyDataMapper>::New();
   	//poly_mapper->SetInputConnection(reader->GetOutputPort());
@@ -99,7 +102,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 	mappers[0] = vtkSmartPointer<vtkDataSetMapper>::New();
 	mappers[0]->SetInputConnection(reader->GetOutputPort());
 
-	
+
 	actors[0] = vtkSmartPointer<vtkActor>::New();
 	actors[0]->SetMapper(mappers[0]);
 	actors[0]->GetProperty()->SetColor(colors->GetColor3d("Red").GetData());
@@ -129,10 +132,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
 			// qInfo() << "x:";
 			// qInfo() << cellVertices[0].getX(); // debug
- 
+
 			// qInfo() << "y:";
 			// qInfo() << cellVertices[0].getY(); // debug
- 
+
 			// qInfo() << "z:";
 			// qInfo() << cellVertices[0].getZ(); // debug
 
@@ -140,7 +143,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 			if (cellVertices.size() == 5) {
 
 			} else if (cellVertices.size() == 4) { // Tetrahedron
-				tetras.resize(tetra_count+1); 
+				tetras.resize(tetra_count+1);
 				qInfo() << "tetra"; // debug
 				// Insert vertices into vtkPoints vector
 				for (int i = 0; i < 4; i++)
@@ -184,7 +187,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 				{
 					points->InsertNextPoint(cellVertices[i].getX(), cellVertices[i].getY(), cellVertices[i].getZ());
 				}
-			
+
 				unstructuredGrids[poly_count] = vtkSmartPointer<vtkUnstructuredGrid>::New();
 				// Maybe this needs to go after set points
     			unstructuredGrids[poly_count]->SetPoints(points);
@@ -223,7 +226,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
 	// Link a renderWindowInteractor to the renderer (this allows you to capture mouse movements etc)  ###### Not needed with Qt ######
 	//vtkSmartPointer<vtkRenderWindowInteractor> renderWindowInteractor = vtkSmartPointer<vtkRenderWindowInteractor>::New();
-	//renderWindowInteractor->SetRenderWindow( ui->vtkWidget->GetRenderWindow() );				
+	//renderWindowInteractor->SetRenderWindow( ui->vtkWidget->GetRenderWindow() );
 	renderer->SetBackground( colors->GetColor3d("Grey").GetData() );
 
 	// Setup the renderers's camera
@@ -242,3 +245,59 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
+
+void MainWindow::handleModelButton()
+{
+    vtkSmartPointer<vtkNamedColors> colors = vtkSmartPointer<vtkNamedColors>::New();
+
+	QColor color = QColorDialog::getColor(Qt::white, this, "Choose Color");
+
+	if (color.isValid()) {
+
+		QString hex = color.name();
+		std::string str = hex.toStdString();
+		char *cstr = &str[0u];
+
+		int r, g, b;
+		double ri, gi, bi;
+		sscanf(cstr, "#%02x%02x%02x", &r, &g, &b);
+
+		ri = (double)r / 255;
+		gi = (double)g / 255;
+		bi = (double)b / 255;
+
+		actor->GetProperty()->SetColor(ri, gi, bi);
+	}
+
+    ui->qvtkWidget->GetRenderWindow()->Render();
+}
+
+void MainWindow::handleBackgButton()
+{
+    vtkSmartPointer<vtkNamedColors> colors = vtkSmartPointer<vtkNamedColors>::New();
+    renderer->AddActor(actor);
+
+    QColor color = QColorDialog::getColor(Qt::white,this,"Choose Color");
+
+    if(color.isValid()) {
+
+		QString hex = color.name();
+
+		std::string str = hex.toStdString();
+		char *cstr = &str[0u];
+
+		int r, g, b;
+		double ri, gi, bi;
+
+		sscanf(cstr, "#%02x%02x%02x", &r, &g, &b);
+
+		ri = (double)r / 255;
+		gi = (double)g / 255;
+		bi = (double)b / 255;
+
+        renderer->SetBackground(ri, gi, bi);
+    }
+
+    ui->qvtkWidget->GetRenderWindow()->Render();
+}
+

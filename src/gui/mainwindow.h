@@ -15,6 +15,13 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+    //vtkSmartPointer<vtkActor> actor;
+    //vtkSmartPointer<vtkRenderer> renderer;
+
+public slots:
+    void handleModelButton();
+    void handleBackgButton();
+
 private:
     Ui::MainWindow *ui;
 };
