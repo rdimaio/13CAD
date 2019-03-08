@@ -6,8 +6,13 @@
    <rect>
     <x>0</x>
     <y>0</y>
+<<<<<<< HEAD
+    <width>636</width>
+    <height>623</height>
+=======
     <width>936</width>
     <height>664</height>
+>>>>>>> 593b68d63f7ae869dfd46602ccf897d2d09ff1fc
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,9 +23,15 @@
     <property name="geometry">
      <rect>
       <x>10</x>
+<<<<<<< HEAD
+      <y>10</y>
+      <width>602</width>
+      <height>520</height>
+=======
       <y>40</y>
       <width>602</width>
       <height>433</height>
+>>>>>>> 593b68d63f7ae869dfd46602ccf897d2d09ff1fc
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout">
@@ -35,6 +46,77 @@
       </widget>
      </item>
      <item>
+<<<<<<< HEAD
+      <layout class="QHBoxLayout" name="horizontalLayout_4">
+       <item>
+        <layout class="QVBoxLayout" name="verticalLayout_2">
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_2">
+           <item>
+            <widget class="QLabel" name="label">
+             <property name="text">
+              <string>Model colour</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="horizontalSpacer_2">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <widget class="QPushButton" name="modelButton">
+           <property name="text">
+            <string>Change</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_3">
+           <item>
+            <widget class="QLabel" name="label_2">
+             <property name="text">
+              <string>Background colour</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="horizontalSpacer_3">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <widget class="QPushButton" name="backgButton">
+           <property name="text">
+            <string>Change</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_4">
+=======
       <layout class="QHBoxLayout" name="horizontalLayout">
        <item>
         <widget class="QPushButton" name="pushButton">
@@ -55,6 +137,7 @@
        </item>
        <item>
         <spacer name="horizontalSpacer">
+>>>>>>> 593b68d63f7ae869dfd46602ccf897d2d09ff1fc
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
          </property>
@@ -76,7 +159,11 @@
     <rect>
      <x>0</x>
      <y>0</y>
+<<<<<<< HEAD
+     <width>636</width>
+=======
      <width>936</width>
+>>>>>>> 593b68d63f7ae869dfd46602ccf897d2d09ff1fc
      <height>21</height>
     </rect>
    </property>
