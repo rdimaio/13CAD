@@ -59,7 +59,17 @@ TEST(parseVertexTest, modelBase) {
 
 TEST(parseCellTest, modelBase) {
 
-	// TODO: see from tests above
+	Model mod("tests/ExampleModel.mod");
+    std::vector<Cell> cells = mod.getCells();
+    std::vector<Vector3D> cellVertices = cells[0].getVertices();
+
+    double x1 = cellVertices[0].getX();
+    double y1 = cellVertices[0].getY();
+    double z1 = cellVertices[0].getZ();
+
+    ASSERT_NEAR(x1, 0.00195, 0.009);
+    ASSERT_NEAR(y1, 0.00115, 0.009);
+    ASSERT_NEAR(z1, 0.0015, 0.009);
 }
 
 TEST(centreTest, modelBase) {

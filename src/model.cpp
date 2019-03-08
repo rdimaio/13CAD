@@ -20,34 +20,38 @@ Model::Model(std::string filename) {
 	std::ifstream modelFile(filename);
 	std::string line;
 	
-	if (modelFile.is_open()) {
-		// Read file line by line
-		while (std::getline(modelFile, line)) {
-			// Check first character
-    		switch (line[0]) {
-				// Cell case
-				case 'c':
-					parseCell(line);				
-					break;
+	// Only parse it if it's not a STL file
+	if (!isExtension(filename, ".stl")) {
+		if (modelFile.is_open()) {
+			this->isSTL = false;
+			// Read file line by line
+			while (std::getline(modelFile, line)) {
+				// Check first character
+   			switch (line[0]) {
+					// Cell case
+					case 'c':
+						parseCell(line);				
+						break;
 
-				// Vertex case
-				case 'v':
-					parseVertex(line);
-					break;
+					// Vertex case
+					case 'v':
+						parseVertex(line);
+						break;
 
-				// Material case
-				case 'm':
-					parseMaterial(line);
-					break;
+					// Material case
+					case 'm':
+						parseMaterial(line);
+						break;
+				}
 			}
+			// Close file
+			modelFile.close();
 		}
-		modelFile.close();
+	} else {
+		this->isSTL = true;
 	}
 }
 
-/**
- * Split string into space-separated words.
- */
 std::vector<std::string> Model::splitString(std::string line) {
 	std::vector<std::string> strings; 
 	std::istringstream f(line);
@@ -58,6 +62,12 @@ std::vector<std::string> Model::splitString(std::string line) {
         strings.push_back(s);
     }
 	return strings;
+}
+
+bool Model::isExtension(const std::string &str, const std::string &suffix)
+{
+    return str.size() >= suffix.size() &&
+           str.compare(str.size() - suffix.size(), suffix.size(), suffix) == 0;
 }
 
 void Model::parseMaterial(std::string line) {
@@ -101,9 +111,9 @@ void Model::parseVertex(std::string line) {
 	// 4 - z
 	
 	int id = std::stoi(strings[1]);
-	float x = std::stod(strings[2]);
-	float y = std::stod(strings[3]);
-	float z = std::stod(strings[4]);
+	double x = std::stod(strings[2]);
+	double y = std::stod(strings[3]);
+	double z = std::stod(strings[4]);
 	
 	Vector3D v(x, y, z);
 	
@@ -172,6 +182,10 @@ void Model::parseCell(std::string line) {
 
 std::string Model::getFilename() {
 	return this->filename;
+}
+
+bool Model::getIsSTL() {
+	return this->isSTL;
 }
 
 std::vector<Material> Model::getMaterials() {

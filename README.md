@@ -11,8 +11,22 @@
 - Where I left off: test_model.cpp, implementing parseCellTest. Maybe
 I should change the way cell behaves, because right now it's holding the entire material,
 but maybe it doesn't need it.
+- Move main from src to src/gui in case something fails (might work better there)
 - Add IDs to all classes; right now, saving is not really feasible.
 Might need to change the way vector ID is saved in saveToFile in model.
+- Maybe have it so that model.cpp/model.h have a function that returns
+the count of tetras, pyramids and hexas respectively, to speed up 
+mainwindow rendering (because it has the number already and doesn't have to
+resize at each iteration)  
+- Right now we have an actor and mapper for each cell, but maybe this is how it should be:
+```		
+// ONLY ONE ACTOR, ONE MAPPER, AND ONE READER. (reader is only needed for stl)
+		// 1. MAKE UNSTRUCTURED GRID
+		// 2. PUT POINTS IN IT
+		// 3. MAKE CELL, PUT IT IN ARRAY
+		// 4. LOOP OVER
+		// 5. AT THE END, MAKE ACTOR
+```
 - Implement the things at the end of worksheet 6
 - Maybe change vectors so that they hold their IDs too (might be important for cells,
 as right now in model.cpp the vertices' coordinates are assigned and the vertices IDs

@@ -51,6 +51,11 @@ install_manifest.txt
 compile_commands.json
 CTestTestfile.cmake
 
+# GUI
+qrc_icons.cpp
+ui_mainwindow.h
+ModelLoader_autogen/*
+
 # IDEs
 .vscode
 
