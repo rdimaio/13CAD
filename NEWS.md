@@ -1,4 +1,15 @@
 # Term 2
+
+## Project week 3:
+- Additional graphical features were added, improving user experience
+- Automated testing was integrated using Travis-CI
+- Automated generation and deployment of documentation was integrated
+using Travis-CI and Doxygen
+
+## Project week 2:
+- STL model loading was integrated into the QtVTK interface
+- MOD proprietary model loading was integrated into the QtVTK interface
+
 ## Project week 1:
 - Initial user interface draft was created
 

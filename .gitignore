@@ -51,6 +51,10 @@ install_manifest.txt
 compile_commands.json
 CTestTestfile.cmake
 
+# CPack
+CPackConfig.cmake
+CPackSourceConfig.cmake
+
 # GUI
 qrc_icons.cpp
 ui_mainwindow.h
