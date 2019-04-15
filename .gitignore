@@ -59,6 +59,7 @@ CPackSourceConfig.cmake
 qrc_icons.cpp
 ui_mainwindow.h
 ModelLoader_autogen/*
+icons.qrc*
 
 # IDEs
 .vscode

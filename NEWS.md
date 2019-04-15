@@ -1,5 +1,7 @@
-# Term 2
+# Break 2
 
+
+# Term 2
 ## Project week 3:
 - Additional graphical features were added, improving user experience
 - Automated testing was integrated using Travis-CI

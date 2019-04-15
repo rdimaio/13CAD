@@ -38,8 +38,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     // standard call to setup Qt UI (same as previously)
     ui->setupUi(this);
 	
-	std::string inputFilename = "tests/ExampleSTL.stl";
-	//std::string inputFilename = "tests/ExampleModel.mod";
+	//std::string inputFilename = "tests/ExampleSTL.stl";
+	std::string inputFilename = "tests/ExampleModel.mod";
 
 	// Load model
 	// (maybe only do model mod1 in case it's a .mod file, remove isstl from model,
@@ -110,8 +110,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 		qInfo() << "Model is of .mod format"; // debug
 
 		int poly_count = 0;
-		int tetra_count = 0; // Number of tetras
-		int hexa_count = 0;
+		int tetra_count = 0; // Number of tetrahedrons
+		int pyra_count = 0; // Number of pyramids
+		int hexa_count = 0; // Number of hexahedrons
 		int last_used_point_id = 0; // ID of last point used
 		// Get vector of cells from the model
 		std::vector<Cell> modCells = mod1.getCells();
@@ -136,10 +137,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 			// qInfo() << "z:";
 			// qInfo() << cellVertices[0].getZ(); // debug
 
-			// Pyramid
-			if (cellVertices.size() == 5) {
-
-			} else if (cellVertices.size() == 4) { // Tetrahedron
+			// Tetrahedron
+			if (cellVertices.size() == 4) {
 				tetras.resize(tetra_count+1); 
 				qInfo() << "tetra"; // debug
 				// Insert vertices into vtkPoints vector
@@ -173,6 +172,42 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 				// actors[poly_count]->GetProperty()->SetColor( colors->GetColor3d("Red").GetData());
 
 				tetra_count++;
+				poly_count++;
+			
+			// Pyramid
+			} else if (cellVertices.size() == 5) {
+				pyras.resize(pyra_count+1); 
+				// Insert vertices into vtkPoints vector
+				for (int i = 0; i < 5; i++)
+				{
+					points->InsertNextPoint(cellVertices[i].getX(), cellVertices[i].getY(), cellVertices[i].getZ());
+				}
+
+				unstructuredGrids[poly_count] = vtkSmartPointer<vtkUnstructuredGrid>::New();
+    			unstructuredGrids[poly_count]->SetPoints(points);
+				pyras[pyra_count] = vtkSmartPointer<vtkPyramid>::New();
+
+				// Set points to the pyramid
+				for (int i = 0; i < 4; i++)
+				{
+					pyras[pyra_count]->GetPointIds()->SetId(i, last_used_point_id+i);
+				}
+				last_used_point_id += 4;
+
+				cellArray->InsertNextCell(pyras[pyra_count]);
+    			unstructuredGrids[poly_count]->SetCells(VTK_PYRAMID, cellArray);
+
+				mappers[poly_count] = vtkSmartPointer<vtkDataSetMapper>::New();
+				mappers[poly_count]->SetInputData(unstructuredGrids[poly_count]);
+
+				actors[poly_count] = vtkSmartPointer<vtkActor>::New();
+				actors[poly_count]->SetMapper(mappers[poly_count]);
+				actors[poly_count]->GetProperty()->SetColor(colors->GetColor3d("Cyan").GetData());
+				renderer->AddActor(actors[poly_count]);
+
+				// actors[poly_count]->GetProperty()->SetColor( colors->GetColor3d("Red").GetData());
+
+				pyra_count++;
 				poly_count++;
 			// Hexahedron
 			} else if (cellVertices.size() == 8) {
@@ -236,9 +271,65 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 	// renderWindow->Render();					// ###### Not needed with Qt ######
 	// renderWindowInteractor->Start();			// ###### Not needed with Qt ######
 	qInfo() << "Window complete"; // debug
+
+	connect( ui->greenButton,SIGNAL(clicked()), this, SLOT(on_greenButton_clicked()));
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::on_greenButton_clicked()
+{
+    //actor->GetProperty()->SetColor( colors->GetColor3d("green").GetData() );
+    ui->qvtkWidget->GetRenderWindow()->Render();
+}
+
+
+
+
+//Code for File Open, Save, help and print
+
+//Open file Code
+void MainWindow::on_actionFileOpen_triggered()
+{
+
+
+}
+//Save file code
+void MainWindow::on_actionFileSave_triggered()
+{
+
+}
+
+//Help button code
+//Could possibly contain an readme file or a html link to instructions on how to use the software
+void MainWindow::on_actionHelp_triggered()
+{
+
+}
+
+//
+void MainWindow::on_actionPrint_triggered()
+{
+
+}
+
+
+
+//Colour scrollers (R,G,B)
+void MainWindow::on_horizontalSlider_sliderMoved(int position)
+{
+
+}
+
+void MainWindow::on_horizontalSlider_2_sliderMoved(int position)
+{
+
+}
+
+void MainWindow::on_horizontalSlider_3_sliderMoved(int position)
+{
+
 }
