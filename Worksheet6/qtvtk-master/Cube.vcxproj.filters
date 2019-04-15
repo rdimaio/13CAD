@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="C:\Users\ezydhm\Desktop\H62PEP-Week1\Worksheet6\vtk_cube.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\ezydhm\Desktop\H62PEP-Week1\Worksheet6\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{78DFE392-0B93-3285-B870-9AFDA47DB175}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
