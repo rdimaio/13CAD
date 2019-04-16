@@ -52,7 +52,8 @@ std::vector<vtkSmartPointer<vtkTetra>> tetras;
 std::vector<vtkSmartPointer<vtkPyramid>> pyras;
 std::vector<vtkSmartPointer<vtkHexahedron>> hexas;
 vtkSmartPointer<vtkPoints> points = vtkSmartPointer<vtkPoints>::New();
-QString inputFileName;
+QString inputFileName; // Global string for model's filename
+bool modelLoaded = false; // Global flag that indicates a model is currently loaded
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
 {
@@ -120,6 +121,17 @@ void MainWindow::handleActionOpen()
 	// Convert QString to std::string
 	std::string modelFileName = inputFileName.toUtf8().constData();
 
+	if (modelLoaded) {
+		// Remove renderer from render window
+		ui->qvtkWidget->GetRenderWindow()->RemoveRenderer(renderer);
+		// Free previous renderer by assigning it to a NULL pointer
+		renderer = NULL;
+		// Create a new pointer to a renderer
+		renderer = vtkSmartPointer<vtkRenderer>::New();
+		// Add the renderer back
+		ui->qvtkWidget->GetRenderWindow()->AddRenderer(renderer);
+	}
+
 	LoadModel(modelFileName);
 }
 
@@ -129,8 +141,6 @@ void MainWindow::handleActionSave()
 	QString outputFileName = QFileDialog::getSaveFileName(this, tr("Save File"),
 		QDir::currentPath(),
 		tr("Supported Models (*.mod *.stl);;STL Model (*.stl);;Proprietary Model (*.mod)"));
-
-	//QFile::copy(inputFileName, outputFileName);
 
 	if(!QFile::copy(inputFileName, outputFileName)) {
 		// debug - insert error message here - couldn't copy
@@ -147,26 +157,26 @@ void MainWindow::on_horizontalSlider_sliderMoved(int position) //light
 
 void MainWindow::on_comboBox_activated(const QString &arg1) //camera
 {
-    if (arg1 == "X-Axis"){
-        renderer->GetActiveCamera()->SetPosition(1.0,0.0,0.0);
-    }
-    else if (arg1 == "-X-Axis"){
-         renderer->GetActiveCamera()->SetPosition(-1.0,0.0,0.0);
-    }
-    else if (arg1 == "Y-Axis"){
-         renderer->GetActiveCamera()->SetPosition(0.0,1.0,0.0);
-    }
-    else if (arg1 == "-Y-Axis"){
-         renderer->GetActiveCamera()->SetPosition(0.0,-1.0,0.0);
-    }
-    else if (arg1 == "Z-Axis"){
-         renderer->GetActiveCamera()->SetPosition(0.0,0.0,1.0);
-    }
-    else if (arg1 == "-Z-Axis"){
-         renderer->GetActiveCamera()->SetPosition(0.0,0.0,-1.0);
-    }
-    renderer->ResetCamera();
-    ui->qvtkWidget->GetRenderWindow()->Render();
+    if (arg1 == "+X-Axis"){
+           renderer->GetActiveCamera()->SetPosition(1.0,0.0,0.0);
+       }
+       else if (arg1 == "-X-Axis"){
+            renderer->GetActiveCamera()->SetPosition(-1.0,0.0,0.0);
+       }
+       else if (arg1 == "+Y-Axis"){
+            renderer->GetActiveCamera()->SetPosition(0.0,1.0,0.0);
+       }
+       else if (arg1 == "-Y-Axis"){
+            renderer->GetActiveCamera()->SetPosition(0.0,-1.0,0.0);
+       }
+       else if (arg1 == "+Z-Axis"){
+            renderer->GetActiveCamera()->SetPosition(0.0,0.0,1.0);
+       }
+       else if (arg1 == "-Z-Axis"){
+            renderer->GetActiveCamera()->SetPosition(0.0,0.0,-1.0);
+       }
+       renderer->ResetCamera();
+       ui->qvtkWidget->GetRenderWindow()->Render();
 
 }
 
@@ -299,8 +309,13 @@ void LoadModel(std::string inputFilename) {
 
 	qInfo() << "Model is STL"; // debug
 
+	
+
 	actors.resize(1);
 	mappers.resize(1);
+
+	actors[0] = NULL;
+	mappers[0] = NULL;
 
 	// Visualize
 	vtkSmartPointer<vtkSTLReader> reader =
@@ -340,6 +355,22 @@ void LoadModel(std::string inputFilename) {
 		unstructuredGrids.resize(modCells.size());
     	actors.resize(modCells.size());
     	mappers.resize(modCells.size());
+
+		if (modelLoaded) {
+			// Clear pointers to previous model
+			for (int i = 0; i < modCells.size(); i++)
+			{
+				unstructuredGrids[i] = NULL;
+				actors[i] = NULL;
+				mappers[i] = NULL;
+			}
+			tetras.clear();
+			pyras.clear();
+			hexas.clear();
+			cellArray->Reset();
+			points->Reset();
+
+		}
 
 		// For each cell
 		for(std::vector<Cell>::iterator it = modCells.begin(); it != modCells.end(); ++it) {
@@ -471,4 +502,5 @@ void LoadModel(std::string inputFilename) {
 		qInfo() << poly_count; // debug
 		qInfo() << last_used_point_id; // debug
 	}
+	modelLoaded = true;
 }

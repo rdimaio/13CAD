@@ -267,6 +267,8 @@
     </property>
     <addaction name="actionOpen"/>
     <addaction name="actionSave"/>
+    <addaction name="actionClose_Model"/>
+    <addaction name="separator"/>
     <addaction name="actionExport_Screenshot"/>
    </widget>
    <widget class="QMenu" name="menuEdit">
@@ -275,6 +277,7 @@
     </property>
     <addaction name="actionUndo"/>
     <addaction name="actionRedo"/>
+    <addaction name="separator"/>
     <addaction name="actionResetFilters"/>
    </widget>
    <widget class="QMenu" name="menuSettings">
@@ -286,10 +289,11 @@
     <property name="title">
      <string>Help</string>
     </property>
-    <addaction name="actionLIcense"/>
-    <addaction name="actionAbout"/>
     <addaction name="actionLoad_test_STL_model"/>
     <addaction name="actionLoad_test_proprietary_model"/>
+    <addaction name="separator"/>
+    <addaction name="actionAbout"/>
+    <addaction name="actionLIcense"/>
     <addaction name="actionContact_Us"/>
    </widget>
    <widget class="QMenu" name="menuView">
@@ -412,6 +416,11 @@
   <action name="actionContact_Us">
    <property name="text">
     <string>Contact Us</string>
+   </property>
+  </action>
+  <action name="actionClose_Model">
+   <property name="text">
+    <string>Close Model</string>
    </property>
   </action>
  </widget>
