@@ -27,10 +27,17 @@ private:
     void setupUi();
     void setupConnects();
 
+    /**
+     * Clears loaded model.
+    */
+    void clearModel();
+
 
 public slots:
     void handleActionOpen();
     void handleActionSave();
+    void handleActionStlTest();
+    void handleActionModTest();
 //    void handleModelButton();
 //    
 //    void handleBackgButton();
@@ -61,6 +68,6 @@ private:
 /**
  * Loads model.
  */
-void LoadModel(std::string inputFilename);
+void loadModel(std::string inputFilename);
 
 #endif // MAINWINDOW_H

@@ -108,7 +108,22 @@ void MainWindow::setupConnects()
     //connect( ui->backgButton, SIGNAL(clicked()), this, SLOT(handleBackgButton()) );
 	connect(ui->actionOpen, SIGNAL(triggered()), this, SLOT(handleActionOpen()));
 	connect(ui->actionSave, SIGNAL(triggered()), this, SLOT(handleActionSave()));
+	connect(ui->actionStlTest, SIGNAL(triggered()), this, SLOT(handleActionStlTest()));
+	connect(ui->actionModTest, SIGNAL(triggered()), this, SLOT(handleActionModTest()));
 	//ui->sa->setIcon(QIcon("ModelLoader/src/gui/Icons/filesave.png")); //choose the icon location
+}
+
+void MainWindow::clearModel()
+{
+	// Remove renderer from render window
+	ui->qvtkWidget->GetRenderWindow()->RemoveRenderer(renderer);
+	// Free previous renderer by assigning it to a NULL pointer
+	renderer = NULL;
+	// Create a new pointer to a renderer
+	renderer = vtkSmartPointer<vtkRenderer>::New();
+	// Add the renderer back
+	ui->qvtkWidget->GetRenderWindow()->AddRenderer(renderer);
+	modelLoaded = false;
 }
 
 void MainWindow::handleActionOpen()
@@ -122,17 +137,10 @@ void MainWindow::handleActionOpen()
 	std::string modelFileName = inputFileName.toUtf8().constData();
 
 	if (modelLoaded) {
-		// Remove renderer from render window
-		ui->qvtkWidget->GetRenderWindow()->RemoveRenderer(renderer);
-		// Free previous renderer by assigning it to a NULL pointer
-		renderer = NULL;
-		// Create a new pointer to a renderer
-		renderer = vtkSmartPointer<vtkRenderer>::New();
-		// Add the renderer back
-		ui->qvtkWidget->GetRenderWindow()->AddRenderer(renderer);
+		clearModel();
 	}
 
-	LoadModel(modelFileName);
+	loadModel(modelFileName);
 }
 
 void MainWindow::handleActionSave()
@@ -145,6 +153,24 @@ void MainWindow::handleActionSave()
 	if(!QFile::copy(inputFileName, outputFileName)) {
 		// debug - insert error message here - couldn't copy
 	}
+}
+
+void MainWindow::handleActionStlTest()
+{
+    if (modelLoaded)
+	{
+		clearModel();
+	}
+	loadModel("tests/ExampleSTL.stl");
+}
+
+void MainWindow::handleActionModTest()
+{
+	if (modelLoaded)
+	{
+		clearModel();
+	}
+    loadModel("tests/ExampleModel.mod");
 }
 
 /*
@@ -299,7 +325,7 @@ void MainWindow::on_horizontalSlider_3_sliderMoved(int position)
 
 */
 
-void LoadModel(std::string inputFilename) {
+void loadModel(std::string inputFilename) {
 	// Load model
 	// (maybe only do model mod1 in case it's a .mod file, remove isstl from model,
 	// and check here, so that you don't construct a model in case it's stl.)

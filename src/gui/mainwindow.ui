@@ -289,8 +289,8 @@
     <property name="title">
      <string>Help</string>
     </property>
-    <addaction name="actionLoad_test_STL_model"/>
-    <addaction name="actionLoad_test_proprietary_model"/>
+    <addaction name="actionStlTest"/>
+    <addaction name="actionModTest"/>
     <addaction name="separator"/>
     <addaction name="actionAbout"/>
     <addaction name="actionLIcense"/>
@@ -403,12 +403,12 @@
     <string>Reset Filters</string>
    </property>
   </action>
-  <action name="actionLoad_test_STL_model">
+  <action name="actionStlTest">
    <property name="text">
     <string>Load test STL model</string>
    </property>
   </action>
-  <action name="actionLoad_test_proprietary_model">
+  <action name="actionModTest">
    <property name="text">
     <string>Load test proprietary model</string>
    </property>
