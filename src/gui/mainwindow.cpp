@@ -52,6 +52,7 @@ std::vector<vtkSmartPointer<vtkTetra>> tetras;
 std::vector<vtkSmartPointer<vtkPyramid>> pyras;
 std::vector<vtkSmartPointer<vtkHexahedron>> hexas;
 vtkSmartPointer<vtkPoints> points = vtkSmartPointer<vtkPoints>::New();
+QString inputFileName;
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
 {
@@ -96,37 +97,44 @@ void MainWindow::setupUi()
 	// Add the renderer to the render window
 	ui->qvtkWidget->GetRenderWindow()->AddRenderer(renderer);
 
+	setupConnects();
+}
+
+void MainWindow::setupConnects()
+{
 	//connect( ui->greenButton,SIGNAL(clicked()), this, SLOT(on_greenButton_clicked()));
     //connect( ui->modelButton, SIGNAL(clicked()), this, SLOT(handleModelButton()) );
     //connect( ui->backgButton, SIGNAL(clicked()), this, SLOT(handleBackgButton()) );
 	connect(ui->actionOpen, SIGNAL(triggered()), this, SLOT(handleActionOpen()));
+	connect(ui->actionSave, SIGNAL(triggered()), this, SLOT(handleActionSave()));
 	//ui->sa->setIcon(QIcon("ModelLoader/src/gui/Icons/filesave.png")); //choose the icon location
 }
 
 void MainWindow::handleActionOpen()
 {
     // Prompt user for a filename
-	QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"),
+	inputFileName = QFileDialog::getOpenFileName(this, tr("Open File"),
 		QDir::currentPath(),
 		tr("Supported Models (*.mod, *.stl);;STL Model (*.stl);;Proprietary Model (*.mod)"));
 
 	// Convert QString to std::string
-	std::string inputFileName = fileName.toUtf8().constData();
+	std::string modelFileName = inputFileName.toUtf8().constData();
 
-	LoadModel(inputFileName);
+	LoadModel(modelFileName);
 }
 
 void MainWindow::handleActionSave()
 {
     // Prompt user for a filename
-	QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"),
+	QString outputFileName = QFileDialog::getSaveFileName(this, tr("Save File"),
 		QDir::currentPath(),
-		tr("Supported Models (*.mod, *.stl);;STL Model (*.stl);;Proprietary Model (*.mod)"));
+		tr("Supported Models (*.mod *.stl);;STL Model (*.stl);;Proprietary Model (*.mod)"));
 
-	// Convert QString to std::string
-	std::string inputFileName = fileName.toUtf8().constData();
+	//QFile::copy(inputFileName, outputFileName);
 
-	LoadModel(inputFileName);
+	if(!QFile::copy(inputFileName, outputFileName)) {
+		// debug - insert error message here - couldn't copy
+	}
 }
 
 /*

@@ -18,6 +18,7 @@ Might need to change the way vector ID is saved in saveToFile in model.
 the count of tetras, pyramids and hexas respectively, to speed up 
 mainwindow rendering (because it has the number already and doesn't have to
 resize at each iteration)  
+- Go through all the comments that say "debug", work on them and remove them
 - Right now we have an actor and mapper for each cell, but maybe this is how it should be:
 ```		
 // ONLY ONE ACTOR, ONE MAPPER, AND ONE READER. (reader is only needed for stl)

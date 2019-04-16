@@ -25,6 +25,7 @@ public:
 
 private:
     void setupUi();
+    void setupConnects();
 
 
 public slots:
