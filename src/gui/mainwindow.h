@@ -23,8 +23,23 @@ public:
     ~MainWindow();
 
 private slots:
-
     void on_sa_clicked();
+    
+    void on_greenButton_clicked();
+
+    void on_actionFileOpen_triggered();
+
+    void on_horizontalSlider_sliderMoved(int position);
+
+    void on_horizontalSlider_2_sliderMoved(int position);
+
+    void on_horizontalSlider_3_sliderMoved(int position);
+
+    void on_actionFileSave_triggered();
+
+    void on_actionHelp_triggered();
+
+    void on_actionPrint_triggered();
 
 private:
     Ui::MainWindow *ui;
