@@ -53,6 +53,6 @@ private:
     Ui::MainWindow *ui;
 };
 
-void LoadModel();
+void LoadModel(std::string inputFilename);
 
 #endif // MAINWINDOW_H

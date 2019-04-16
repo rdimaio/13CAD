@@ -33,30 +33,9 @@
 // Local headers
 #include "model.h"
 
-MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
-{
-    // standard call to setup Qt UI (same as previously)
-    ui->setupUi(this);
 
-	//std::string inputFilename = "tests/ExampleSTL.stl";
-	std::string inputFilename = "tests/ExampleModel.mod";
-
-    setWindowTitle(tr("Model Loader"));
-
-	// Load model
-	// (maybe only do model mod1 in case it's a .mod file, remove isstl from model,
-	// and check here, so that you don't construct a model in case it's stl.)
-  	Model mod1(inputFilename);
-
-	// Create a VTK render window and link it to the QtVTK widget
-	// (vtkWidget is the name gave to QtVTKOpenGLWidget in Qt Creator)
-	vtkNew<vtkGenericOpenGLRenderWindow> renderWindow;
-	ui->qvtkWidget->SetRenderWindow(renderWindow);
-
-	// Create a renderer and add it to the render window
-	vtkSmartPointer<vtkRenderer> renderer = vtkSmartPointer<vtkRenderer>::New();
-	ui->qvtkWidget->GetRenderWindow()->AddRenderer(renderer);
-
+vtkNew<vtkGenericOpenGLRenderWindow> renderWindow;
+vtkSmartPointer<vtkRenderer> renderer = vtkSmartPointer<vtkRenderer>::New();
 	// Create colors
 	vtkSmartPointer<vtkNamedColors> colors = vtkSmartPointer<vtkNamedColors>::New();
 
@@ -76,7 +55,238 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 	std::vector<vtkSmartPointer<vtkHexahedron>> hexas;
 	vtkSmartPointer<vtkPoints> points = vtkSmartPointer<vtkPoints>::New();
 
-	if (mod1.getIsSTL()) {
+MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
+{
+    // standard call to setup Qt UI (same as previously)
+    ui->setupUi(this);
+
+    setWindowTitle(tr("13CAD"));
+
+	
+
+	// Create a VTK render window and link it to the QtVTK widget
+	// (vtkWidget is the name gave to QtVTKOpenGLWidget in Qt Creator)
+	
+	ui->qvtkWidget->SetRenderWindow(renderWindow);
+
+	// Create a renderer and add it to the render window
+	
+	ui->qvtkWidget->GetRenderWindow()->AddRenderer(renderer);
+
+
+
+	
+
+	//actor->GetProperty()->EdgeVisibilityOn();
+
+
+	// Link a renderWindowInteractor to the renderer (this allows you to capture mouse movements etc)  ###### Not needed with Qt ######
+	//vtkSmartPointer<vtkRenderWindowInteractor> renderWindowInteractor = vtkSmartPointer<vtkRenderWindowInteractor>::New();
+	//renderWindowInteractor->SetRenderWindow( ui->vtkWidget->GetRenderWindow() );
+	renderer->SetBackground( colors->GetColor3d("Grey").GetData() );
+
+        // // Setup the light
+        // light = vtkSmartPointer<vtkLight>::New();
+        // light->SetLightTypeToHeadlight();
+        // light->SetIntensity( 1 );
+
+	// Setup the renderers's camera
+	renderer->ResetCamera();
+	renderer->GetActiveCamera()->Azimuth(30);
+	renderer->GetActiveCamera()->Elevation(30);
+	renderer->ResetCameraClippingRange();
+
+
+	// Render and interact
+	// renderWindow->Render();					// ###### Not needed with Qt ######
+	// renderWindowInteractor->Start();			// ###### Not needed with Qt ######
+	qInfo() << "Window complete"; // debug
+
+	//connect( ui->greenButton,SIGNAL(clicked()), this, SLOT(on_greenButton_clicked()));
+    //connect( ui->modelButton, SIGNAL(clicked()), this, SLOT(handleModelButton()) );
+    //connect( ui->backgButton, SIGNAL(clicked()), this, SLOT(handleBackgButton()) );
+	connect(ui->openButton, SIGNAL(triggered()), this, SLOT(handleOpenButton()));
+	//ui->sa->setIcon(QIcon("ModelLoader/src/gui/Icons/filesave.png")); //choose the icon location
+
+}
+
+MainWindow::~MainWindow()
+{
+    delete ui;
+}
+
+void MainWindow::handleOpenButton()
+{
+    // Prompt user for a filename
+	QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"),
+		QDir::currentPath(),
+		tr("Supported Models (*.mod, *.stl);;STL Model (*.stl);;Proprietary Model (*.mod)"));
+
+	// Convert QString to std::string
+	std::string inputFileName = fileName.toUtf8().constData();
+
+	LoadModel(inputFileName);
+}
+
+/*
+
+void MainWindow::on_horizontalSlider_sliderMoved(int position) //light
+{
+    light->SetIntensity((float) (100-position)/100);
+    ui->qvtkWidget->GetRenderWindow()->Render();
+}
+
+void MainWindow::on_comboBox_activated(const QString &arg1) //camera
+{
+    if (arg1 == "X-Axis"){
+        renderer->GetActiveCamera()->SetPosition(1.0,0.0,0.0);
+    }
+    else if (arg1 == "-X-Axis"){
+         renderer->GetActiveCamera()->SetPosition(-1.0,0.0,0.0);
+    }
+    else if (arg1 == "Y-Axis"){
+         renderer->GetActiveCamera()->SetPosition(0.0,1.0,0.0);
+    }
+    else if (arg1 == "-Y-Axis"){
+         renderer->GetActiveCamera()->SetPosition(0.0,-1.0,0.0);
+    }
+    else if (arg1 == "Z-Axis"){
+         renderer->GetActiveCamera()->SetPosition(0.0,0.0,1.0);
+    }
+    else if (arg1 == "-Z-Axis"){
+         renderer->GetActiveCamera()->SetPosition(0.0,0.0,-1.0);
+    }
+    renderer->ResetCamera();
+    ui->qvtkWidget->GetRenderWindow()->Render();
+
+}
+
+void MainWindow::handleModelButton()
+{
+    vtkSmartPointer<vtkNamedColors> colors = vtkSmartPointer<vtkNamedColors>::New();
+
+	QColor color = QColorDialog::getColor(Qt::white, this, "Choose Color");
+
+	if (color.isValid()) {
+
+		QString hex = color.name();
+		std::string str = hex.toStdString();
+		char *cstr = &str[0u];
+
+		int r, g, b;
+		double ri, gi, bi;
+		sscanf(cstr, "#%02x%02x%02x", &r, &g, &b);
+
+		ri = (double)r / 255;
+		gi = (double)g / 255;
+		bi = (double)b / 255;
+
+		actor->GetProperty()->SetColor(ri, gi, bi);
+	}
+
+    ui->qvtkWidget->GetRenderWindow()->Render();
+}
+
+void MainWindow::handleBackgButton()
+{
+    vtkSmartPointer<vtkNamedColors> colors = vtkSmartPointer<vtkNamedColors>::New();
+    renderer->AddActor(actor);
+
+    QColor color = QColorDialog::getColor(Qt::white,this,"Choose Color");
+
+    if(color.isValid()) {
+
+		QString hex = color.name();
+
+		std::string str = hex.toStdString();
+		char *cstr = &str[0u];
+
+		int r, g, b;
+		double ri, gi, bi;
+
+		sscanf(cstr, "#%02x%02x%02x", &r, &g, &b);
+
+		ri = (double)r / 255;
+		gi = (double)g / 255;
+		bi = (double)b / 255;
+
+        renderer->SetBackground(ri, gi, bi);
+    }
+
+    ui->qvtkWidget->GetRenderWindow()->Render();
+}
+  
+void MainWindow::on_sa_clicked()
+{
+    QString filename = QFileDialog::getSaveFileName(this,tr("Save Image"),"",tr("Images (*.png)")); 
+        QScreen *screen = QGuiApplication::primaryScreen();
+        screen->grabWindow(ui->qvtkWidget->winId()).save(filename);
+
+}
+
+void MainWindow::on_greenButton_clicked()
+{
+    //actor->GetProperty()->SetColor( colors->GetColor3d("green").GetData() );
+    ui->qvtkWidget->GetRenderWindow()->Render();
+}
+
+
+
+
+//Code for File Open, Save, help and print
+
+//Open file Code
+void MainWindow::on_actionFileOpen_triggered()
+{
+
+
+}
+//Save file code
+void MainWindow::on_actionFileSave_triggered()
+{
+
+}
+
+//Help button code
+//Could possibly contain an readme file or a html link to instructions on how to use the software
+void MainWindow::on_actionHelp_triggered()
+{
+
+}
+
+//
+void MainWindow::on_actionPrint_triggered()
+{
+
+}
+
+
+
+//Colour scrollers (R,G,B)
+void MainWindow::on_horizontalSlider_sliderMoved(int position)
+{
+
+}
+
+void MainWindow::on_horizontalSlider_2_sliderMoved(int position)
+{
+
+}
+
+void MainWindow::on_horizontalSlider_3_sliderMoved(int position)
+{
+
+}
+
+*/
+
+void LoadModel(std::string inputFilename) {
+	// Load model
+	// (maybe only do model mod1 in case it's a .mod file, remove isstl from model,
+	// and check here, so that you don't construct a model in case it's stl.)
+  	Model mod1(inputFilename);
+
+	  if (mod1.getIsSTL()) {
 
 	qInfo() << "Model is STL"; // debug
 
@@ -252,206 +462,4 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 		qInfo() << poly_count; // debug
 		qInfo() << last_used_point_id; // debug
 	}
-
-	//actor->GetProperty()->EdgeVisibilityOn();
-
-
-	// Link a renderWindowInteractor to the renderer (this allows you to capture mouse movements etc)  ###### Not needed with Qt ######
-	//vtkSmartPointer<vtkRenderWindowInteractor> renderWindowInteractor = vtkSmartPointer<vtkRenderWindowInteractor>::New();
-	//renderWindowInteractor->SetRenderWindow( ui->vtkWidget->GetRenderWindow() );
-	renderer->SetBackground( colors->GetColor3d("Grey").GetData() );
-
-        // Setup the light
-        light = vtkSmartPointer<vtkLight>::New();
-        light->SetLightTypeToHeadlight();
-        light->SetIntensity( 1 );
-
-	// Setup the renderers's camera
-	renderer->ResetCamera();
-	renderer->GetActiveCamera()->Azimuth(30);
-	renderer->GetActiveCamera()->Elevation(30);
-	renderer->ResetCameraClippingRange();
-
-
-	// Render and interact
-	// renderWindow->Render();					// ###### Not needed with Qt ######
-	// renderWindowInteractor->Start();			// ###### Not needed with Qt ######
-	qInfo() << "Window complete"; // debug
-
-	//connect( ui->greenButton,SIGNAL(clicked()), this, SLOT(on_greenButton_clicked()));
-    //connect( ui->modelButton, SIGNAL(clicked()), this, SLOT(handleModelButton()) );
-    //connect( ui->backgButton, SIGNAL(clicked()), this, SLOT(handleBackgButton()) );
-	connect(ui->openButton, SIGNAL(triggered()), this, SLOT(handleOpenButton()));
-	//ui->sa->setIcon(QIcon("ModelLoader/src/gui/Icons/filesave.png")); //choose the icon location
-
 }
-
-MainWindow::~MainWindow()
-{
-    delete ui;
-}
-
-void MainWindow::handleOpenButton()
-{
-    // Prompt user for a filename
-	QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"),
-		QDir::currentPath(),
-		tr("STL Model (*.stl);;Proprietary Model (*.mod)"));
-
-		
-}
-
-/*
-
-void MainWindow::on_horizontalSlider_sliderMoved(int position) //light
-{
-    light->SetIntensity((float) (100-position)/100);
-    ui->qvtkWidget->GetRenderWindow()->Render();
-}
-
-void MainWindow::on_comboBox_activated(const QString &arg1) //camera
-{
-    if (arg1 == "X-Axis"){
-        renderer->GetActiveCamera()->SetPosition(1.0,0.0,0.0);
-    }
-    else if (arg1 == "-X-Axis"){
-         renderer->GetActiveCamera()->SetPosition(-1.0,0.0,0.0);
-    }
-    else if (arg1 == "Y-Axis"){
-         renderer->GetActiveCamera()->SetPosition(0.0,1.0,0.0);
-    }
-    else if (arg1 == "-Y-Axis"){
-         renderer->GetActiveCamera()->SetPosition(0.0,-1.0,0.0);
-    }
-    else if (arg1 == "Z-Axis"){
-         renderer->GetActiveCamera()->SetPosition(0.0,0.0,1.0);
-    }
-    else if (arg1 == "-Z-Axis"){
-         renderer->GetActiveCamera()->SetPosition(0.0,0.0,-1.0);
-    }
-    renderer->ResetCamera();
-    ui->qvtkWidget->GetRenderWindow()->Render();
-
-}
-
-void MainWindow::handleModelButton()
-{
-    vtkSmartPointer<vtkNamedColors> colors = vtkSmartPointer<vtkNamedColors>::New();
-
-	QColor color = QColorDialog::getColor(Qt::white, this, "Choose Color");
-
-	if (color.isValid()) {
-
-		QString hex = color.name();
-		std::string str = hex.toStdString();
-		char *cstr = &str[0u];
-
-		int r, g, b;
-		double ri, gi, bi;
-		sscanf(cstr, "#%02x%02x%02x", &r, &g, &b);
-
-		ri = (double)r / 255;
-		gi = (double)g / 255;
-		bi = (double)b / 255;
-
-		actor->GetProperty()->SetColor(ri, gi, bi);
-	}
-
-    ui->qvtkWidget->GetRenderWindow()->Render();
-}
-
-void MainWindow::handleBackgButton()
-{
-    vtkSmartPointer<vtkNamedColors> colors = vtkSmartPointer<vtkNamedColors>::New();
-    renderer->AddActor(actor);
-
-    QColor color = QColorDialog::getColor(Qt::white,this,"Choose Color");
-
-    if(color.isValid()) {
-
-		QString hex = color.name();
-
-		std::string str = hex.toStdString();
-		char *cstr = &str[0u];
-
-		int r, g, b;
-		double ri, gi, bi;
-
-		sscanf(cstr, "#%02x%02x%02x", &r, &g, &b);
-
-		ri = (double)r / 255;
-		gi = (double)g / 255;
-		bi = (double)b / 255;
-
-        renderer->SetBackground(ri, gi, bi);
-    }
-
-    ui->qvtkWidget->GetRenderWindow()->Render();
-}
-  
-void MainWindow::on_sa_clicked()
-{
-    QString filename = QFileDialog::getSaveFileName(this,tr("Save Image"),"",tr("Images (*.png)")); 
-        QScreen *screen = QGuiApplication::primaryScreen();
-        screen->grabWindow(ui->qvtkWidget->winId()).save(filename);
-
-}
-
-void MainWindow::on_greenButton_clicked()
-{
-    //actor->GetProperty()->SetColor( colors->GetColor3d("green").GetData() );
-    ui->qvtkWidget->GetRenderWindow()->Render();
-}
-
-
-
-
-//Code for File Open, Save, help and print
-
-//Open file Code
-void MainWindow::on_actionFileOpen_triggered()
-{
-
-
-}
-//Save file code
-void MainWindow::on_actionFileSave_triggered()
-{
-
-}
-
-//Help button code
-//Could possibly contain an readme file or a html link to instructions on how to use the software
-void MainWindow::on_actionHelp_triggered()
-{
-
-}
-
-//
-void MainWindow::on_actionPrint_triggered()
-{
-
-}
-
-
-
-//Colour scrollers (R,G,B)
-void MainWindow::on_horizontalSlider_sliderMoved(int position)
-{
-
-}
-
-void MainWindow::on_horizontalSlider_2_sliderMoved(int position)
-{
-
-}
-
-void MainWindow::on_horizontalSlider_3_sliderMoved(int position)
-{
-<<<<<<< HEAD
-}
-
-*/
-=======
-}
->>>>>>> 41320a9f39d2761c735483579cedcee77df5d775
