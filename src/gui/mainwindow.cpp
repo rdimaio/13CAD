@@ -38,8 +38,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     // standard call to setup Qt UI (same as previously)
     ui->setupUi(this);
 
-    connect( ui->modelButton, SIGNAL(clicked()), this, SLOT(handleModelButton()) );
-    connect( ui->backgButton, SIGNAL(clicked()), this, SLOT(handleBackgButton()) );
+	//std::string inputFilename = "tests/ExampleSTL.stl";
+	std::string inputFilename = "tests/ExampleModel.mod";
+
+    setWindowTitle(tr("Model Loader"));
 
 	// Load model
 	// (maybe only do model mod1 in case it's a .mod file, remove isstl from model,
@@ -73,8 +75,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 	std::vector<vtkSmartPointer<vtkPyramid>> pyras;
 	std::vector<vtkSmartPointer<vtkHexahedron>> hexas;
 	vtkSmartPointer<vtkPoints> points = vtkSmartPointer<vtkPoints>::New();
-
-	qInfo() << "Window successfully initialised"; // debug
 
 	if (mod1.getIsSTL()) {
 
@@ -266,16 +266,19 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 	renderer->GetActiveCamera()->Azimuth(30);
 	renderer->GetActiveCamera()->Elevation(30);
 	renderer->ResetCameraClippingRange();
-	
-	
-	ui->sa->setIcon(QIcon("ModelLoader/src/gui/Icons/filesave.png")); //choose the icon location
+
 
 	// Render and interact
 	// renderWindow->Render();					// ###### Not needed with Qt ######
 	// renderWindowInteractor->Start();			// ###### Not needed with Qt ######
 	qInfo() << "Window complete"; // debug
 
-	connect( ui->greenButton,SIGNAL(clicked()), this, SLOT(on_greenButton_clicked()));
+	//connect( ui->greenButton,SIGNAL(clicked()), this, SLOT(on_greenButton_clicked()));
+    //connect( ui->modelButton, SIGNAL(clicked()), this, SLOT(handleModelButton()) );
+    //connect( ui->backgButton, SIGNAL(clicked()), this, SLOT(handleBackgButton()) );
+	connect(ui->openButton, SIGNAL(triggered()), this, SLOT(handleOpenButton()));
+	//ui->sa->setIcon(QIcon("ModelLoader/src/gui/Icons/filesave.png")); //choose the icon location
+
 }
 
 MainWindow::~MainWindow()
@@ -283,6 +286,17 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+void MainWindow::handleOpenButton()
+{
+    // Prompt user for a filename
+	QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"),
+		QDir::currentPath(),
+		tr("STL Model (*.stl);;Proprietary Model (*.mod)"));
+
+		
+}
+
+/*
 void MainWindow::handleModelButton()
 {
     vtkSmartPointer<vtkNamedColors> colors = vtkSmartPointer<vtkNamedColors>::New();
@@ -399,3 +413,4 @@ void MainWindow::on_horizontalSlider_3_sliderMoved(int position)
 {
 }
 
+*/
