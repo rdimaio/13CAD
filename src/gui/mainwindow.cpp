@@ -266,6 +266,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 	renderer->GetActiveCamera()->Azimuth(30);
 	renderer->GetActiveCamera()->Elevation(30);
 	renderer->ResetCameraClippingRange();
+	
+	
+	ui->sa->setIcon(QIcon("ModelLoader/src/gui/Icons/filesave.png")); //choose the icon location
 
 	// Render and interact
 	// renderWindow->Render();					// ###### Not needed with Qt ######
@@ -278,6 +281,14 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::on_sa_clicked()
+{
+    QString filename = QFileDialog::getSaveFileName(this,tr("Save Image"),"",tr("Images (*.png)")); 
+        QScreen *screen = QGuiApplication::primaryScreen();
+        screen->grabWindow(ui->qvtkWidget->winId()).save(filename);
+
 }
 
 void MainWindow::on_greenButton_clicked()
@@ -333,3 +344,4 @@ void MainWindow::on_horizontalSlider_3_sliderMoved(int position)
 {
 
 }
+

@@ -3,6 +3,13 @@
 
 #include <QMainWindow>
 
+#include <QImage>
+#include <QPixmap>
+#include <QFileDialog>
+#include <QMessageBox>
+#include <QScreen>
+#include <QGuiApplication>
+
 namespace Ui {
 class MainWindow;
 }
@@ -16,6 +23,8 @@ public:
     ~MainWindow();
 
 private slots:
+    void on_sa_clicked();
+    
     void on_greenButton_clicked();
 
     void on_actionFileOpen_triggered();
