@@ -23,9 +23,13 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+private:
+    void setupUi();
+
 
 public slots:
-    void handleOpenButton();
+    void handleActionOpen();
+    void handleActionSave();
 //    void handleModelButton();
 //    
 //    void handleBackgButton();
@@ -53,6 +57,9 @@ private:
     Ui::MainWindow *ui;
 };
 
+/**
+ * Loads model.
+ */
 void LoadModel(std::string inputFilename);
 
 #endif // MAINWINDOW_H

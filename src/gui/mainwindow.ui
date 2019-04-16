@@ -265,8 +265,8 @@
     <property name="title">
      <string>File</string>
     </property>
-    <addaction name="openButton"/>
-    <addaction name="actionFileSave"/>
+    <addaction name="actionOpen"/>
+    <addaction name="actionSave"/>
     <addaction name="actionExport_Screenshot"/>
    </widget>
    <widget class="QMenu" name="menuEdit">
@@ -313,14 +313,14 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
-   <addaction name="openButton"/>
-   <addaction name="actionFileSave"/>
+   <addaction name="actionOpen"/>
+   <addaction name="actionSave"/>
    <addaction name="separator"/>
    <addaction name="actionPrint"/>
    <addaction name="actionHelp"/>
    <addaction name="separator"/>
   </widget>
-  <action name="openButton">
+  <action name="actionOpen">
    <property name="checkable">
     <bool>false</bool>
    </property>
@@ -335,7 +335,7 @@
     <string>Ctrl+O</string>
    </property>
   </action>
-  <action name="actionFileSave">
+  <action name="actionSave">
    <property name="icon">
     <iconset>
      <normaloff>icons/filesave.png</normaloff>icons/filesave.png</iconset>

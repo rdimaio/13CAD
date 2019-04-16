@@ -33,57 +33,33 @@
 // Local headers
 #include "model.h"
 
-
+// VTK global variables
+// Create a VTK render window and a renderer
 vtkNew<vtkGenericOpenGLRenderWindow> renderWindow;
 vtkSmartPointer<vtkRenderer> renderer = vtkSmartPointer<vtkRenderer>::New();
-	// Create colors
-	vtkSmartPointer<vtkNamedColors> colors = vtkSmartPointer<vtkNamedColors>::New();
-
-	// Create cell array to store the cells of the .mod file
-	vtkSmartPointer<vtkCellArray> cellArray = vtkSmartPointer<vtkCellArray>::New();
-
-	// Initialise vectors for mappers and actors
-	// .mod files have an actor/mapper per cell,
-	// while .stl files only require one actor/mapper for the entire file
-	std::vector<vtkSmartPointer<vtkDataSetMapper>> mappers;
-  	std::vector<vtkSmartPointer<vtkActor>> actors;
-
-	// Initialise vectors for .mod parsing
-	std::vector<vtkSmartPointer<vtkUnstructuredGrid>> unstructuredGrids;
-  	std::vector<vtkSmartPointer<vtkTetra>> tetras;
-	std::vector<vtkSmartPointer<vtkPyramid>> pyras;
-	std::vector<vtkSmartPointer<vtkHexahedron>> hexas;
-	vtkSmartPointer<vtkPoints> points = vtkSmartPointer<vtkPoints>::New();
+// Create colors
+vtkSmartPointer<vtkNamedColors> colors = vtkSmartPointer<vtkNamedColors>::New();
+// Create cell array to store the cells of the .mod file
+vtkSmartPointer<vtkCellArray> cellArray = vtkSmartPointer<vtkCellArray>::New();
+// Initialise vectors for mappers and actors
+// .mod files have an actor/mapper per cell,
+// while .stl files only require one actor/mapper for the entire file
+std::vector<vtkSmartPointer<vtkDataSetMapper>> mappers;
+std::vector<vtkSmartPointer<vtkActor>> actors;
+// Initialise vectors for .mod parsing
+std::vector<vtkSmartPointer<vtkUnstructuredGrid>> unstructuredGrids;
+std::vector<vtkSmartPointer<vtkTetra>> tetras;
+std::vector<vtkSmartPointer<vtkPyramid>> pyras;
+std::vector<vtkSmartPointer<vtkHexahedron>> hexas;
+vtkSmartPointer<vtkPoints> points = vtkSmartPointer<vtkPoints>::New();
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
 {
-    // standard call to setup Qt UI (same as previously)
-    ui->setupUi(this);
+	// debug - works with both this-> and just setupUi(); on its own;
+	// maybe change it if it breaks
+	this->setupUi();
 
-    setWindowTitle(tr("13CAD"));
-
-	
-
-	// Create a VTK render window and link it to the QtVTK widget
-	// (vtkWidget is the name gave to QtVTKOpenGLWidget in Qt Creator)
-	
-	ui->qvtkWidget->SetRenderWindow(renderWindow);
-
-	// Create a renderer and add it to the render window
-	
-	ui->qvtkWidget->GetRenderWindow()->AddRenderer(renderer);
-
-
-
-	
-
-	//actor->GetProperty()->EdgeVisibilityOn();
-
-
-	// Link a renderWindowInteractor to the renderer (this allows you to capture mouse movements etc)  ###### Not needed with Qt ######
-	//vtkSmartPointer<vtkRenderWindowInteractor> renderWindowInteractor = vtkSmartPointer<vtkRenderWindowInteractor>::New();
-	//renderWindowInteractor->SetRenderWindow( ui->vtkWidget->GetRenderWindow() );
-	renderer->SetBackground( colors->GetColor3d("Grey").GetData() );
+	renderer->SetBackground(colors->GetColor3d("Grey").GetData());
 
         // // Setup the light
         // light = vtkSmartPointer<vtkLight>::New();
@@ -98,16 +74,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
 
 	// Render and interact
-	// renderWindow->Render();					// ###### Not needed with Qt ######
-	// renderWindowInteractor->Start();			// ###### Not needed with Qt ######
 	qInfo() << "Window complete"; // debug
-
-	//connect( ui->greenButton,SIGNAL(clicked()), this, SLOT(on_greenButton_clicked()));
-    //connect( ui->modelButton, SIGNAL(clicked()), this, SLOT(handleModelButton()) );
-    //connect( ui->backgButton, SIGNAL(clicked()), this, SLOT(handleBackgButton()) );
-	connect(ui->openButton, SIGNAL(triggered()), this, SLOT(handleOpenButton()));
-	//ui->sa->setIcon(QIcon("ModelLoader/src/gui/Icons/filesave.png")); //choose the icon location
-
 }
 
 MainWindow::~MainWindow()
@@ -115,7 +82,41 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::handleOpenButton()
+void MainWindow::setupUi()
+{
+    // standard call to setup Qt UI (same as previously)
+    ui->setupUi(this);
+
+    setWindowTitle(tr("13CAD"));
+
+	// Link the VTK render window to the QtVTK widget
+	// (qvtkWidget is the name gave to QtVTKOpenGLWidget in Qt Creator)
+	ui->qvtkWidget->SetRenderWindow(renderWindow);
+
+	// Add the renderer to the render window
+	ui->qvtkWidget->GetRenderWindow()->AddRenderer(renderer);
+
+	//connect( ui->greenButton,SIGNAL(clicked()), this, SLOT(on_greenButton_clicked()));
+    //connect( ui->modelButton, SIGNAL(clicked()), this, SLOT(handleModelButton()) );
+    //connect( ui->backgButton, SIGNAL(clicked()), this, SLOT(handleBackgButton()) );
+	connect(ui->actionOpen, SIGNAL(triggered()), this, SLOT(handleActionOpen()));
+	//ui->sa->setIcon(QIcon("ModelLoader/src/gui/Icons/filesave.png")); //choose the icon location
+}
+
+void MainWindow::handleActionOpen()
+{
+    // Prompt user for a filename
+	QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"),
+		QDir::currentPath(),
+		tr("Supported Models (*.mod, *.stl);;STL Model (*.stl);;Proprietary Model (*.mod)"));
+
+	// Convert QString to std::string
+	std::string inputFileName = fileName.toUtf8().constData();
+
+	LoadModel(inputFileName);
+}
+
+void MainWindow::handleActionSave()
 {
     // Prompt user for a filename
 	QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"),
