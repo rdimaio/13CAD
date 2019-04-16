@@ -261,6 +261,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 	//renderWindowInteractor->SetRenderWindow( ui->vtkWidget->GetRenderWindow() );
 	renderer->SetBackground( colors->GetColor3d("Grey").GetData() );
 
+        // Setup the light
+        light = vtkSmartPointer<vtkLight>::New();
+        light->SetLightTypeToHeadlight();
+        light->SetIntensity( 1 );
+
 	// Setup the renderers's camera
 	renderer->ResetCamera();
 	renderer->GetActiveCamera()->Azimuth(30);
@@ -281,6 +286,37 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::on_horizontalSlider_sliderMoved(int position) //light
+{
+    light->SetIntensity((float) (100-position)/100);
+    ui->qvtkWidget->GetRenderWindow()->Render();
+}
+
+void MainWindow::on_comboBox_activated(const QString &arg1) //camera
+{
+    if (arg1 == "X-Axis"){
+        renderer->GetActiveCamera()->SetPosition(1.0,0.0,0.0);
+    }
+    else if (arg1 == "-X-Axis"){
+         renderer->GetActiveCamera()->SetPosition(-1.0,0.0,0.0);
+    }
+    else if (arg1 == "Y-Axis"){
+         renderer->GetActiveCamera()->SetPosition(0.0,1.0,0.0);
+    }
+    else if (arg1 == "-Y-Axis"){
+         renderer->GetActiveCamera()->SetPosition(0.0,-1.0,0.0);
+    }
+    else if (arg1 == "Z-Axis"){
+         renderer->GetActiveCamera()->SetPosition(0.0,0.0,1.0);
+    }
+    else if (arg1 == "-Z-Axis"){
+         renderer->GetActiveCamera()->SetPosition(0.0,0.0,-1.0);
+    }
+    renderer->ResetCamera();
+    ui->qvtkWidget->GetRenderWindow()->Render();
+
 }
 
 void MainWindow::handleModelButton()
@@ -398,4 +434,3 @@ void MainWindow::on_horizontalSlider_2_sliderMoved(int position)
 void MainWindow::on_horizontalSlider_3_sliderMoved(int position)
 {
 }
-
