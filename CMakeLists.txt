@@ -89,27 +89,38 @@ else()
     # Also link to VTK
     # find_package( VTK REQUIRED)
     find_package(VTK REQUIRED)
-  if (NOT VTK_FOUND)
-    message("Skipping ReadSTL: ${VTK_NOT_FOUND_MESSAGE}")
-    return ()
-  endif()
-  message (STATUS "VTK_VERSION: ${VTK_VERSION}")
+    if (NOT VTK_FOUND)
+      message("Skipping ReadSTL: ${VTK_NOT_FOUND_MESSAGE}")
+      return ()
+    endif()
+    
+    message (STATUS "VTK_VERSION: ${VTK_VERSION}")
 
     include( ${VTK_USE_FILE} )
 
     # Append main.cpp
     list(APPEND SOURCES 
-    src/main.cpp
-    src/gui/mainwindow.cpp 
-		src/gui/mainwindow.h 
-		src/gui/mainwindow.ui)
-    add_executable(${PROJECT_NAME} MACOSX_BUNDLE 
-    ${SOURCES}
-    ${UI_Srcs}
-    ${QRC_Srcs}
+      src/main.cpp
+      src/gui/mainwindow.cpp 
+		  src/gui/mainwindow.h 
+		  src/gui/mainwindow.ui)
+      add_executable(${PROJECT_NAME} MACOSX_BUNDLE 
+      ${SOURCES}
+      ${UI_Srcs}
+      ${QRC_Srcs}
     )
 
     target_link_libraries(${PROJECT_NAME} Qt5::Widgets ${VTK_LIBRARIES})
+
+    # Use NSIS to generate installer for Windows, else format it to Zip
+    if(WIN32)
+      set(CPACK_GENERATOR "NSIS")
+    else()
+      set(CPACK_GENERATOR "ZIP")
+    endif()
+    
+    include(CPack)
+
 endif(TESTING)
 
 unset(TESTING CACHE)
