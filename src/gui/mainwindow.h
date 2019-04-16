@@ -22,6 +22,12 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+
+public slots:
+    void handleModelButton();
+    
+    void handleBackgButton();
+
 private slots:
     void on_sa_clicked();
     
