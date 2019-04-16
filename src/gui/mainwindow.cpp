@@ -247,6 +247,7 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
+
 void MainWindow::on_horizontalSlider_sliderMoved(int position) //light
 {
     light->SetIntensity((float) (100-position)/100);
@@ -255,25 +256,24 @@ void MainWindow::on_horizontalSlider_sliderMoved(int position) //light
 
 void MainWindow::on_comboBox_activated(const QString &arg1) //camera
 {
-    if (arg1 == "X-Axis"){
-        renderer->GetActiveCamera()->SetPosition(1.0,0.0,0.0);
-    }
-    else if (arg1 == "-X-Axis"){
-         renderer->GetActiveCamera()->SetPosition(-1.0,0.0,0.0);
-    }
-    else if (arg1 == "Y-Axis"){
-         renderer->GetActiveCamera()->SetPosition(0.0,1.0,0.0);
-    }
-    else if (arg1 == "-Y-Axis"){
-         renderer->GetActiveCamera()->SetPosition(0.0,-1.0,0.0);
-    }
-    else if (arg1 == "Z-Axis"){
-         renderer->GetActiveCamera()->SetPosition(0.0,0.0,1.0);
-    }
-    else if (arg1 == "-Z-Axis"){
-         renderer->GetActiveCamera()->SetPosition(0.0,0.0,-1.0);
-    }
-    renderer->ResetCamera();
-    ui->qvtkWidget->GetRenderWindow()->Render();
-
+    if (arg1 == "+X-Axis"){
+           renderer->GetActiveCamera()->SetPosition(1.0,0.0,0.0);
+       }
+       else if (arg1 == "-X-Axis"){
+            renderer->GetActiveCamera()->SetPosition(-1.0,0.0,0.0);
+       }
+       else if (arg1 == "+Y-Axis"){
+            renderer->GetActiveCamera()->SetPosition(0.0,1.0,0.0);
+       }
+       else if (arg1 == "-Y-Axis"){
+            renderer->GetActiveCamera()->SetPosition(0.0,-1.0,0.0);
+       }
+       else if (arg1 == "+Z-Axis"){
+            renderer->GetActiveCamera()->SetPosition(0.0,0.0,1.0);
+       }
+       else if (arg1 == "-Z-Axis"){
+            renderer->GetActiveCamera()->SetPosition(0.0,0.0,-1.0);
+       }
+       renderer->ResetCamera();
+       ui->qvtkWidget->GetRenderWindow()->Render();
 }
