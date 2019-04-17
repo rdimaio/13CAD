@@ -176,6 +176,32 @@
      <string>Filters</string>
     </property>
    </widget>
+   <widget class="QSlider" name="horizontalSlider">
+    <property name="geometry">
+     <rect>
+      <x>760</x>
+      <y>640</y>
+      <width>160</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Horizontal</enum>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="bkgColourButton">
+    <property name="geometry">
+     <rect>
+      <x>770</x>
+      <y>680</y>
+      <width>80</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>bkg colour</string>
+    </property>
+   </widget>
    <widget class="QWidget" name="">
     <property name="geometry">
      <rect>
@@ -267,9 +293,10 @@
     </property>
     <addaction name="actionOpen"/>
     <addaction name="actionSave"/>
-    <addaction name="actionClose_Model"/>
+    <addaction name="actionClose"/>
     <addaction name="separator"/>
     <addaction name="actionExport_Screenshot"/>
+    <addaction name="actionExport_Data"/>
    </widget>
    <widget class="QMenu" name="menuEdit">
     <property name="title">
@@ -418,9 +445,14 @@
     <string>Contact Us</string>
    </property>
   </action>
-  <action name="actionClose_Model">
+  <action name="actionClose">
    <property name="text">
     <string>Close Model</string>
+   </property>
+  </action>
+  <action name="actionExport_Data">
+   <property name="text">
+    <string>Export Data</string>
    </property>
   </action>
  </widget>

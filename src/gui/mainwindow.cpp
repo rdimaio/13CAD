@@ -11,6 +11,7 @@
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
 #include <vtkGenericOpenGLRenderWindow.h>
+#include <vtkLight.h>
 
 // VTK libraries - cells
 #include <vtkCellArray.h>
@@ -41,6 +42,8 @@ vtkSmartPointer<vtkRenderer> renderer = vtkSmartPointer<vtkRenderer>::New();
 vtkSmartPointer<vtkNamedColors> colors = vtkSmartPointer<vtkNamedColors>::New();
 // Create cell array to store the cells of the .mod file
 vtkSmartPointer<vtkCellArray> cellArray = vtkSmartPointer<vtkCellArray>::New();
+// Setup the light
+vtkSmartPointer<vtkLight> light = vtkSmartPointer<vtkLight>::New();
 // Initialise vectors for mappers and actors
 // .mod files have an actor/mapper per cell,
 // while .stl files only require one actor/mapper for the entire file
@@ -57,16 +60,12 @@ bool modelLoaded = false; // Global flag that indicates a model is currently loa
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
 {
-	// debug - works with both this-> and just setupUi(); on its own;
+	// debug - works with both this-> and just setupWindow(); on its own;
 	// maybe change it if it breaks
-	this->setupUi();
+	this->setupWindow();
 
-	renderer->SetBackground(colors->GetColor3d("Grey").GetData());
-
-        // // Setup the light
-        // light = vtkSmartPointer<vtkLight>::New();
-        // light->SetLightTypeToHeadlight();
-        // light->SetIntensity( 1 );
+    light->SetLightTypeToHeadlight();
+    light->SetIntensity( 1 );
 
 	// Setup the renderers's camera
 	renderer->ResetCamera();
@@ -84,11 +83,11 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::setupUi()
+void MainWindow::setupWindow()
 {
     // standard call to setup Qt UI (same as previously)
     ui->setupUi(this);
-
+	
     setWindowTitle(tr("13CAD"));
 
 	// Link the VTK render window to the QtVTK widget
@@ -98,19 +97,26 @@ void MainWindow::setupUi()
 	// Add the renderer to the render window
 	ui->qvtkWidget->GetRenderWindow()->AddRenderer(renderer);
 
+	// Set default background colour
+	renderer->SetBackground(colors->GetColor3d("Grey").GetData());
+
+	// Setup GUI connects
 	setupConnects();
 }
 
 void MainWindow::setupConnects()
 {
+	//ui->bgkColourButton->setEnabled(true);
 	//connect( ui->greenButton,SIGNAL(clicked()), this, SLOT(on_greenButton_clicked()));
     //connect( ui->modelButton, SIGNAL(clicked()), this, SLOT(handleModelButton()) );
     //connect( ui->backgButton, SIGNAL(clicked()), this, SLOT(handleBackgButton()) );
 	connect(ui->actionOpen, SIGNAL(triggered()), this, SLOT(handleActionOpen()));
 	connect(ui->actionSave, SIGNAL(triggered()), this, SLOT(handleActionSave()));
+	connect(ui->actionClose, SIGNAL(triggered()), this, SLOT(handleActionClose()));
 	connect(ui->actionStlTest, SIGNAL(triggered()), this, SLOT(handleActionStlTest()));
 	connect(ui->actionModTest, SIGNAL(triggered()), this, SLOT(handleActionModTest()));
-	//ui->sa->setIcon(QIcon("ModelLoader/src/gui/Icons/filesave.png")); //choose the icon location
+	//connect(ui->horizontalSlider, SIGNAL(valueChanged(int)), this, SLOT(on_horizontalSlider_sliderMoved(int)));
+	//ui->actionSave->setIcon(QIcon("gui/icons/filesave.png")); //choose the icon location
 }
 
 void MainWindow::clearModel()
@@ -124,6 +130,8 @@ void MainWindow::clearModel()
 	// Add the renderer back
 	ui->qvtkWidget->GetRenderWindow()->AddRenderer(renderer);
 	modelLoaded = false;
+
+	ui->qvtkWidget->GetRenderWindow()->Render();
 }
 
 void MainWindow::handleActionOpen()
@@ -141,17 +149,32 @@ void MainWindow::handleActionOpen()
 	}
 
 	loadModel(modelFileName);
+	ui->qvtkWidget->GetRenderWindow()->Render();
 }
 
 void MainWindow::handleActionSave()
 {
-    // Prompt user for a filename
-	QString outputFileName = QFileDialog::getSaveFileName(this, tr("Save File"),
-		QDir::currentPath(),
-		tr("Supported Models (*.mod *.stl);;STL Model (*.stl);;Proprietary Model (*.mod)"));
+	// Only save if a model is already loaded
+    if (!modelLoaded) {
+		// debug - add error saying no model has been loaded
+	} else {
+	
+		// Prompt user for a filename
+		QString outputFileName = QFileDialog::getSaveFileName(this, tr("Save File"),
+			QDir::currentPath(),
+			tr("Supported Models (*.mod *.stl);;STL Model (*.stl);;Proprietary Model (*.mod)"));
 
-	if(!QFile::copy(inputFileName, outputFileName)) {
-		// debug - insert error message here - couldn't copy
+		if(!QFile::copy(inputFileName, outputFileName)) {
+			// debug - insert error message here - couldn't copy
+		}
+	}
+}
+
+void MainWindow::handleActionClose()
+{
+	if (modelLoaded)
+	{
+		clearModel();
 	}
 }
 
@@ -162,6 +185,7 @@ void MainWindow::handleActionStlTest()
 		clearModel();
 	}
 	loadModel("tests/ExampleSTL.stl");
+	ui->qvtkWidget->GetRenderWindow()->Render();
 }
 
 void MainWindow::handleActionModTest()
@@ -171,15 +195,33 @@ void MainWindow::handleActionModTest()
 		clearModel();
 	}
     loadModel("tests/ExampleModel.mod");
+	ui->qvtkWidget->GetRenderWindow()->Render();
+}
+
+void MainWindow::on_bkgColourButton_clicked()
+{
+	// Prompt user for colour
+    QColor rgbColours = QColorDialog::getColor(Qt::white,this,"Choose Background Color");
+    double r = rgbColours.redF();
+    double g = rgbColours.greenF();
+    double b = rgbColours.blueF();
+
+	// Check that colour is valid, otherwise show an error
+    if(rgbColours.isValid()){
+        renderer->SetBackground(r,g,b);
+        ui->qvtkWidget->GetRenderWindow()->Render();
+    } else {
+		// debug - show error saying error while changing background colour
+	}
+}
+
+void MainWindow::on_horizontalSlider_sliderMoved(int position)
+{
+    light->SetIntensity((float)(100-position)/100);
+    ui->qvtkWidget->GetRenderWindow()->Render();
 }
 
 /*
-
-void MainWindow::on_horizontalSlider_sliderMoved(int position) //light
-{
-    light->SetIntensity((float) (100-position)/100);
-    ui->qvtkWidget->GetRenderWindow()->Render();
-}
 
 void MainWindow::on_comboBox_activated(const QString &arg1) //camera
 {
@@ -529,4 +571,5 @@ void loadModel(std::string inputFilename) {
 		qInfo() << last_used_point_id; // debug
 	}
 	modelLoaded = true;
+	
 }
