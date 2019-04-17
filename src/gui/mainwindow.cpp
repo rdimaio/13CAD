@@ -87,6 +87,8 @@ void MainWindow::setupWindow()
 {
     // standard call to setup Qt UI (same as previously)
     ui->setupUi(this);
+	setupButtons(modelLoaded);
+	setupConnects();
 	
     setWindowTitle(tr("13CAD"));
 
@@ -98,15 +100,21 @@ void MainWindow::setupWindow()
 	ui->qvtkWidget->GetRenderWindow()->AddRenderer(renderer);
 
 	// Set default background colour
-	renderer->SetBackground(colors->GetColor3d("Grey").GetData());
+	renderer->SetBackground(colors->GetColor3d("Black").GetData());
 
-	// Setup GUI connects
-	setupConnects();
+
+}
+
+void MainWindow::setupButtons(bool modelLoaded)
+{
+	// Greyed out if no model is loaded, enabled if model is loaded
+	ui->resetCameraButton->setEnabled(modelLoaded);
+	ui->screenshotButton->setEnabled(modelLoaded);
+	// debug - grey out remaining buttons too
 }
 
 void MainWindow::setupConnects()
 {
-	//ui->bgkColourButton->setEnabled(true);
 	//connect( ui->greenButton,SIGNAL(clicked()), this, SLOT(on_greenButton_clicked()));
     //connect( ui->modelButton, SIGNAL(clicked()), this, SLOT(handleModelButton()) );
     //connect( ui->backgButton, SIGNAL(clicked()), this, SLOT(handleBackgButton()) );
@@ -119,6 +127,226 @@ void MainWindow::setupConnects()
 	//ui->actionSave->setIcon(QIcon("gui/icons/filesave.png")); //choose the icon location
 }
 
+void MainWindow::loadModel(std::string inputFilename) {
+	// Load model
+	// (maybe only do model mod1 in case it's a .mod file, remove isstl from model,
+	// and check here, so that you don't construct a model in case it's stl.)
+  	Model mod1(inputFilename);
+
+	  if (mod1.getIsSTL()) {
+
+	qInfo() << "Model is STL"; // debug
+
+	
+
+	actors.resize(1);
+	mappers.resize(1);
+
+	if (modelLoaded) {
+		actors[0] = NULL;
+		mappers[0] = NULL;
+		clearModel();
+	}
+
+	// Visualize
+	vtkSmartPointer<vtkSTLReader> reader =
+	vtkSmartPointer<vtkSTLReader>::New();
+	reader->SetFileName(inputFilename.c_str());
+	reader->Update();
+
+	// NOTE: datasetmapper is used instead of polydatamapper.
+	// Try to switch back to polydatamapper if there are any bugs.
+
+	//vtkSmartPointer<vtkPolyDataMapper> poly_mapper =
+  	//vtkSmartPointer<vtkPolyDataMapper>::New();
+  	//poly_mapper->SetInputConnection(reader->GetOutputPort());
+
+	mappers[0] = vtkSmartPointer<vtkDataSetMapper>::New();
+	mappers[0]->SetInputConnection(reader->GetOutputPort());
+
+	actors[0] = vtkSmartPointer<vtkActor>::New();
+	actors[0]->SetMapper(mappers[0]);
+	actors[0]->GetProperty()->SetColor(colors->GetColor3d("Red").GetData());
+	renderer->AddActor(actors[0]);
+
+	} else {
+
+		qInfo() << "Model is of .mod format"; // debug
+
+		int poly_count = 0;
+		int tetra_count = 0; // Number of tetrahedrons
+		int pyra_count = 0; // Number of pyramids
+		int hexa_count = 0; // Number of hexahedrons
+		int last_used_point_id = 0; // ID of last point used
+		// Get vector of cells from the model
+		std::vector<Cell> modCells = mod1.getCells();
+
+		// Resize to new model
+		unstructuredGrids.resize(modCells.size());
+    	actors.resize(modCells.size());
+    	mappers.resize(modCells.size());
+
+		if (modelLoaded) {
+			/*// Clear pointers to previous model - debug
+			for (int i = 0; i < modCells.size(); i++)
+			{
+				unstructuredGrids[i] = NULL;
+				actors[i] = NULL;
+				mappers[i] = NULL;
+			} */
+			unstructuredGrids.clear();
+			actors.clear();
+			mappers.clear();
+			tetras.clear();
+			pyras.clear();
+			hexas.clear();
+			cellArray->Reset();
+			points->Reset();
+
+			clearModel();
+
+		}
+
+		// For each cell
+		for(std::vector<Cell>::iterator it = modCells.begin(); it != modCells.end(); ++it) {
+
+			// Get vertices of the cell
+			std::vector<Vector3D> cellVertices = it->getVertices();
+
+			// qInfo() << "x:";
+			// qInfo() << cellVertices[0].getX(); // debug
+
+			// qInfo() << "y:";
+			// qInfo() << cellVertices[0].getY(); // debug
+
+			// qInfo() << "z:";
+			// qInfo() << cellVertices[0].getZ(); // debug
+
+			// Tetrahedron
+			if (cellVertices.size() == 4) {
+				tetras.resize(tetra_count+1); 
+				qInfo() << "tetra"; // debug
+				// Insert vertices into vtkPoints vector
+				for (int i = 0; i < 4; i++)
+				{
+					points->InsertNextPoint(cellVertices[i].getX(), cellVertices[i].getY(), cellVertices[i].getZ());
+				}
+
+				unstructuredGrids[poly_count] = vtkSmartPointer<vtkUnstructuredGrid>::New();
+    			unstructuredGrids[poly_count]->SetPoints(points);
+				tetras[tetra_count] = vtkSmartPointer<vtkTetra>::New();
+
+				// Set points to the tetra
+				for (int i = 0; i < 4; i++)
+				{
+					tetras[tetra_count]->GetPointIds()->SetId(i, last_used_point_id+i);
+				}
+				last_used_point_id += 4;
+
+				cellArray->InsertNextCell(tetras[tetra_count]);
+    			unstructuredGrids[poly_count]->SetCells(VTK_TETRA, cellArray);
+
+				mappers[poly_count] = vtkSmartPointer<vtkDataSetMapper>::New();
+				mappers[poly_count]->SetInputData(unstructuredGrids[poly_count]);
+
+				actors[poly_count] = vtkSmartPointer<vtkActor>::New();
+				actors[poly_count]->SetMapper(mappers[poly_count]);
+				actors[poly_count]->GetProperty()->SetColor(colors->GetColor3d("Cyan").GetData());
+				renderer->AddActor(actors[poly_count]);
+
+				// actors[poly_count]->GetProperty()->SetColor( colors->GetColor3d("Red").GetData());
+
+				tetra_count++;
+				poly_count++;
+			
+			// Pyramid
+			} else if (cellVertices.size() == 5) {
+				pyras.resize(pyra_count+1); 
+				// Insert vertices into vtkPoints vector
+				for (int i = 0; i < 5; i++)
+				{
+					points->InsertNextPoint(cellVertices[i].getX(), cellVertices[i].getY(), cellVertices[i].getZ());
+				}
+
+				unstructuredGrids[poly_count] = vtkSmartPointer<vtkUnstructuredGrid>::New();
+    			unstructuredGrids[poly_count]->SetPoints(points);
+				pyras[pyra_count] = vtkSmartPointer<vtkPyramid>::New();
+
+				// Set points to the pyramid
+				for (int i = 0; i < 4; i++)
+				{
+					pyras[pyra_count]->GetPointIds()->SetId(i, last_used_point_id+i);
+				}
+				last_used_point_id += 4;
+
+				cellArray->InsertNextCell(pyras[pyra_count]);
+    			unstructuredGrids[poly_count]->SetCells(VTK_PYRAMID, cellArray);
+
+				mappers[poly_count] = vtkSmartPointer<vtkDataSetMapper>::New();
+				mappers[poly_count]->SetInputData(unstructuredGrids[poly_count]);
+
+				actors[poly_count] = vtkSmartPointer<vtkActor>::New();
+				actors[poly_count]->SetMapper(mappers[poly_count]);
+				actors[poly_count]->GetProperty()->SetColor(colors->GetColor3d("Cyan").GetData());
+				renderer->AddActor(actors[poly_count]);
+
+				// actors[poly_count]->GetProperty()->SetColor( colors->GetColor3d("Red").GetData());
+
+				pyra_count++;
+				poly_count++;
+			// Hexahedron
+			} else if (cellVertices.size() == 8) {
+
+				hexas.resize(hexa_count+1);
+
+				// Insert vertices into vtkPoints vector
+				for (int i = 0; i < 8; i++)
+				{
+					points->InsertNextPoint(cellVertices[i].getX(), cellVertices[i].getY(), cellVertices[i].getZ());
+				}
+
+				unstructuredGrids[poly_count] = vtkSmartPointer<vtkUnstructuredGrid>::New();
+				// Maybe this needs to go after set points
+    			unstructuredGrids[poly_count]->SetPoints(points);
+				hexas[hexa_count] = vtkSmartPointer<vtkHexahedron>::New();
+
+				// Set points to the hexa
+				for (int i = 0; i < 8; i++)
+				{
+					hexas[hexa_count]->GetPointIds()->SetId(i, last_used_point_id+1+i);
+				}
+				last_used_point_id += 4;
+
+				cellArray->InsertNextCell(hexas[hexa_count]);
+				unstructuredGrids[poly_count]->SetCells(VTK_HEXAHEDRON, cellArray);
+
+				mappers[poly_count] = vtkSmartPointer<vtkDataSetMapper>::New();
+				mappers[poly_count]->SetInputData(unstructuredGrids[poly_count]);
+				actors[poly_count] = vtkSmartPointer<vtkActor>::New();
+				actors[poly_count]->SetMapper(mappers[poly_count]);
+				actors[poly_count]->GetProperty()->SetColor(colors->GetColor3d("Cyan").GetData());
+				renderer->AddActor(actors[poly_count]);
+				// actors[poly_count]->GetProperty()->SetColor( colors->GetColor3d("Red").GetData());
+				hexa_count++;
+				poly_count++;
+
+			}
+		}
+		qInfo() << tetra_count; // debug
+		qInfo() << hexa_count; // debug
+		qInfo() << poly_count; // debug
+		qInfo() << last_used_point_id; // debug
+	}
+	// Set flag back to true
+	modelLoaded = true;
+	
+	// Enable buttons relating to model viewing
+	setupButtons(modelLoaded);
+	resetCamera();
+	
+	ui->qvtkWidget->GetRenderWindow()->Render();
+}
+
 void MainWindow::clearModel()
 {
 	// Remove renderer from render window
@@ -129,9 +357,20 @@ void MainWindow::clearModel()
 	renderer = vtkSmartPointer<vtkRenderer>::New();
 	// Add the renderer back
 	ui->qvtkWidget->GetRenderWindow()->AddRenderer(renderer);
-	modelLoaded = false;
-
 	ui->qvtkWidget->GetRenderWindow()->Render();
+
+	modelLoaded = false;
+}
+
+void MainWindow::resetCamera() {
+	// These lines are needed to ensure the button can be pressed more than
+	// once per each model
+	renderer->GetActiveCamera()->SetFocalPoint(0.0, 0.0, 0.0);
+    renderer->GetActiveCamera()->SetViewUp(0, 1, 0);
+    renderer->GetActiveCamera()->SetPosition(0, 0, 1);
+
+	// Reset camera and re-render scene
+    renderer->ResetCamera();
 }
 
 void MainWindow::handleActionOpen()
@@ -149,7 +388,6 @@ void MainWindow::handleActionOpen()
 	}
 
 	loadModel(modelFileName);
-	ui->qvtkWidget->GetRenderWindow()->Render();
 }
 
 void MainWindow::handleActionSave()
@@ -176,6 +414,8 @@ void MainWindow::handleActionClose()
 	{
 		clearModel();
 	}
+	// Reset buttons to initial state (some buttons greyed out)
+	setupButtons(modelLoaded);
 }
 
 void MainWindow::handleActionStlTest()
@@ -185,7 +425,6 @@ void MainWindow::handleActionStlTest()
 		clearModel();
 	}
 	loadModel("tests/ExampleSTL.stl");
-	ui->qvtkWidget->GetRenderWindow()->Render();
 }
 
 void MainWindow::handleActionModTest()
@@ -195,7 +434,6 @@ void MainWindow::handleActionModTest()
 		clearModel();
 	}
     loadModel("tests/ExampleModel.mod");
-	ui->qvtkWidget->GetRenderWindow()->Render();
 }
 
 void MainWindow::on_bkgColourButton_clicked()
@@ -213,6 +451,12 @@ void MainWindow::on_bkgColourButton_clicked()
     } else {
 		// debug - show error saying error while changing background colour
 	}
+}
+
+void MainWindow::on_resetCameraButton_clicked()
+{
+    resetCamera();
+    ui->qvtkWidget->GetRenderWindow()->Render();
 }
 
 void MainWindow::on_horizontalSlider_sliderMoved(int position)
@@ -366,210 +610,3 @@ void MainWindow::on_horizontalSlider_3_sliderMoved(int position)
 }
 
 */
-
-void loadModel(std::string inputFilename) {
-	// Load model
-	// (maybe only do model mod1 in case it's a .mod file, remove isstl from model,
-	// and check here, so that you don't construct a model in case it's stl.)
-  	Model mod1(inputFilename);
-
-	  if (mod1.getIsSTL()) {
-
-	qInfo() << "Model is STL"; // debug
-
-	
-
-	actors.resize(1);
-	mappers.resize(1);
-
-	actors[0] = NULL;
-	mappers[0] = NULL;
-
-	// Visualize
-	vtkSmartPointer<vtkSTLReader> reader =
-	vtkSmartPointer<vtkSTLReader>::New();
-	reader->SetFileName(inputFilename.c_str());
-	reader->Update();
-
-	// NOTE: datasetmapper is used instead of polydatamapper.
-	// Try to switch back to polydatamapper if there are any bugs.
-
-	//vtkSmartPointer<vtkPolyDataMapper> poly_mapper =
-  	//vtkSmartPointer<vtkPolyDataMapper>::New();
-  	//poly_mapper->SetInputConnection(reader->GetOutputPort());
-
-	mappers[0] = vtkSmartPointer<vtkDataSetMapper>::New();
-	mappers[0]->SetInputConnection(reader->GetOutputPort());
-
-
-	actors[0] = vtkSmartPointer<vtkActor>::New();
-	actors[0]->SetMapper(mappers[0]);
-	actors[0]->GetProperty()->SetColor(colors->GetColor3d("Red").GetData());
-	renderer->AddActor(actors[0]);
-
-	} else {
-
-		qInfo() << "Model is of .mod format"; // debug
-
-		int poly_count = 0;
-		int tetra_count = 0; // Number of tetrahedrons
-		int pyra_count = 0; // Number of pyramids
-		int hexa_count = 0; // Number of hexahedrons
-		int last_used_point_id = 0; // ID of last point used
-		// Get vector of cells from the model
-		std::vector<Cell> modCells = mod1.getCells();
-
-		// Resize to new model
-		unstructuredGrids.resize(modCells.size());
-    	actors.resize(modCells.size());
-    	mappers.resize(modCells.size());
-
-		if (modelLoaded) {
-			// Clear pointers to previous model
-			for (int i = 0; i < modCells.size(); i++)
-			{
-				unstructuredGrids[i] = NULL;
-				actors[i] = NULL;
-				mappers[i] = NULL;
-			}
-			tetras.clear();
-			pyras.clear();
-			hexas.clear();
-			cellArray->Reset();
-			points->Reset();
-
-		}
-
-		// For each cell
-		for(std::vector<Cell>::iterator it = modCells.begin(); it != modCells.end(); ++it) {
-
-			// Get vertices of the cell
-			std::vector<Vector3D> cellVertices = it->getVertices();
-
-			// qInfo() << "x:";
-			// qInfo() << cellVertices[0].getX(); // debug
-
-			// qInfo() << "y:";
-			// qInfo() << cellVertices[0].getY(); // debug
-
-			// qInfo() << "z:";
-			// qInfo() << cellVertices[0].getZ(); // debug
-
-			// Tetrahedron
-			if (cellVertices.size() == 4) {
-				tetras.resize(tetra_count+1); 
-				qInfo() << "tetra"; // debug
-				// Insert vertices into vtkPoints vector
-				for (int i = 0; i < 4; i++)
-				{
-					points->InsertNextPoint(cellVertices[i].getX(), cellVertices[i].getY(), cellVertices[i].getZ());
-				}
-
-				unstructuredGrids[poly_count] = vtkSmartPointer<vtkUnstructuredGrid>::New();
-    			unstructuredGrids[poly_count]->SetPoints(points);
-				tetras[tetra_count] = vtkSmartPointer<vtkTetra>::New();
-
-				// Set points to the tetra
-				for (int i = 0; i < 4; i++)
-				{
-					tetras[tetra_count]->GetPointIds()->SetId(i, last_used_point_id+i);
-				}
-				last_used_point_id += 4;
-
-				cellArray->InsertNextCell(tetras[tetra_count]);
-    			unstructuredGrids[poly_count]->SetCells(VTK_TETRA, cellArray);
-
-				mappers[poly_count] = vtkSmartPointer<vtkDataSetMapper>::New();
-				mappers[poly_count]->SetInputData(unstructuredGrids[poly_count]);
-
-				actors[poly_count] = vtkSmartPointer<vtkActor>::New();
-				actors[poly_count]->SetMapper(mappers[poly_count]);
-				actors[poly_count]->GetProperty()->SetColor(colors->GetColor3d("Cyan").GetData());
-				renderer->AddActor(actors[poly_count]);
-
-				// actors[poly_count]->GetProperty()->SetColor( colors->GetColor3d("Red").GetData());
-
-				tetra_count++;
-				poly_count++;
-			
-			// Pyramid
-			} else if (cellVertices.size() == 5) {
-				pyras.resize(pyra_count+1); 
-				// Insert vertices into vtkPoints vector
-				for (int i = 0; i < 5; i++)
-				{
-					points->InsertNextPoint(cellVertices[i].getX(), cellVertices[i].getY(), cellVertices[i].getZ());
-				}
-
-				unstructuredGrids[poly_count] = vtkSmartPointer<vtkUnstructuredGrid>::New();
-    			unstructuredGrids[poly_count]->SetPoints(points);
-				pyras[pyra_count] = vtkSmartPointer<vtkPyramid>::New();
-
-				// Set points to the pyramid
-				for (int i = 0; i < 4; i++)
-				{
-					pyras[pyra_count]->GetPointIds()->SetId(i, last_used_point_id+i);
-				}
-				last_used_point_id += 4;
-
-				cellArray->InsertNextCell(pyras[pyra_count]);
-    			unstructuredGrids[poly_count]->SetCells(VTK_PYRAMID, cellArray);
-
-				mappers[poly_count] = vtkSmartPointer<vtkDataSetMapper>::New();
-				mappers[poly_count]->SetInputData(unstructuredGrids[poly_count]);
-
-				actors[poly_count] = vtkSmartPointer<vtkActor>::New();
-				actors[poly_count]->SetMapper(mappers[poly_count]);
-				actors[poly_count]->GetProperty()->SetColor(colors->GetColor3d("Cyan").GetData());
-				renderer->AddActor(actors[poly_count]);
-
-				// actors[poly_count]->GetProperty()->SetColor( colors->GetColor3d("Red").GetData());
-
-				pyra_count++;
-				poly_count++;
-			// Hexahedron
-			} else if (cellVertices.size() == 8) {
-
-				hexas.resize(hexa_count+1);
-
-				// Insert vertices into vtkPoints vector
-				for (int i = 0; i < 8; i++)
-				{
-					points->InsertNextPoint(cellVertices[i].getX(), cellVertices[i].getY(), cellVertices[i].getZ());
-				}
-
-				unstructuredGrids[poly_count] = vtkSmartPointer<vtkUnstructuredGrid>::New();
-				// Maybe this needs to go after set points
-    			unstructuredGrids[poly_count]->SetPoints(points);
-				hexas[hexa_count] = vtkSmartPointer<vtkHexahedron>::New();
-
-				// Set points to the hexa
-				for (int i = 0; i < 8; i++)
-				{
-					hexas[hexa_count]->GetPointIds()->SetId(i, last_used_point_id+1+i);
-				}
-				last_used_point_id += 4;
-
-				cellArray->InsertNextCell(hexas[hexa_count]);
-				unstructuredGrids[poly_count]->SetCells(VTK_HEXAHEDRON, cellArray);
-
-				mappers[poly_count] = vtkSmartPointer<vtkDataSetMapper>::New();
-				mappers[poly_count]->SetInputData(unstructuredGrids[poly_count]);
-				actors[poly_count] = vtkSmartPointer<vtkActor>::New();
-				actors[poly_count]->SetMapper(mappers[poly_count]);
-				actors[poly_count]->GetProperty()->SetColor(colors->GetColor3d("Cyan").GetData());
-				renderer->AddActor(actors[poly_count]);
-				// actors[poly_count]->GetProperty()->SetColor( colors->GetColor3d("Red").GetData());
-				hexa_count++;
-				poly_count++;
-
-			}
-		}
-		qInfo() << tetra_count; // debug
-		qInfo() << hexa_count; // debug
-		qInfo() << poly_count; // debug
-		qInfo() << last_used_point_id; // debug
-	}
-	modelLoaded = true;
-	
-}

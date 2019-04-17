@@ -24,13 +24,19 @@ public:
     ~MainWindow();
 
 private:
+    Ui::MainWindow *ui;
     void setupWindow();
+    void setupButtons(bool modelLoaded);
     void setupConnects();
-
+    /**
+    * Loads model.
+    */
+    void loadModel(std::string inputFilename);
     /**
      * Clears loaded model.
     */
     void clearModel();
+    void resetCamera();
 
 
 public slots:
@@ -46,6 +52,7 @@ public slots:
 private slots:
     void on_horizontalSlider_sliderMoved(int position);
     void on_bkgColourButton_clicked();
+    void on_resetCameraButton_clicked();
 //    void on_sa_clicked();
 //    
 //    void on_greenButton_clicked();
@@ -61,14 +68,6 @@ private slots:
 //    void on_actionHelp_triggered();
 //
 //    void on_actionPrint_triggered();
-
-private:
-    Ui::MainWindow *ui;
 };
-
-/**
- * Loads model.
- */
-void loadModel(std::string inputFilename);
 
 #endif // MAINWINDOW_H
