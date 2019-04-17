@@ -46,6 +46,7 @@ public slots:
 private slots:
     void on_horizontalSlider_sliderMoved(int position);
     void on_bkgColourButton_clicked();
+    void on_resetCameraButton_clicked();
 //    void on_sa_clicked();
 //    
 //    void on_greenButton_clicked();

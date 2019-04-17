@@ -215,6 +215,19 @@ void MainWindow::on_bkgColourButton_clicked()
 	}
 }
 
+void MainWindow::on_resetCameraButton_clicked()
+{
+    // These lines are needed to ensure the button can be pressed more than
+	// once per each model
+	renderer->GetActiveCamera()->SetFocalPoint(0.0, 0.0, 0.0);
+    renderer->GetActiveCamera()->SetViewUp(0, 1, 0);
+    renderer->GetActiveCamera()->SetPosition(0, 0, 1);
+
+	
+    renderer->ResetCamera();
+    ui->qvtkWidget->GetRenderWindow()->Render();
+}
+
 void MainWindow::on_horizontalSlider_sliderMoved(int position)
 {
     light->SetIntensity((float)(100-position)/100);
@@ -425,13 +438,16 @@ void loadModel(std::string inputFilename) {
     	mappers.resize(modCells.size());
 
 		if (modelLoaded) {
-			// Clear pointers to previous model
+			/*// Clear pointers to previous model - debug
 			for (int i = 0; i < modCells.size(); i++)
 			{
 				unstructuredGrids[i] = NULL;
 				actors[i] = NULL;
 				mappers[i] = NULL;
-			}
+			} */
+			unstructuredGrids.clear();
+			actors.clear();
+			mappers.clear();
 			tetras.clear();
 			pyras.clear();
 			hexas.clear();
@@ -571,5 +587,5 @@ void loadModel(std::string inputFilename) {
 		qInfo() << last_used_point_id; // debug
 	}
 	modelLoaded = true;
-	
+	renderer->ResetCamera();
 }
