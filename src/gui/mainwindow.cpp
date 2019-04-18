@@ -26,6 +26,10 @@
 #include <vtkSTLReader.h>
 #include <vtkPolyDataMapper.h>
 
+// VTK libraries - Screenshot function
+#include <vtkWindowToImageFilter.h>
+#include <vtkPNGWriter.h>
+
 // Qt headers
 #include <QDebug>
 #include "mainwindow.h"
@@ -106,6 +110,10 @@ void MainWindow::setupWindow()
 void MainWindow::setupButtons(bool modelLoaded)
 {
 	// Greyed out if no model is loaded, enabled if model is loaded
+	ui->actionSave->setEnabled(modelLoaded);
+	ui->actionClose->setEnabled(modelLoaded);
+	ui->actionPrint->setEnabled(modelLoaded);
+	ui->actionScreenshot->setEnabled(modelLoaded);
 	ui->resetCameraButton->setEnabled(modelLoaded);
 	ui->screenshotButton->setEnabled(modelLoaded);
 	ui->posXButton->setEnabled(modelLoaded);
@@ -127,6 +135,8 @@ void MainWindow::setupConnects()
 	connect(ui->actionOpen, SIGNAL(triggered()), this, SLOT(handleActionOpen()));
 	connect(ui->actionSave, SIGNAL(triggered()), this, SLOT(handleActionSave()));
 	connect(ui->actionClose, SIGNAL(triggered()), this, SLOT(handleActionClose()));
+	connect(ui->actionPrint, SIGNAL(triggered()), this, SLOT(handleActionPrint()));
+	connect(ui->actionScreenshot, SIGNAL(triggered()), this, SLOT(handleActionPrint()));
 	connect(ui->actionStlTest, SIGNAL(triggered()), this, SLOT(handleActionStlTest()));
 	connect(ui->actionModTest, SIGNAL(triggered()), this, SLOT(handleActionModTest()));
 	//connect(ui->horizontalSlider, SIGNAL(valueChanged(int)), this, SLOT(on_horizontalSlider_sliderMoved(int)));
@@ -442,6 +452,38 @@ void MainWindow::handleActionModTest()
     loadModel("tests/ExampleModel.mod");
 }
 
+void MainWindow::handleActionPrint()
+{
+	// Enable usage of alpha channel
+	renderWindow->SetAlphaBitPlanes(1);
+	
+	vtkSmartPointer<vtkWindowToImageFilter> windowToImageFilter = vtkSmartPointer<vtkWindowToImageFilter>::New();
+	windowToImageFilter->SetInput(renderWindow);
+
+	// Record the alpha (transparency channel)
+	windowToImageFilter->SetInputBufferTypeToRGBA();
+	windowToImageFilter->ReadFrontBufferOff(); // read from the back buffer
+	windowToImageFilter->Update();
+
+	// Prompt the user for filename
+    QString screenshotName = QFileDialog::getSaveFileName(this, tr("Save Image"), "", tr("Images (*.png)")); 
+
+	// Convert QString
+    vtkSmartPointer<vtkPNGWriter> writer = vtkSmartPointer<vtkPNGWriter>::New();
+    std::string stdName = screenshotName.toStdString();
+    const char * charName = stdName.c_str();
+
+	// Write PNG
+    writer->SetFileName(charName);
+    writer->SetInputConnection(windowToImageFilter->GetOutputPort());
+    writer->Write();
+
+	//// debug - Windows solution
+	//QString filename = QFileDialog::getSaveFileName(this,tr("Save Image"),"",tr("Images (*.png)")); 
+    //QScreen *screen = QGuiApplication::primaryScreen();
+    //screen->grabWindow(ui->qvtkWidget->winId()).save(filename);
+}
+
 void MainWindow::on_bkgColourButton_clicked()
 {
 	// Prompt user for colour
@@ -560,31 +602,6 @@ void MainWindow::on_horizontalSlider_sliderMoved(int position)
 
 /*
 
-void MainWindow::on_comboBox_activated(const QString &arg1) //camera
-{
-    if (arg1 == "+X-Axis"){
-           renderer->GetActiveCamera()->SetPosition(1.0,0.0,0.0);
-       }
-       else if (arg1 == "-X-Axis"){
-            renderer->GetActiveCamera()->SetPosition(-1.0,0.0,0.0);
-       }
-       else if (arg1 == "+Y-Axis"){
-            renderer->GetActiveCamera()->SetPosition(0.0,1.0,0.0);
-       }
-       else if (arg1 == "-Y-Axis"){
-            renderer->GetActiveCamera()->SetPosition(0.0,-1.0,0.0);
-       }
-       else if (arg1 == "+Z-Axis"){
-            renderer->GetActiveCamera()->SetPosition(0.0,0.0,1.0);
-       }
-       else if (arg1 == "-Z-Axis"){
-            renderer->GetActiveCamera()->SetPosition(0.0,0.0,-1.0);
-       }
-       renderer->ResetCamera();
-       ui->qvtkWidget->GetRenderWindow()->Render();
-
-}
-
 void MainWindow::handleModelButton()
 {
     vtkSmartPointer<vtkNamedColors> colors = vtkSmartPointer<vtkNamedColors>::New();
@@ -610,96 +627,13 @@ void MainWindow::handleModelButton()
 
     ui->qvtkWidget->GetRenderWindow()->Render();
 }
-
-void MainWindow::handleBackgButton()
-{
-    vtkSmartPointer<vtkNamedColors> colors = vtkSmartPointer<vtkNamedColors>::New();
-    renderer->AddActor(actor);
-
-    QColor color = QColorDialog::getColor(Qt::white,this,"Choose Color");
-
-    if(color.isValid()) {
-
-		QString hex = color.name();
-
-		std::string str = hex.toStdString();
-		char *cstr = &str[0u];
-
-		int r, g, b;
-		double ri, gi, bi;
-
-		sscanf(cstr, "#%02x%02x%02x", &r, &g, &b);
-
-		ri = (double)r / 255;
-		gi = (double)g / 255;
-		bi = (double)b / 255;
-
-        renderer->SetBackground(ri, gi, bi);
-    }
-
-    ui->qvtkWidget->GetRenderWindow()->Render();
-}
   
-void MainWindow::on_sa_clicked()
-{
-    QString filename = QFileDialog::getSaveFileName(this,tr("Save Image"),"",tr("Images (*.png)")); 
-        QScreen *screen = QGuiApplication::primaryScreen();
-        screen->grabWindow(ui->qvtkWidget->winId()).save(filename);
 
-}
 
 void MainWindow::on_greenButton_clicked()
 {
     //actor->GetProperty()->SetColor( colors->GetColor3d("green").GetData() );
     ui->qvtkWidget->GetRenderWindow()->Render();
-}
-
-
-
-
-//Code for File Open, Save, help and print
-
-//Open file Code
-void MainWindow::on_actionFileOpen_triggered()
-{
-
-
-}
-//Save file code
-void MainWindow::on_actionFileSave_triggered()
-{
-
-}
-
-//Help button code
-//Could possibly contain an readme file or a html link to instructions on how to use the software
-void MainWindow::on_actionHelp_triggered()
-{
-
-}
-
-//
-void MainWindow::on_actionPrint_triggered()
-{
-
-}
-
-
-
-//Colour scrollers (R,G,B)
-void MainWindow::on_horizontalSlider_sliderMoved(int position)
-{
-
-}
-
-void MainWindow::on_horizontalSlider_2_sliderMoved(int position)
-{
-
-}
-
-void MainWindow::on_horizontalSlider_3_sliderMoved(int position)
-{
-
 }
 
 */

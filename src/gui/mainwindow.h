@@ -10,6 +10,8 @@
 #include <QScreen>
 #include <QGuiApplication>
 #include <QColorDialog>
+#include <QInputDialog>
+#include <QLineEdit>
 
 namespace Ui {
 class MainWindow;
@@ -43,6 +45,7 @@ public slots:
     void handleActionOpen();
     void handleActionSave();
     void handleActionClose();
+    void handleActionPrint(); // Handles actionScreenshot too
     void handleActionStlTest();
     void handleActionModTest();
 //    void handleModelButton();

@@ -289,8 +289,9 @@
     <addaction name="actionSave"/>
     <addaction name="actionClose"/>
     <addaction name="separator"/>
-    <addaction name="actionExport_Screenshot"/>
+    <addaction name="actionScreenshot"/>
     <addaction name="actionExport_Data"/>
+    <addaction name="separator"/>
    </widget>
    <widget class="QMenu" name="menuEdit">
     <property name="title">
@@ -391,14 +392,6 @@
    <property name="text">
     <string>Print</string>
    </property>
-   <property name="shortcut">
-    <string>Ctrl+P</string>
-   </property>
-  </action>
-  <action name="actionExport_Screenshot">
-   <property name="text">
-    <string>Export Screenshot</string>
-   </property>
   </action>
   <action name="actionAbout">
    <property name="text">
@@ -444,6 +437,9 @@
    <property name="text">
     <string>Close Model</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+W</string>
+   </property>
   </action>
   <action name="actionExport_Data">
    <property name="text">
@@ -456,6 +452,19 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+F</string>
+   </property>
+  </action>
+  <action name="actionScreenshot">
+   <property name="icon">
+    <iconset>
+     <normalon>icons/print.png</normalon>
+    </iconset>
+   </property>
+   <property name="text">
+    <string>Export Screenshot</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+P</string>
    </property>
   </action>
  </widget>
