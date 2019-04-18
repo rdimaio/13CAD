@@ -52,7 +52,18 @@ public slots:
 private slots:
     void on_horizontalSlider_sliderMoved(int position);
     void on_bkgColourButton_clicked();
+
+    // Note for the camera functions:
+    // The view up vector must be set to be orthogonal to the camera direction.
     void on_resetCameraButton_clicked();
+    void on_posXButton_clicked();
+    void on_posYButton_clicked();
+    void on_posZButton_clicked();
+    void on_pos90Button_clicked();
+    void on_negXButton_clicked();
+    void on_negYButton_clicked();
+    void on_negZButton_clicked();
+    void on_neg90Button_clicked();
 //    void on_sa_clicked();
 //    
 //    void on_greenButton_clicked();

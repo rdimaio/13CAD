@@ -73,8 +73,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 	renderer->GetActiveCamera()->Elevation(30);
 	renderer->ResetCameraClippingRange();
 
-
-	// Render and interact
 	qInfo() << "Window complete"; // debug
 }
 
@@ -110,6 +108,14 @@ void MainWindow::setupButtons(bool modelLoaded)
 	// Greyed out if no model is loaded, enabled if model is loaded
 	ui->resetCameraButton->setEnabled(modelLoaded);
 	ui->screenshotButton->setEnabled(modelLoaded);
+	ui->posXButton->setEnabled(modelLoaded);
+	ui->posYButton->setEnabled(modelLoaded);
+	ui->posZButton->setEnabled(modelLoaded);
+	ui->pos90Button->setEnabled(modelLoaded);
+	ui->negXButton->setEnabled(modelLoaded);
+	ui->negYButton->setEnabled(modelLoaded);
+	ui->negZButton->setEnabled(modelLoaded);
+	ui->neg90Button->setEnabled(modelLoaded);
 	// debug - grey out remaining buttons too
 }
 
@@ -458,6 +464,103 @@ void MainWindow::on_resetCameraButton_clicked()
     resetCamera();
     ui->qvtkWidget->GetRenderWindow()->Render();
 }
+
+void MainWindow::on_posXButton_clicked()
+{
+	renderer->GetActiveCamera()->SetFocalPoint(0.0, 0.0, 0.0);
+    renderer->GetActiveCamera()->SetViewUp(0, 0, 0);
+    renderer->GetActiveCamera()->SetPosition(1, 0, 0);
+
+	// Re-render scene
+    renderer->ResetCamera();
+    ui->qvtkWidget->GetRenderWindow()->Render();
+}
+
+void MainWindow::on_posYButton_clicked()
+{
+	renderer->GetActiveCamera()->SetFocalPoint(0.0, 0.0, 0.0);
+    renderer->GetActiveCamera()->SetViewUp(1, 0, 0);
+    renderer->GetActiveCamera()->SetPosition(0, 1, 0);
+
+	// Re-render scene
+    renderer->ResetCamera();
+    ui->qvtkWidget->GetRenderWindow()->Render();
+}
+
+void MainWindow::on_posZButton_clicked()
+{
+
+    renderer->GetActiveCamera()->SetFocalPoint(0.0, 0.0, 0.0);
+    renderer->GetActiveCamera()->SetViewUp(0, 1, 0);
+    renderer->GetActiveCamera()->SetPosition(0, 0, 1);
+
+	// Re-render scene
+    renderer->ResetCamera();
+    ui->qvtkWidget->GetRenderWindow()->Render();
+}
+
+void MainWindow::on_pos90Button_clicked()
+{
+
+    renderer->GetActiveCamera()->SetFocalPoint(0.0, 0.0, 0.0);
+    renderer->GetActiveCamera()->SetViewUp(0, 1, 0);
+    renderer->GetActiveCamera()->SetPosition(0, 0, 1);
+
+	// Re-render scene
+    renderer->ResetCamera();
+    ui->qvtkWidget->GetRenderWindow()->Render();
+}
+
+void MainWindow::on_negXButton_clicked()
+{
+
+    renderer->GetActiveCamera()->SetFocalPoint(0.0, 0.0, 0.0);
+    renderer->GetActiveCamera()->SetViewUp(0, 1, 0);
+    renderer->GetActiveCamera()->SetPosition(-1, 0, 0);
+
+	// Re-render scene
+    renderer->ResetCamera();
+    ui->qvtkWidget->GetRenderWindow()->Render();
+}
+
+void MainWindow::on_negYButton_clicked()
+{
+
+    renderer->GetActiveCamera()->SetFocalPoint(0.0, 0.0, 0.0);
+    renderer->GetActiveCamera()->SetViewUp(1, 0, 0);
+    renderer->GetActiveCamera()->SetPosition(0, -1, 0);
+
+	// Re-render scene
+    renderer->ResetCamera();
+    ui->qvtkWidget->GetRenderWindow()->Render();
+}
+
+void MainWindow::on_negZButton_clicked()
+{
+
+    renderer->GetActiveCamera()->SetFocalPoint(0.0, 0.0, 0.0);
+    renderer->GetActiveCamera()->SetViewUp(0, 1, 0);
+    renderer->GetActiveCamera()->SetPosition(0, 0, -1);
+
+	// Re-render scene
+    renderer->ResetCamera();
+    ui->qvtkWidget->GetRenderWindow()->Render();
+}
+
+void MainWindow::on_neg90Button_clicked()
+{
+
+    renderer->GetActiveCamera()->SetFocalPoint(0.0, 0.0, 0.0);
+    renderer->GetActiveCamera()->SetViewUp(0, 1, 0);
+    renderer->GetActiveCamera()->SetPosition(-1, 0, 0);
+
+	// Re-render scene
+    renderer->ResetCamera();
+    ui->qvtkWidget->GetRenderWindow()->Render();
+}
+
+
+
 
 void MainWindow::on_horizontalSlider_sliderMoved(int position)
 {
