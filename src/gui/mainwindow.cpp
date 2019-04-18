@@ -114,6 +114,7 @@ void MainWindow::setupButtons(bool modelLoaded)
 	ui->actionClose->setEnabled(modelLoaded);
 	ui->actionPrint->setEnabled(modelLoaded);
 	ui->actionScreenshot->setEnabled(modelLoaded);
+	ui->modColourButton->setEnabled(modelLoaded);
 	ui->resetCameraButton->setEnabled(modelLoaded);
 	ui->screenshotButton->setEnabled(modelLoaded);
 	ui->posXButton->setEnabled(modelLoaded);
@@ -487,18 +488,40 @@ void MainWindow::handleActionPrint()
 void MainWindow::on_bkgColourButton_clicked()
 {
 	// Prompt user for colour
-    QColor rgbColours = QColorDialog::getColor(Qt::white,this,"Choose Background Color");
+    QColor rgbColours = QColorDialog::getColor(Qt::white, this, "Choose Background Colour");
     double r = rgbColours.redF();
     double g = rgbColours.greenF();
     double b = rgbColours.blueF();
 
 	// Check that colour is valid, otherwise show an error
     if(rgbColours.isValid()){
-        renderer->SetBackground(r,g,b);
+        renderer->SetBackground(r, g, b);
         ui->qvtkWidget->GetRenderWindow()->Render();
     } else {
 		// debug - show error saying error while changing background colour
 	}
+}
+
+void MainWindow::on_modColourButton_clicked()
+{
+    // Prompt user for colour
+    QColor rgbColours = QColorDialog::getColor(Qt::white, this, "Choose Model Colour");
+    double r = rgbColours.redF();
+    double g = rgbColours.greenF();
+    double b = rgbColours.blueF();
+	
+	// Check that colour is valid, otherwise show an error
+    if(rgbColours.isValid()) {
+
+		// Ensure all actors are properly coloured in case it's a .mod file
+		for (int i = 0; i < actors.size(); i++)
+		{
+			actors[i]->GetProperty()->SetColor(r, g, b);
+		}
+        ui->qvtkWidget->GetRenderWindow()->Render();
+    } else {
+        // debug - show error saying error while changing background colour
+    }
 }
 
 void MainWindow::on_resetCameraButton_clicked()

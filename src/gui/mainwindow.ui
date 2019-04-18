@@ -36,19 +36,6 @@
      </item>
     </layout>
    </widget>
-   <widget class="QLabel" name="label_2">
-    <property name="geometry">
-     <rect>
-      <x>600</x>
-      <y>580</y>
-      <width>59</width>
-      <height>15</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Objects</string>
-    </property>
-   </widget>
    <widget class="QLabel" name="label_4">
     <property name="geometry">
      <rect>
@@ -86,19 +73,6 @@
     </property>
     <property name="orientation">
      <enum>Qt::Horizontal</enum>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="bkgColourButton">
-    <property name="geometry">
-     <rect>
-      <x>770</x>
-      <y>680</y>
-      <width>80</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>bkg colour</string>
     </property>
    </widget>
    <widget class="QPushButton" name="screenshotButton">
@@ -268,6 +242,75 @@
         <string>Reset camera view</string>
        </property>
       </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QGroupBox" name="">
+    <property name="geometry">
+     <rect>
+      <x>540</x>
+      <y>583</y>
+      <width>151</width>
+      <height>151</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>Properties</string>
+    </property>
+    <layout class="QGridLayout" name="gridLayout_2">
+     <item row="0" column="0">
+      <layout class="QVBoxLayout" name="verticalLayout_4">
+       <item>
+        <widget class="QLabel" name="bkgColourLabel">
+         <property name="text">
+          <string>Background colour</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="bkgColourButton">
+         <property name="text">
+          <string>Change...</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item row="1" column="0">
+      <layout class="QVBoxLayout" name="verticalLayout_5">
+       <item>
+        <widget class="QLabel" name="modColourLabel">
+         <property name="text">
+          <string>Model colour</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="modColourButton">
+         <property name="text">
+          <string>Change...</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item row="2" column="0">
+      <layout class="QVBoxLayout" name="verticalLayout_7">
+       <item>
+        <widget class="QLabel" name="opacityLabel">
+         <property name="text">
+          <string>Opacity</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QSlider" name="opacitySlider">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </item>
     </layout>
    </widget>
