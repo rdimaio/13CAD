@@ -53,10 +53,19 @@ public slots:
 //    void handleBackgButton();
 //
 private slots:
-    void on_horizontalSlider_sliderMoved(int position);
+    // Properties
     void on_bkgColourButton_clicked();
     void on_modColourButton_clicked();
+    // Note on opacity slider:
+    // If a STL model is loaded, there is only one actor,
+    // thus changing the opacity as the slider is moved
+    // is not resource expensive.
+    // If a MOD model is loaded, there will be many actors,
+    // thus the opacity is only changed when the value is changed.
+    void on_opacitySlider_sliderMoved(int position);
+    void on_opacitySlider_valueChanged(int value);
 
+    // Camera
     // Note for the camera functions:
     // The view up vector must be set to be orthogonal to the camera direction.
     void on_resetCameraButton_clicked();

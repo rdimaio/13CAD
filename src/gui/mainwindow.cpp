@@ -116,6 +116,8 @@ void MainWindow::setupButtons(bool modelLoaded)
 	ui->actionScreenshot->setEnabled(modelLoaded);
 	ui->modColourButton->setEnabled(modelLoaded);
 	ui->resetCameraButton->setEnabled(modelLoaded);
+	ui->opacitySlider->setEnabled(modelLoaded);
+	ui->opacitySlider->setValue(99); // Initialize slider at max value
 	ui->screenshotButton->setEnabled(modelLoaded);
 	ui->posXButton->setEnabled(modelLoaded);
 	ui->posYButton->setEnabled(modelLoaded);
@@ -140,6 +142,8 @@ void MainWindow::setupConnects()
 	connect(ui->actionScreenshot, SIGNAL(triggered()), this, SLOT(handleActionPrint()));
 	connect(ui->actionStlTest, SIGNAL(triggered()), this, SLOT(handleActionStlTest()));
 	connect(ui->actionModTest, SIGNAL(triggered()), this, SLOT(handleActionModTest()));
+	connect(ui->opacitySlider, SIGNAL(sliderMoved(int)), this, SLOT(on_opacitySlider_sliderMoved(int)));
+	connect(ui->opacitySlider, SIGNAL(valueChanged(int)), this, SLOT(on_opacitySlider_valueChanged(int)));
 	//connect(ui->horizontalSlider, SIGNAL(valueChanged(int)), this, SLOT(on_horizontalSlider_sliderMoved(int)));
 	//ui->actionSave->setIcon(QIcon("gui/icons/filesave.png")); //choose the icon location
 }
@@ -614,16 +618,47 @@ void MainWindow::on_neg90Button_clicked()
     ui->qvtkWidget->GetRenderWindow()->Render();
 }
 
+void MainWindow::on_opacitySlider_sliderMoved(int position)
+{
+	float pos;
+	if (position == 99) {
+		pos = 1;
+	} else {
+		pos = (float)position/100;
+	}
 
+	if (actors.size() == 1) {
+		actors[0]->GetProperty()->SetOpacity(pos);
+		ui->qvtkWidget->GetRenderWindow()->Render();
+	}
+}
 
+void MainWindow::on_opacitySlider_valueChanged(int value)
+{
+    float pos;
+	if (value == 99) {
+		pos = 1;
+	} else {
+		pos = (float)value/100;
+	}
 
-void MainWindow::on_horizontalSlider_sliderMoved(int position)
+	if (actors.size() != 1) {
+		// Ensure all actors are properly coloured in case it's a .mod file
+		for (int i = 0; i < actors.size(); i++)
+		{
+			actors[i]->GetProperty()->SetOpacity(pos);
+		}
+    	ui->qvtkWidget->GetRenderWindow()->Render();
+	}
+}
+
+/*
+
+void MainWindow::on_lightSlider_sliderMoved(int position)
 {
     light->SetIntensity((float)(100-position)/100);
     ui->qvtkWidget->GetRenderWindow()->Render();
 }
-
-/*
 
 void MainWindow::handleModelButton()
 {
