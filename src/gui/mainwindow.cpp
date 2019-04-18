@@ -489,7 +489,6 @@ void MainWindow::on_posYButton_clicked()
 
 void MainWindow::on_posZButton_clicked()
 {
-
     renderer->GetActiveCamera()->SetFocalPoint(0.0, 0.0, 0.0);
     renderer->GetActiveCamera()->SetViewUp(0, 1, 0);
     renderer->GetActiveCamera()->SetPosition(0, 0, 1);
@@ -501,10 +500,7 @@ void MainWindow::on_posZButton_clicked()
 
 void MainWindow::on_pos90Button_clicked()
 {
-
-    renderer->GetActiveCamera()->SetFocalPoint(0.0, 0.0, 0.0);
-    renderer->GetActiveCamera()->SetViewUp(0, 1, 0);
-    renderer->GetActiveCamera()->SetPosition(0, 0, 1);
+	renderer->GetActiveCamera()->Roll(-90);
 
 	// Re-render scene
     renderer->ResetCamera();
@@ -513,7 +509,6 @@ void MainWindow::on_pos90Button_clicked()
 
 void MainWindow::on_negXButton_clicked()
 {
-
     renderer->GetActiveCamera()->SetFocalPoint(0.0, 0.0, 0.0);
     renderer->GetActiveCamera()->SetViewUp(0, 1, 0);
     renderer->GetActiveCamera()->SetPosition(-1, 0, 0);
@@ -525,7 +520,6 @@ void MainWindow::on_negXButton_clicked()
 
 void MainWindow::on_negYButton_clicked()
 {
-
     renderer->GetActiveCamera()->SetFocalPoint(0.0, 0.0, 0.0);
     renderer->GetActiveCamera()->SetViewUp(1, 0, 0);
     renderer->GetActiveCamera()->SetPosition(0, -1, 0);
@@ -537,7 +531,6 @@ void MainWindow::on_negYButton_clicked()
 
 void MainWindow::on_negZButton_clicked()
 {
-
     renderer->GetActiveCamera()->SetFocalPoint(0.0, 0.0, 0.0);
     renderer->GetActiveCamera()->SetViewUp(0, 1, 0);
     renderer->GetActiveCamera()->SetPosition(0, 0, -1);
@@ -549,10 +542,7 @@ void MainWindow::on_negZButton_clicked()
 
 void MainWindow::on_neg90Button_clicked()
 {
-
-    renderer->GetActiveCamera()->SetFocalPoint(0.0, 0.0, 0.0);
-    renderer->GetActiveCamera()->SetViewUp(0, 1, 0);
-    renderer->GetActiveCamera()->SetPosition(-1, 0, 0);
+	renderer->GetActiveCamera()->Roll(90);
 
 	// Re-render scene
     renderer->ResetCamera();
