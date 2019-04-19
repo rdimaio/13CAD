@@ -334,18 +334,41 @@
      <string>Gradient background</string>
     </property>
    </widget>
-   <widget class="QRadioButton" name="wireframeRadio">
+   <widget class="QGroupBox" name="visualizationGrid">
     <property name="geometry">
      <rect>
       <x>670</x>
-      <y>620</y>
-      <width>100</width>
-      <height>21</height>
+      <y>586</y>
+      <width>91</width>
+      <height>121</height>
      </rect>
     </property>
-    <property name="text">
-     <string>Wireframes</string>
+    <property name="title">
+     <string>Visualization</string>
     </property>
+    <layout class="QGridLayout" name="gridLayout_3">
+     <item row="0" column="0">
+      <widget class="QRadioButton" name="wireframeRadio">
+       <property name="text">
+        <string>Wireframe</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QRadioButton" name="pointsRadio">
+       <property name="text">
+        <string>Points</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="0">
+      <widget class="QRadioButton" name="surfaceRadio">
+       <property name="text">
+        <string>Surface</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">

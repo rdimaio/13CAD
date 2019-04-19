@@ -13,6 +13,8 @@
 #include <QInputDialog>
 #include <QLineEdit>
 #include <QString>
+#include <QAction>
+#include <QActionGroup>
 
 namespace Ui {
 class MainWindow;
@@ -25,6 +27,8 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
+
+    
 
 private:
     Ui::MainWindow *ui;
@@ -40,6 +44,12 @@ private:
     */
     void clearModel();
     void resetCamera();
+
+    // Action *visualizeWireframe;
+    // Action *visualizePoints;
+    // Action *visualizeSurface;
+
+    
 
 
 public slots:
@@ -83,6 +93,8 @@ private slots:
 
     // Visualization
     void on_wireframeRadio_toggled(bool checked);
+    void on_pointsRadio_toggled(bool checked);
+    void on_surfaceRadio_toggled(bool checked);
 //    void on_sa_clicked();
 //    
 //    void on_greenButton_clicked();
