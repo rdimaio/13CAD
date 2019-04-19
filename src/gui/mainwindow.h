@@ -56,6 +56,7 @@ public slots:
 private slots:
     // Properties
     void on_bkgColourButton_clicked();
+    void on_gradientCheckBox_stateChanged(int state);
     void on_modColourButton_clicked();
     void on_resetPropertiesButton_clicked();
     // Note on opacity slider:

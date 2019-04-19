@@ -245,12 +245,12 @@
      </item>
     </layout>
    </widget>
-   <widget class="QGroupBox" name="groupBox">
+   <widget class="QGroupBox" name="propertiesGrid">
     <property name="geometry">
      <rect>
       <x>540</x>
       <y>583</y>
-      <width>151</width>
+      <width>171</width>
       <height>151</height>
      </rect>
     </property>
@@ -276,23 +276,12 @@
        </item>
       </layout>
      </item>
-     <item row="1" column="0">
-      <layout class="QVBoxLayout" name="verticalLayout_5">
-       <item>
-        <widget class="QLabel" name="modColourLabel">
-         <property name="text">
-          <string>Model colour</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="modColourButton">
-         <property name="text">
-          <string>Change...</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
+     <item row="3" column="0">
+      <widget class="QPushButton" name="resetPropertiesButton">
+       <property name="text">
+        <string>Reset properties</string>
+       </property>
+      </widget>
      </item>
      <item row="0" column="0">
       <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -312,14 +301,38 @@
        </item>
       </layout>
      </item>
-     <item row="3" column="0">
-      <widget class="QPushButton" name="resetPropertiesButton">
-       <property name="text">
-        <string>Reset properties</string>
-       </property>
-      </widget>
+     <item row="1" column="0">
+      <layout class="QVBoxLayout" name="verticalLayout_5">
+       <item>
+        <widget class="QLabel" name="modColourLabel">
+         <property name="text">
+          <string>Model colour</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="modColourButton">
+         <property name="text">
+          <string>Change...</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </item>
     </layout>
+   </widget>
+   <widget class="QCheckBox" name="gradientCheckBox">
+    <property name="geometry">
+     <rect>
+      <x>750</x>
+      <y>690</y>
+      <width>151</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Gradient background</string>
+    </property>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">

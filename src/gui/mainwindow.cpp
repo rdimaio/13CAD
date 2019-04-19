@@ -115,6 +115,7 @@ void MainWindow::setupButtons(bool modelLoaded)
 	ui->actionPrint->setEnabled(modelLoaded);
 	ui->actionScreenshot->setEnabled(modelLoaded);
 	ui->modColourButton->setEnabled(modelLoaded);
+	ui->gradientCheckBox->setChecked(true); // Initialize gradient on
 	ui->resetCameraButton->setEnabled(modelLoaded);
 	ui->resetPropertiesButton->setEnabled(modelLoaded);
 	ui->opacitySlider->setEnabled(modelLoaded);
@@ -143,6 +144,7 @@ void MainWindow::setupConnects()
 	connect(ui->actionScreenshot, SIGNAL(triggered()), this, SLOT(handleActionPrint()));
 	connect(ui->actionStlTest, SIGNAL(triggered()), this, SLOT(handleActionStlTest()));
 	connect(ui->actionModTest, SIGNAL(triggered()), this, SLOT(handleActionModTest()));
+	connect(ui->gradientCheckBox, SIGNAL(stateChanged(int)), this, SLOT(on_gradientCheckBox_stateChanged(int)));
 	connect(ui->opacitySlider, SIGNAL(sliderMoved(int)), this, SLOT(on_opacitySlider_sliderMoved(int)));
 	connect(ui->opacitySlider, SIGNAL(valueChanged(int)), this, SLOT(on_opacitySlider_valueChanged(int)));
 	//connect(ui->horizontalSlider, SIGNAL(valueChanged(int)), this, SLOT(on_horizontalSlider_sliderMoved(int)));
@@ -638,6 +640,26 @@ void MainWindow::on_neg90Button_clicked()
 	// Re-render scene
     renderer->ResetCamera();
     ui->qvtkWidget->GetRenderWindow()->Render();
+}
+
+void MainWindow::on_gradientCheckBox_stateChanged(int state)
+{
+	
+	qInfo() << state;
+	// Note: state == 1 means partially checked
+	if (state == 0) // unchecked
+	{
+		renderer->GradientBackgroundOff();
+
+	} else if (state == 2) // checked
+	{
+		double r, g, b;
+		renderer->GetBackground(r, g, b);
+		renderer->GradientBackgroundOn();
+		renderer->SetBackground(r, g, b);
+		renderer->SetBackground2(0,0,1);
+	}
+	ui->qvtkWidget->GetRenderWindow()->Render();
 }
 
 void MainWindow::on_opacitySlider_sliderMoved(int position)
