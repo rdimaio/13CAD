@@ -12,6 +12,7 @@
 #include <QColorDialog>
 #include <QInputDialog>
 #include <QLineEdit>
+#include <QString>
 
 namespace Ui {
 class MainWindow;
@@ -33,7 +34,7 @@ private:
     /**
     * Loads model.
     */
-    void loadModel(std::string inputFilename);
+    void loadModel(QString inputFilename);
     /**
      * Clears loaded model.
     */

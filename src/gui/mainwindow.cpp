@@ -149,11 +149,14 @@ void MainWindow::setupConnects()
 	//ui->actionSave->setIcon(QIcon("gui/icons/filesave.png")); //choose the icon location
 }
 
-void MainWindow::loadModel(std::string inputFilename) {
+void MainWindow::loadModel(QString inputFilename) {
+	// Convert QString to std::string
+	std::string modelFileName = inputFileName.toUtf8().constData();
+	
 	// Load model
 	// (maybe only do model mod1 in case it's a .mod file, remove isstl from model,
 	// and check here, so that you don't construct a model in case it's stl.)
-  	Model mod1(inputFilename);
+  	Model mod1(modelFileName);
 
 	  if (mod1.getIsSTL()) {
 
@@ -173,7 +176,7 @@ void MainWindow::loadModel(std::string inputFilename) {
 	// Visualize
 	vtkSmartPointer<vtkSTLReader> reader =
 	vtkSmartPointer<vtkSTLReader>::New();
-	reader->SetFileName(inputFilename.c_str());
+	reader->SetFileName(modelFileName.c_str());
 	reader->Update();
 
 	// NOTE: datasetmapper is used instead of polydatamapper.
@@ -405,14 +408,11 @@ void MainWindow::handleActionOpen()
 		QDir::currentPath(),
 		tr("Supported Models (*.mod, *.stl);;STL Model (*.stl);;Proprietary Model (*.mod)"));
 
-	// Convert QString to std::string
-	std::string modelFileName = inputFileName.toUtf8().constData();
-
 	if (modelLoaded) {
 		clearModel();
 	}
 
-	loadModel(modelFileName);
+	loadModel(inputFileName);
 }
 
 void MainWindow::handleActionSave()
@@ -445,20 +445,22 @@ void MainWindow::handleActionClose()
 
 void MainWindow::handleActionStlTest()
 {
-    if (modelLoaded)
-	{
-		clearModel();
-	}
-	loadModel("tests/ExampleSTL.stl");
-}
-
-void MainWindow::handleActionModTest()
-{
+    inputFileName = "tests/ExampleSTL.stl";
 	if (modelLoaded)
 	{
 		clearModel();
 	}
-    loadModel("tests/ExampleModel.mod");
+	loadModel(inputFileName);
+}
+
+void MainWindow::handleActionModTest()
+{
+	inputFileName = "tests/ExampleModel.mod";
+	if (modelLoaded)
+	{
+		clearModel();
+	}
+    loadModel(inputFileName);
 }
 
 void MainWindow::handleActionPrint()
@@ -517,7 +519,7 @@ void MainWindow::on_modColourButton_clicked()
     double r = rgbColours.redF();
     double g = rgbColours.greenF();
     double b = rgbColours.blueF();
-	
+
 	// Check that colour is valid, otherwise show an error
     if(rgbColours.isValid()) {
 
@@ -542,13 +544,16 @@ void MainWindow::on_resetPropertiesButton_clicked()
 {
     // Set default background colour
 	renderer->SetBackground(colors->GetColor3d("Black").GetData());
+	qInfo() << inputFileName;
 
 	// debug - recolor model
+	loadModel(inputFileName);
 
 	// Set maximum opacity
 	ui->opacitySlider->setValue(99);
 
     ui->qvtkWidget->GetRenderWindow()->Render();
+
 }
 
 void MainWindow::on_posXButton_clicked()
