@@ -140,6 +140,7 @@ void MainWindow::setupConnects()
 	connect(ui->actionStlTest, SIGNAL(triggered()), this, SLOT(handleActionStlTest()));
 	connect(ui->actionModTest, SIGNAL(triggered()), this, SLOT(handleActionModTest()));
 	connect(ui->gradientCheckBox, SIGNAL(stateChanged(int)), this, SLOT(on_gradientCheckBox_stateChanged(int)));
+	connect(ui->wireframeRadio, SIGNAL(toggled(bool)), this, SLOT(on_wireframeRadio_toggled(bool)));
 	connect(ui->opacitySlider, SIGNAL(sliderMoved(int)), this, SLOT(on_opacitySlider_sliderMoved(int)));
 	connect(ui->opacitySlider, SIGNAL(valueChanged(int)), this, SLOT(on_opacitySlider_valueChanged(int)));
 	//connect(ui->horizontalSlider, SIGNAL(valueChanged(int)), this, SLOT(on_horizontalSlider_sliderMoved(int)));
@@ -667,6 +668,23 @@ void MainWindow::on_gradientCheckBox_stateChanged(int state)
 		renderer->GradientBackgroundOn();
 		renderer->SetBackground(r, g, b);
 		renderer->SetBackground2(0, 0.6, 0.5);
+	}
+	ui->qvtkWidget->GetRenderWindow()->Render();
+}
+
+void MainWindow::on_wireframeRadio_toggled(bool checked)
+{
+	if (checked)
+	{
+		for (int i = 0; i < actors.size(); i++)
+		{
+			actors[i]->GetProperty()->SetRepresentationToWireframe();
+		}
+	} else {
+		for (int i = 0; i < actors.size(); i++)
+		{
+			actors[i]->GetProperty()->SetRepresentationToSurface();
+		}
 	}
 	ui->qvtkWidget->GetRenderWindow()->Render();
 }

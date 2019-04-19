@@ -39,7 +39,7 @@
    <widget class="QLabel" name="label_4">
     <property name="geometry">
      <rect>
-      <x>770</x>
+      <x>940</x>
       <y>590</y>
       <width>141</width>
       <height>16</height>
@@ -52,7 +52,7 @@
    <widget class="QLabel" name="label_5">
     <property name="geometry">
      <rect>
-      <x>1070</x>
+      <x>1140</x>
       <y>590</y>
       <width>141</width>
       <height>16</height>
@@ -65,7 +65,7 @@
    <widget class="QSlider" name="horizontalSlider">
     <property name="geometry">
      <rect>
-      <x>760</x>
+      <x>940</x>
       <y>640</y>
       <width>160</width>
       <height>16</height>
@@ -78,7 +78,7 @@
    <widget class="QPushButton" name="screenshotButton">
     <property name="geometry">
      <rect>
-      <x>990</x>
+      <x>1150</x>
       <y>670</y>
       <width>80</width>
       <height>23</height>
@@ -162,7 +162,7 @@
    <widget class="QGroupBox" name="cameraGrid">
     <property name="geometry">
      <rect>
-      <x>330</x>
+      <x>260</x>
       <y>580</y>
       <width>172</width>
       <height>151</height>
@@ -248,8 +248,8 @@
    <widget class="QGroupBox" name="propertiesGrid">
     <property name="geometry">
      <rect>
-      <x>540</x>
-      <y>583</y>
+      <x>450</x>
+      <y>580</y>
       <width>171</width>
       <height>151</height>
      </rect>
@@ -324,7 +324,7 @@
    <widget class="QCheckBox" name="gradientCheckBox">
     <property name="geometry">
      <rect>
-      <x>720</x>
+      <x>960</x>
       <y>700</y>
       <width>151</width>
       <height>21</height>
@@ -332,6 +332,19 @@
     </property>
     <property name="text">
      <string>Gradient background</string>
+    </property>
+   </widget>
+   <widget class="QRadioButton" name="wireframeRadio">
+    <property name="geometry">
+     <rect>
+      <x>670</x>
+      <y>620</y>
+      <width>100</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Wireframes</string>
     </property>
    </widget>
   </widget>

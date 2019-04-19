@@ -80,6 +80,9 @@ private slots:
     void on_negYButton_clicked();
     void on_negZButton_clicked();
     void on_neg90Button_clicked();
+
+    // Visualization
+    void on_wireframeRadio_toggled(bool checked);
 //    void on_sa_clicked();
 //    
 //    void on_greenButton_clicked();
