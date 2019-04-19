@@ -10,6 +10,7 @@ var searchData=
   ['getid',['getId',['../classMaterial.html#aeb2e7dc58e15549cb66dcf4348c5d3af',1,'Material']]],
   ['getisstl',['getIsSTL',['../classModel.html#a7fcb94402abc1f1916a485c38f7bdb53',1,'Model']]],
   ['getmass',['getMass',['../classCell.html#afddd8cc5cabef0dd943b4fa21019c95e',1,'Cell']]],
+  ['getmaterial',['getMaterial',['../classCell.html#a0b438b2a52cbc2faac025b3b2533db8e',1,'Cell']]],
   ['getmaterialcount',['getMaterialCount',['../classModel.html#a007ada8785b274d14d8ff91dd66aeab5',1,'Model']]],
   ['getmaterials',['getMaterials',['../classModel.html#a7fb041f8ba06b70fb670c2c86b696a08',1,'Model']]],
   ['getname',['getName',['../classMaterial.html#a6dd6278a55af611612d999c7d3ab63f3',1,'Material']]],
