@@ -116,6 +116,7 @@ void MainWindow::setupButtons(bool modelLoaded)
 	ui->actionScreenshot->setEnabled(modelLoaded);
 	ui->modColourButton->setEnabled(modelLoaded);
 	ui->resetCameraButton->setEnabled(modelLoaded);
+	ui->resetPropertiesButton->setEnabled(modelLoaded);
 	ui->opacitySlider->setEnabled(modelLoaded);
 	ui->opacitySlider->setValue(99); // Initialize slider at max value
 	ui->screenshotButton->setEnabled(modelLoaded);
@@ -202,6 +203,9 @@ void MainWindow::loadModel(std::string inputFilename) {
 		// Get vector of cells from the model
 		std::vector<Cell> modCells = mod1.getCells();
 
+		// Get vector of materials
+		std::vector<Material> modMaterials = mod1.getMaterials();
+
 		// Resize to new model
 		unstructuredGrids.resize(modCells.size());
     	actors.resize(modCells.size());
@@ -266,19 +270,7 @@ void MainWindow::loadModel(std::string inputFilename) {
 
 				cellArray->InsertNextCell(tetras[tetra_count]);
     			unstructuredGrids[poly_count]->SetCells(VTK_TETRA, cellArray);
-
-				mappers[poly_count] = vtkSmartPointer<vtkDataSetMapper>::New();
-				mappers[poly_count]->SetInputData(unstructuredGrids[poly_count]);
-
-				actors[poly_count] = vtkSmartPointer<vtkActor>::New();
-				actors[poly_count]->SetMapper(mappers[poly_count]);
-				actors[poly_count]->GetProperty()->SetColor(colors->GetColor3d("Cyan").GetData());
-				renderer->AddActor(actors[poly_count]);
-
-				// actors[poly_count]->GetProperty()->SetColor( colors->GetColor3d("Red").GetData());
-
 				tetra_count++;
-				poly_count++;
 			
 			// Pyramid
 			} else if (cellVertices.size() == 5) {
@@ -302,19 +294,8 @@ void MainWindow::loadModel(std::string inputFilename) {
 
 				cellArray->InsertNextCell(pyras[pyra_count]);
     			unstructuredGrids[poly_count]->SetCells(VTK_PYRAMID, cellArray);
-
-				mappers[poly_count] = vtkSmartPointer<vtkDataSetMapper>::New();
-				mappers[poly_count]->SetInputData(unstructuredGrids[poly_count]);
-
-				actors[poly_count] = vtkSmartPointer<vtkActor>::New();
-				actors[poly_count]->SetMapper(mappers[poly_count]);
-				actors[poly_count]->GetProperty()->SetColor(colors->GetColor3d("Cyan").GetData());
-				renderer->AddActor(actors[poly_count]);
-
-				// actors[poly_count]->GetProperty()->SetColor( colors->GetColor3d("Red").GetData());
-
 				pyra_count++;
-				poly_count++;
+
 			// Hexahedron
 			} else if (cellVertices.size() == 8) {
 
@@ -340,18 +321,41 @@ void MainWindow::loadModel(std::string inputFilename) {
 
 				cellArray->InsertNextCell(hexas[hexa_count]);
 				unstructuredGrids[poly_count]->SetCells(VTK_HEXAHEDRON, cellArray);
-
-				mappers[poly_count] = vtkSmartPointer<vtkDataSetMapper>::New();
-				mappers[poly_count]->SetInputData(unstructuredGrids[poly_count]);
-				actors[poly_count] = vtkSmartPointer<vtkActor>::New();
-				actors[poly_count]->SetMapper(mappers[poly_count]);
-				actors[poly_count]->GetProperty()->SetColor(colors->GetColor3d("Cyan").GetData());
-				renderer->AddActor(actors[poly_count]);
-				// actors[poly_count]->GetProperty()->SetColor( colors->GetColor3d("Red").GetData());
 				hexa_count++;
-				poly_count++;
-
 			}
+
+			// Create mapper and set the current cell as its input
+			mappers[poly_count] = vtkSmartPointer<vtkDataSetMapper>::New();
+			mappers[poly_count]->SetInputData(unstructuredGrids[poly_count]);
+
+			// Set mapper to actor
+			actors[poly_count] = vtkSmartPointer<vtkActor>::New();
+			actors[poly_count]->SetMapper(mappers[poly_count]);
+			//actors[poly_count]->GetProperty()->SetColor(colors->GetColor3d("Cyan").GetData());
+
+			// Get material of current cell
+			Material mat1 = modCells[poly_count].getMaterial();
+			
+			// Get colour as hexadecimal string, convert it to separate r, g and b
+			std::string matColour = mat1.getColour();
+			const char * rgbColour = matColour.c_str();
+			int r, g, b;
+			sscanf(rgbColour, "%02x%02x%02x", &r, &g, &b);
+
+			// Convert it to double and set it to range from 0 to 1
+			double dr = (double)r/255;
+			double dg = (double)g/255;
+			double db = (double)b/255;
+
+			// debug
+			//qInfo() << dr;
+			//qInfo() << dg;
+			//qInfo() << db;
+
+			actors[poly_count]->GetProperty()->SetColor(dr, dg, db);
+			// Add actor to renderer
+			renderer->AddActor(actors[poly_count]);
+			poly_count++;
 		}
 		qInfo() << tetra_count; // debug
 		qInfo() << hexa_count; // debug
@@ -387,8 +391,8 @@ void MainWindow::resetCamera() {
 	// These lines are needed to ensure the button can be pressed more than
 	// once per each model
 	renderer->GetActiveCamera()->SetFocalPoint(0.0, 0.0, 0.0);
-    renderer->GetActiveCamera()->SetViewUp(0, 1, 0);
-    renderer->GetActiveCamera()->SetPosition(0, 0, 1);
+    renderer->GetActiveCamera()->SetViewUp(0.201282, 0.526811, -0.299848);
+    renderer->GetActiveCamera()->SetPosition(0.795337, -0.696117, -0.689135);
 
 	// Reset camera and re-render scene
     renderer->ResetCamera();
@@ -534,6 +538,19 @@ void MainWindow::on_resetCameraButton_clicked()
     ui->qvtkWidget->GetRenderWindow()->Render();
 }
 
+void MainWindow::on_resetPropertiesButton_clicked()
+{
+    // Set default background colour
+	renderer->SetBackground(colors->GetColor3d("Black").GetData());
+
+	// debug - recolor model
+
+	// Set maximum opacity
+	ui->opacitySlider->setValue(99);
+
+    ui->qvtkWidget->GetRenderWindow()->Render();
+}
+
 void MainWindow::on_posXButton_clicked()
 {
 	renderer->GetActiveCamera()->SetFocalPoint(0.0, 0.0, 0.0);
@@ -626,6 +643,18 @@ void MainWindow::on_opacitySlider_sliderMoved(int position)
 	} else {
 		pos = (float)position/100;
 	}
+
+	// // debug
+	// double xview;
+	// double yview;
+	// double zview;
+	// double x;
+	// double y;
+	// double z;
+ 	// renderer->GetActiveCamera()->GetViewUp(xview, yview, zview);
+ 	// renderer->GetActiveCamera()->GetDirectionOfProjection(x, y, z);
+	// qInfo() << xview << " " << yview << " " << zview;
+	// qInfo() << x << " " << y << " " << z;
 
 	if (actors.size() == 1) {
 		actors[0]->GetProperty()->SetOpacity(pos);

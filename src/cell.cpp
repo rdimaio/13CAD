@@ -24,6 +24,10 @@ double Cell::getMass() {
     return mass;
 }
 
+Material Cell::getMaterial() {
+    return this->material;
+}
+
 std::vector<Vector3D> Cell::getVertices() {
     return this->vertices;
 }

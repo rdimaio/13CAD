@@ -53,6 +53,12 @@ class Cell {
          * Get the centre of gravity of the cell based on the vertices
          */
         Vector3D getCentre();
+
+        /**
+         * Get material of the cell
+         */
+        Material getMaterial();
+
 };
 
 /**

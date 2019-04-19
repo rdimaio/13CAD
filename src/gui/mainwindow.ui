@@ -127,7 +127,7 @@
       </layout>
      </item>
      <item>
-      <widget class="QFrame" name="">
+      <widget class="QFrame" name="frame">
        <layout class="QVBoxLayout" name="verticalLayout_3">
         <item>
          <layout class="QVBoxLayout" name="verticalLayout_6">
@@ -245,7 +245,7 @@
      </item>
     </layout>
    </widget>
-   <widget class="QGroupBox" name="">
+   <widget class="QGroupBox" name="groupBox">
     <property name="geometry">
      <rect>
       <x>540</x>
@@ -258,19 +258,19 @@
      <string>Properties</string>
     </property>
     <layout class="QGridLayout" name="gridLayout_2">
-     <item row="0" column="0">
-      <layout class="QVBoxLayout" name="verticalLayout_4">
+     <item row="2" column="0">
+      <layout class="QVBoxLayout" name="verticalLayout_7">
        <item>
-        <widget class="QLabel" name="bkgColourLabel">
+        <widget class="QLabel" name="opacityLabel">
          <property name="text">
-          <string>Background colour</string>
+          <string>Opacity</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="bkgColourButton">
-         <property name="text">
-          <string>Change...</string>
+        <widget class="QSlider" name="opacitySlider">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
          </property>
         </widget>
        </item>
@@ -294,23 +294,30 @@
        </item>
       </layout>
      </item>
-     <item row="2" column="0">
-      <layout class="QVBoxLayout" name="verticalLayout_7">
+     <item row="0" column="0">
+      <layout class="QVBoxLayout" name="verticalLayout_4">
        <item>
-        <widget class="QLabel" name="opacityLabel">
+        <widget class="QLabel" name="bkgColourLabel">
          <property name="text">
-          <string>Opacity</string>
+          <string>Background colour</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QSlider" name="opacitySlider">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
+        <widget class="QPushButton" name="bkgColourButton">
+         <property name="text">
+          <string>Change...</string>
          </property>
         </widget>
        </item>
       </layout>
+     </item>
+     <item row="3" column="0">
+      <widget class="QPushButton" name="resetPropertiesButton">
+       <property name="text">
+        <string>Reset properties</string>
+       </property>
+      </widget>
      </item>
     </layout>
    </widget>

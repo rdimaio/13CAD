@@ -56,6 +56,7 @@ private slots:
     // Properties
     void on_bkgColourButton_clicked();
     void on_modColourButton_clicked();
+    void on_resetPropertiesButton_clicked();
     // Note on opacity slider:
     // If a STL model is loaded, there is only one actor,
     // thus changing the opacity as the slider is moved
