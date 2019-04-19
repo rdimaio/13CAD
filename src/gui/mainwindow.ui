@@ -324,8 +324,8 @@
    <widget class="QCheckBox" name="gradientCheckBox">
     <property name="geometry">
      <rect>
-      <x>750</x>
-      <y>690</y>
+      <x>720</x>
+      <y>700</y>
       <width>151</width>
       <height>21</height>
      </rect>

@@ -100,11 +100,6 @@ void MainWindow::setupWindow()
 
 	// Add the renderer to the render window
 	ui->qvtkWidget->GetRenderWindow()->AddRenderer(renderer);
-
-	// Set default background colour
-	renderer->SetBackground(colors->GetColor3d("Black").GetData());
-
-
 }
 
 void MainWindow::setupButtons(bool modelLoaded)
@@ -379,6 +374,15 @@ void MainWindow::loadModel(QString inputFilename) {
 
 void MainWindow::clearModel()
 {
+	// Retain background colour
+	double r, g, b;
+	double r2, g2, b2;
+	renderer->GetBackground(r, g, b);
+	bool isGradient = renderer->GetGradientBackground();
+	if (isGradient) {
+		renderer->GetBackground2(r2, g2, b2);
+	}
+	
 	// Remove renderer from render window
 	ui->qvtkWidget->GetRenderWindow()->RemoveRenderer(renderer);
 	// Free previous renderer by assigning it to a NULL pointer
@@ -388,6 +392,13 @@ void MainWindow::clearModel()
 	// Add the renderer back
 	ui->qvtkWidget->GetRenderWindow()->AddRenderer(renderer);
 	ui->qvtkWidget->GetRenderWindow()->Render();
+
+	if (isGradient) {
+		renderer->GradientBackgroundOn();
+		renderer->SetBackground2(r2, g2, b2);
+	}
+	// Set previous background colour
+	renderer->SetBackground(r, g, b);
 
 	modelLoaded = false;
 }
@@ -544,18 +555,18 @@ void MainWindow::on_resetCameraButton_clicked()
 
 void MainWindow::on_resetPropertiesButton_clicked()
 {
-    // Set default background colour
-	renderer->SetBackground(colors->GetColor3d("Black").GetData());
-	qInfo() << inputFileName;
-
-	// debug - recolor model
+    // Recolor model
 	loadModel(inputFileName);
+	
+	// Set default background colour
+	renderer->GradientBackgroundOn();
+	renderer->SetBackground(colors->GetColor3d("Black").GetData());
+	renderer->SetBackground2(0.5, 0.5, 0.5);
 
 	// Set maximum opacity
 	ui->opacitySlider->setValue(99);
 
     ui->qvtkWidget->GetRenderWindow()->Render();
-
 }
 
 void MainWindow::on_posXButton_clicked()
@@ -644,8 +655,6 @@ void MainWindow::on_neg90Button_clicked()
 
 void MainWindow::on_gradientCheckBox_stateChanged(int state)
 {
-	
-	qInfo() << state;
 	// Note: state == 1 means partially checked
 	if (state == 0) // unchecked
 	{
@@ -657,7 +666,7 @@ void MainWindow::on_gradientCheckBox_stateChanged(int state)
 		renderer->GetBackground(r, g, b);
 		renderer->GradientBackgroundOn();
 		renderer->SetBackground(r, g, b);
-		renderer->SetBackground2(0,0,1);
+		renderer->SetBackground2(0, 0.6, 0.5);
 	}
 	ui->qvtkWidget->GetRenderWindow()->Render();
 }
@@ -715,39 +724,4 @@ void MainWindow::on_lightSlider_sliderMoved(int position)
     light->SetIntensity((float)(100-position)/100);
     ui->qvtkWidget->GetRenderWindow()->Render();
 }
-
-void MainWindow::handleModelButton()
-{
-    vtkSmartPointer<vtkNamedColors> colors = vtkSmartPointer<vtkNamedColors>::New();
-
-	QColor color = QColorDialog::getColor(Qt::white, this, "Choose Color");
-
-	if (color.isValid()) {
-
-		QString hex = color.name();
-		std::string str = hex.toStdString();
-		char *cstr = &str[0u];
-
-		int r, g, b;
-		double ri, gi, bi;
-		sscanf(cstr, "#%02x%02x%02x", &r, &g, &b);
-
-		ri = (double)r / 255;
-		gi = (double)g / 255;
-		bi = (double)b / 255;
-
-		actor->GetProperty()->SetColor(ri, gi, bi);
-	}
-
-    ui->qvtkWidget->GetRenderWindow()->Render();
-}
-  
-
-
-void MainWindow::on_greenButton_clicked()
-{
-    //actor->GetProperty()->SetColor( colors->GetColor3d("green").GetData() );
-    ui->qvtkWidget->GetRenderWindow()->Render();
-}
-
 */
