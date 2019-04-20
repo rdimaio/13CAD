@@ -48,8 +48,6 @@ vtkNew<vtkGenericOpenGLRenderWindow> renderWindow;
 vtkSmartPointer<vtkRenderer> renderer = vtkSmartPointer<vtkRenderer>::New();
 // Create colors
 vtkSmartPointer<vtkNamedColors> colors = vtkSmartPointer<vtkNamedColors>::New();
-// Create cell array to store the cells of the .mod file
-vtkSmartPointer<vtkCellArray> cellArray = vtkSmartPointer<vtkCellArray>::New();
 // Setup the light
 vtkSmartPointer<vtkLight> light = vtkSmartPointer<vtkLight>::New();
 // Initialise vectors for mappers and actors
@@ -62,7 +60,6 @@ std::vector<vtkSmartPointer<vtkUnstructuredGrid>> unstructuredGrids;
 std::vector<vtkSmartPointer<vtkTetra>> tetras;
 std::vector<vtkSmartPointer<vtkPyramid>> pyras;
 std::vector<vtkSmartPointer<vtkHexahedron>> hexas;
-vtkSmartPointer<vtkPoints> points = vtkSmartPointer<vtkPoints>::New();
 QString inputFileName; // Global string for model's filename
 bool modelLoaded = false; // Global flag that indicates a model is currently loaded
 
@@ -169,6 +166,19 @@ void MainWindow::loadModel(QString inputFilename) {
 	QString volumeString;
 	QString cellString;
 	QString pointString;
+	double modSurfArea;
+	double modVolume;
+	int modCells;
+	int modPoints;
+	vtkSmartPointer<vtkPolyData> modPolyData;
+
+	if (modelLoaded) {
+		double modSurfArea = 0;
+		double modVolume = 0;
+		int modCells = 0;
+		int modPoints = 0;
+		modPolyData->Initialize();
+	}
 
 	// Convert QString to std::string
 	std::string modelFileName = inputFileName.toUtf8().constData();
@@ -213,21 +223,22 @@ void MainWindow::loadModel(QString inputFilename) {
   		actors[0]->GetProperty()->SetSpecularPower(5);
 
 		// Get PolyData of model
-		vtkSmartPointer<vtkPolyData> modPolyData = reader->GetOutput();
+		modPolyData = reader->GetOutput();
 
 		// Get stats
-		int modCells = modPolyData->GetNumberOfPolys();
-		int modPoints = modPolyData->GetNumberOfPoints();
+		modCells = modPolyData->GetNumberOfPolys();
+		modPoints = modPolyData->GetNumberOfPoints();
 
 
 		// Use a triangle filter to obtain mass and surface area information
 		vtkTriangleFilter *triangleFilter = vtkTriangleFilter::New();
     	triangleFilter->SetInputConnection(reader->GetOutputPort());
+		triangleFilter->Update();
     	vtkMassProperties *massProperty = vtkMassProperties::New();
     	massProperty->SetInputConnection(triangleFilter->GetOutputPort());
     	massProperty->Update();
-    	double modSurfArea = massProperty->GetSurfaceArea();
-		double modVolume = massProperty->GetVolume();
+    	modSurfArea = massProperty->GetSurfaceArea();
+		modVolume = massProperty->GetVolume();
 
 		// Define the strings to be shown in the stats area
     	surfAreaString = QString::number(modSurfArea) + " m^2";
@@ -256,6 +267,9 @@ void MainWindow::loadModel(QString inputFilename) {
 		unstructuredGrids.resize(modCells.size());
     	actors.resize(modCells.size());
     	mappers.resize(modCells.size());
+
+		vtkSmartPointer<vtkCellArray> cellArray = vtkSmartPointer<vtkCellArray>::New();
+		vtkSmartPointer<vtkPoints> points = vtkSmartPointer<vtkPoints>::New();
 
 		if (modelLoaded) {
 			/*// Clear pointers to previous model - debug
@@ -411,10 +425,26 @@ void MainWindow::loadModel(QString inputFilename) {
 		qInfo() << "Hexas:" << hexa_count;
 		qInfo() << "Cells:" << poly_count;
 
-		vtkSmartPointer<vtkPolyData> modPolyData = reader->GetOutput(); // WORK ON THIS
+		modPolyData = vtkSmartPointer<vtkPolyData>::New();
 
-		//surfAreaString = QString::number(modSurfArea) + " m^2";
-    	//volumeString = QString::number(modVolume) + " m^3";
+		modPolyData->SetPolys(cellArray);
+		modPolyData->SetPoints(points);
+
+		// Use a triangle filter to obtain mass and surface area information
+		vtkTriangleFilter *triangleFilter = vtkTriangleFilter::New();
+		vtkMassProperties *massProperty = vtkMassProperties::New();
+    	triangleFilter->SetInputData(modPolyData);
+		triangleFilter->Update();
+    	massProperty->SetInputConnection(triangleFilter->GetOutputPort());
+    	massProperty->Update();
+    	modSurfArea = massProperty->GetSurfaceArea();
+		modVolume = massProperty->GetVolume();
+
+		qInfo() << modSurfArea;
+		qInfo() << modVolume;
+
+		surfAreaString = QString::number(modSurfArea) + " m^2";
+    	volumeString = QString::number(modVolume) + " m^3";
 		cellString = QString::number(poly_count);
 		pointString = QString::number(mod1.getVertexCount());
 	}

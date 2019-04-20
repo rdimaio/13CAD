@@ -479,10 +479,11 @@
     <property name="title">
      <string>Edit</string>
     </property>
-    <addaction name="actionUndo"/>
-    <addaction name="actionRedo"/>
     <addaction name="separator"/>
     <addaction name="actionResetFilters"/>
+    <addaction name="actionReset_Camera_View"/>
+    <addaction name="actionReset_Properties"/>
+    <addaction name="actionReset_lighting"/>
    </widget>
    <widget class="QMenu" name="menuSettings">
     <property name="title">
@@ -647,6 +648,21 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+P</string>
+   </property>
+  </action>
+  <action name="actionReset_Camera_View">
+   <property name="text">
+    <string>Reset Camera View</string>
+   </property>
+  </action>
+  <action name="actionReset_Properties">
+   <property name="text">
+    <string>Reset Properties</string>
+   </property>
+  </action>
+  <action name="actionReset_lighting">
+   <property name="text">
+    <string>Reset lighting</string>
    </property>
   </action>
  </widget>
