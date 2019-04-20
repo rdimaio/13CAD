@@ -25,32 +25,6 @@
     </property>
     <layout class="QVBoxLayout" name="verticalLayout"/>
    </widget>
-   <widget class="QLabel" name="label_5">
-    <property name="geometry">
-     <rect>
-      <x>1030</x>
-      <y>590</y>
-      <width>141</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Statistics</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="screenshotButton">
-    <property name="geometry">
-     <rect>
-      <x>1150</x>
-      <y>670</y>
-      <width>80</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Screenshot</string>
-    </property>
-   </widget>
    <widget class="QGroupBox" name="groupBox">
     <property name="geometry">
      <rect>
@@ -325,7 +299,7 @@
      </item>
     </layout>
    </widget>
-   <widget class="QGroupBox" name="">
+   <widget class="QGroupBox" name="lightingGrid">
     <property name="geometry">
      <rect>
       <x>770</x>
@@ -403,6 +377,77 @@
       <widget class="QPushButton" name="resetLightingButton">
        <property name="text">
         <string>Reset lighting</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QGroupBox" name="statsGrid">
+    <property name="geometry">
+     <rect>
+      <x>1040</x>
+      <y>600</y>
+      <width>221</width>
+      <height>121</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>Statistics</string>
+    </property>
+    <layout class="QGridLayout" name="gridLayout_4">
+     <item row="0" column="0">
+      <widget class="QLabel" name="volLabel">
+       <property name="text">
+        <string>Volume: </string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QLabel" name="volValue">
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="surfAreaLabel">
+       <property name="text">
+        <string>Surface area:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QLabel" name="surfAreaValue">
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="0">
+      <widget class="QLabel" name="cellsLabel">
+       <property name="text">
+        <string>Cells:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="1">
+      <widget class="QLabel" name="cellsValue">
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="0">
+      <widget class="QLabel" name="pointsLabel">
+       <property name="text">
+        <string>Points:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="1">
+      <widget class="QLabel" name="pointsValue">
+       <property name="text">
+        <string/>
        </property>
       </widget>
      </item>

@@ -22,6 +22,10 @@
 #include <vtkPyramid.h>
 #include <vtkHexahedron.h>
 
+// VTK libraries - volume calculations
+#include <vtkMassProperties.h>
+#include <vtkTriangleFilter.h>
+
 // VTK libraries - STL reading
 #include <vtkSTLReader.h>
 #include <vtkPolyDataMapper.h>
@@ -125,7 +129,6 @@ void MainWindow::setupButtons(bool modelLoaded)
 	ui->specularitySlider->setEnabled(modelLoaded);
 	ui->specularitySlider->setValue(49); // Initialize slider at half value
 	ui->intensitySlider->setValue(49); // Initialize slider at half value
-	ui->screenshotButton->setEnabled(modelLoaded);
 	ui->posXButton->setEnabled(modelLoaded);
 	ui->posYButton->setEnabled(modelLoaded);
 	ui->posZButton->setEnabled(modelLoaded);
@@ -139,9 +142,6 @@ void MainWindow::setupButtons(bool modelLoaded)
 
 void MainWindow::setupConnects()
 {
-	//connect( ui->greenButton,SIGNAL(clicked()), this, SLOT(on_greenButton_clicked()));
-    //connect( ui->modelButton, SIGNAL(clicked()), this, SLOT(handleModelButton()) );
-    //connect( ui->backgButton, SIGNAL(clicked()), this, SLOT(handleBackgButton()) );
 	connect(ui->actionOpen, SIGNAL(triggered()), this, SLOT(handleActionOpen()));
 	connect(ui->actionSave, SIGNAL(triggered()), this, SLOT(handleActionSave()));
 	connect(ui->actionClose, SIGNAL(triggered()), this, SLOT(handleActionClose()));
@@ -175,8 +175,6 @@ void MainWindow::loadModel(QString inputFilename) {
 
 	qInfo() << "Model is STL"; // debug
 
-	
-
 	actors.resize(1);
 	mappers.resize(1);
 
@@ -187,8 +185,7 @@ void MainWindow::loadModel(QString inputFilename) {
 	}
 
 	// Visualize
-	vtkSmartPointer<vtkSTLReader> reader =
-	vtkSmartPointer<vtkSTLReader>::New();
+	vtkSmartPointer<vtkSTLReader> reader = vtkSmartPointer<vtkSTLReader>::New();
 	reader->SetFileName(modelFileName.c_str());
 	reader->Update();
 
@@ -207,6 +204,34 @@ void MainWindow::loadModel(QString inputFilename) {
 	actors[0]->GetProperty()->SetColor(colors->GetColor3d("Red").GetData());
 	actors[0]->GetProperty()->SetSpecular(0.5);
   	actors[0]->GetProperty()->SetSpecularPower(5);
+
+	// Get PolyData of model
+	vtkSmartPointer<vtkPolyData> modPolyData = reader->GetOutput();
+
+	// Get stats
+	int modCells = modPolyData->GetNumberOfPolys();
+	int modPoints = modPolyData->GetNumberOfPoints();
+
+
+	// Use a triangle filter to obtain mass and surface area information
+	vtkTriangleFilter *triangleFilter = vtkTriangleFilter::New();
+    triangleFilter->SetInputConnection(reader->GetOutputPort());
+    vtkMassProperties *massProperty = vtkMassProperties::New();
+    massProperty->SetInputConnection(triangleFilter->GetOutputPort());
+    massProperty->Update();
+    double modSurfArea = massProperty->GetSurfaceArea();
+	double modVolume = massProperty->GetVolume();
+
+    QString surfAreaString = QString::number(modSurfArea) + " m^2";
+    QString volumeString = QString::number(modVolume) + " m^3";
+	QString cellString = QString::number(modCells);
+	QString pointString = QString::number(modPoints);
+
+	ui->surfAreaValue->setText(surfAreaString);
+	ui->volValue->setText(volumeString);
+	ui->cellsValue->setText(cellString);
+	ui->pointsValue->setText(pointString);
+
 	renderer->AddActor(actors[0]);
 
 	} else {
@@ -399,10 +424,8 @@ void MainWindow::clearModel()
 	double r, g, b;
 	double r2, g2, b2;
 	renderer->GetBackground(r, g, b);
+	renderer->GetBackground2(r2, g2, b2);
 	bool isGradient = renderer->GetGradientBackground();
-	if (isGradient) {
-		renderer->GetBackground2(r2, g2, b2);
-	}
 	
 	// Remove renderer from render window
 	ui->qvtkWidget->GetRenderWindow()->RemoveRenderer(renderer);
@@ -414,14 +437,22 @@ void MainWindow::clearModel()
 	ui->qvtkWidget->GetRenderWindow()->AddRenderer(renderer);
 	ui->qvtkWidget->GetRenderWindow()->Render();
 
-	if (isGradient) {
-		renderer->GradientBackgroundOn();
-		renderer->SetBackground2(r2, g2, b2);
-	}
 	// Set previous background colour
 	renderer->SetBackground(r, g, b);
+	renderer->SetBackground2(r2, g2, b2);
+
+	if (isGradient) {
+		renderer->GradientBackgroundOn();
+	}
+
+	// Clear stats text
+	ui->surfAreaValue->setText("");
+	ui->volValue->setText("");
+	ui->cellsValue->setText("");
+	ui->pointsValue->setText("");
 
 	modelLoaded = false;
+	ui->qvtkWidget->GetRenderWindow()->Render();
 }
 
 void MainWindow::resetCamera() {
