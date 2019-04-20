@@ -14,6 +14,7 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
+   <widget class="QStatusBar" name="statusBar"/>
    <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
@@ -472,7 +473,7 @@
     <addaction name="actionClose"/>
     <addaction name="separator"/>
     <addaction name="actionScreenshot"/>
-    <addaction name="actionExport_Data"/>
+    <addaction name="actionExportData"/>
     <addaction name="separator"/>
    </widget>
    <widget class="QMenu" name="menuEdit">
@@ -624,7 +625,7 @@
     <string>Ctrl+W</string>
    </property>
   </action>
-  <action name="actionExport_Data">
+  <action name="actionExportData">
    <property name="text">
     <string>Export Data</string>
    </property>

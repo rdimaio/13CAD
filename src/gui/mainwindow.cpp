@@ -63,6 +63,12 @@ std::vector<vtkSmartPointer<vtkHexahedron>> hexas;
 QString inputFileName; // Global string for model's filename
 bool modelLoaded = false; // Global flag that indicates a model is currently loaded
 
+// Declare stats QStrings (needed as global strings for the export data function)
+QString surfAreaString;
+QString volumeString;
+QString cellString;
+QString pointString;
+
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
 {
 	// debug - works with both this-> and just setupWindow(); on its own;
@@ -113,6 +119,7 @@ void MainWindow::setupButtons(bool modelLoaded)
 	ui->actionClose->setEnabled(modelLoaded);
 	ui->actionPrint->setEnabled(modelLoaded);
 	ui->actionScreenshot->setEnabled(modelLoaded);
+	ui->actionExportData->setEnabled(modelLoaded);
 	ui->modColourButton->setEnabled(modelLoaded);
 	ui->gradientCheckBox->setChecked(true); // Initialize gradient on
 	ui->intensityCheckBox->setEnabled(modelLoaded);
@@ -139,11 +146,13 @@ void MainWindow::setupButtons(bool modelLoaded)
 
 void MainWindow::setupConnects()
 {
+	connect(this, &MainWindow::statusUpdateMessage, ui->statusBar, &QStatusBar::showMessage);
 	connect(ui->actionOpen, SIGNAL(triggered()), this, SLOT(handleActionOpen()));
 	connect(ui->actionSave, SIGNAL(triggered()), this, SLOT(handleActionSave()));
 	connect(ui->actionClose, SIGNAL(triggered()), this, SLOT(handleActionClose()));
 	connect(ui->actionPrint, SIGNAL(triggered()), this, SLOT(handleActionPrint()));
 	connect(ui->actionScreenshot, SIGNAL(triggered()), this, SLOT(handleActionPrint()));
+	connect(ui->actionExportData, SIGNAL(triggered()), this, SLOT(handleActionExportData()));
 	connect(ui->actionStlTest, SIGNAL(triggered()), this, SLOT(handleActionStlTest()));
 	connect(ui->actionModTest, SIGNAL(triggered()), this, SLOT(handleActionModTest()));
 	connect(ui->gradientCheckBox, SIGNAL(stateChanged(int)), this, SLOT(on_gradientCheckBox_stateChanged(int)));
@@ -161,11 +170,7 @@ void MainWindow::setupConnects()
 
 void MainWindow::loadModel(QString inputFilename) {
 
-	// Declare strings to display in stats section
-	QString surfAreaString;
-	QString volumeString;
-	QString cellString;
-	QString pointString;
+	// Declare data to display in stats section
 	double modSurfArea;
 	double modVolume;
 	int modCells;
@@ -576,34 +581,91 @@ void MainWindow::handleActionModTest()
 
 void MainWindow::handleActionPrint()
 {
-	// Enable usage of alpha channel
-	renderWindow->SetAlphaBitPlanes(1);
-	
-	vtkSmartPointer<vtkWindowToImageFilter> windowToImageFilter = vtkSmartPointer<vtkWindowToImageFilter>::New();
-	windowToImageFilter->SetInput(renderWindow);
-
-	// Record the alpha (transparency channel)
-	windowToImageFilter->SetInputBufferTypeToRGBA();
-	windowToImageFilter->ReadFrontBufferOff(); // read from the back buffer
-	windowToImageFilter->Update();
-
 	// Prompt the user for filename
-    QString screenshotName = QFileDialog::getSaveFileName(this, tr("Save Image"), "", tr("Images (*.png)")); 
+    QString screenshotName = QFileDialog::getSaveFileName(this, tr("Save Image"), "", tr("Images (*.png)"));
+	// Only export if a filename has been entered
+	if(!screenshotName.isEmpty() && !screenshotName.isNull()) {
+		// Enable usage of alpha channel
+		renderWindow->SetAlphaBitPlanes(1);
+		ui->qvtkWidget->GetRenderWindow()->Render();
+		vtkSmartPointer<vtkWindowToImageFilter> windowToImageFilter = vtkSmartPointer<vtkWindowToImageFilter>::New();
+		windowToImageFilter->SetInput(renderWindow);
 
-	// Convert QString
-    vtkSmartPointer<vtkPNGWriter> writer = vtkSmartPointer<vtkPNGWriter>::New();
-    std::string stdName = screenshotName.toStdString();
-    const char * charName = stdName.c_str();
+		// Record the alpha (transparency channel)
+		windowToImageFilter->SetInputBufferTypeToRGBA();
+		windowToImageFilter->ReadFrontBufferOff(); // read from the back buffer
+		windowToImageFilter->Update();
 
-	// Write PNG
-    writer->SetFileName(charName);
-    writer->SetInputConnection(windowToImageFilter->GetOutputPort());
-    writer->Write();
+		screenshotName += ".png"; 
 
+		// Convert QString
+    	vtkSmartPointer<vtkPNGWriter> writer = vtkSmartPointer<vtkPNGWriter>::New();
+    	std::string stdName = screenshotName.toStdString();
+    	const char * charName = stdName.c_str();
+
+		// Write PNG
+    	writer->SetFileName(charName);
+    	writer->SetInputConnection(windowToImageFilter->GetOutputPort());
+    	writer->Write();
+	}
 	//// debug - Windows solution
 	//QString filename = QFileDialog::getSaveFileName(this,tr("Save Image"),"",tr("Images (*.png)")); 
     //QScreen *screen = QGuiApplication::primaryScreen();
     //screen->grabWindow(ui->qvtkWidget->winId()).save(filename);
+}
+
+void MainWindow::handleActionExportData()
+{
+	// Prompt user for a filename
+	QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"),
+		QDir::currentPath(),
+		tr("Text file (*.txt)"));
+
+	// Only export if a filename has been entered
+	if(!fileName.isEmpty() && !fileName.isNull()){
+		fileName += ".txt";
+
+		// Open the file
+		QFile outFile(fileName);
+		outFile.open(QIODevice::WriteOnly);
+
+		// Print an error if file fails to open
+		if (!outFile.isOpen()) {
+			QMessageBox messageBox;
+			messageBox.critical(0, "Error", "Error while writing to the file");
+			messageBox.setFixedSize(500, 200);
+		}
+
+		// Initialise output string
+		QString outStr = "";
+
+		outStr += "Volume: ";
+		outStr += volumeString;
+		outStr += "\n";
+
+		outStr += "Surface area: ";
+		outStr += surfAreaString;
+		outStr += "\n";
+
+		outStr += "Cells: ";
+		outStr += cellString;
+		outStr += "\n";
+
+		outStr += "Points: ";
+		outStr += pointString;
+		outStr += "\n";
+
+		// Initialise outStream
+		QTextStream outStream(&outFile);
+
+		// Write to stream
+		outStream << outStr;
+
+		// Close file
+		outFile.close();
+
+		emit statusUpdateMessage(QString("File saved successfully"), 0);
+	}
 }
 
 void MainWindow::on_bkgColourButton_clicked()
