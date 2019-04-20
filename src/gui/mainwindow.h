@@ -75,7 +75,7 @@ private slots:
     void on_specularitySlider_valueChanged(int value);
 
     void on_intensitySlider_sliderMoved(int position);
-    void on_lightCheckBox_stateChanged(int state);
+    void on_intensityCheckBox_stateChanged(int state);
 
     void on_resetLightingButton_clicked();
 

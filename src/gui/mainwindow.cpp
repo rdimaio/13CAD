@@ -114,7 +114,8 @@ void MainWindow::setupButtons(bool modelLoaded)
 	ui->actionScreenshot->setEnabled(modelLoaded);
 	ui->modColourButton->setEnabled(modelLoaded);
 	ui->gradientCheckBox->setChecked(true); // Initialize gradient on
-	ui->lightCheckBox->setChecked(false); // Initialize ext. light off
+	ui->intensityCheckBox->setEnabled(modelLoaded);
+	ui->intensityCheckBox->setChecked(false); // Initialize ext. light off
 	ui->surfaceRadio->setChecked(true); // Initialize surface visualization on
 	ui->resetCameraButton->setEnabled(modelLoaded);
 	ui->resetPropertiesButton->setEnabled(modelLoaded);
@@ -149,7 +150,7 @@ void MainWindow::setupConnects()
 	connect(ui->actionStlTest, SIGNAL(triggered()), this, SLOT(handleActionStlTest()));
 	connect(ui->actionModTest, SIGNAL(triggered()), this, SLOT(handleActionModTest()));
 	connect(ui->gradientCheckBox, SIGNAL(stateChanged(int)), this, SLOT(on_gradientCheckBox_stateChanged(int)));
-	connect(ui->lightCheckBox, SIGNAL(stateChanged(int)), this, SLOT(on_lightCheckBox_stateChanged(int)));
+	connect(ui->intensityCheckBox, SIGNAL(stateChanged(int)), this, SLOT(on_intensityCheckBox_stateChanged(int)));
 	connect(ui->wireframeRadio, SIGNAL(toggled(bool)), this, SLOT(on_wireframeRadio_toggled(bool)));
 	connect(ui->pointsRadio, SIGNAL(toggled(bool)), this, SLOT(on_pointsRadio_toggled(bool)));
 	connect(ui->surfaceRadio, SIGNAL(toggled(bool)), this, SLOT(on_surfaceRadio_toggled(bool)));
@@ -581,10 +582,7 @@ void MainWindow::on_resetPropertiesButton_clicked()
 	// Set default background colour
 	renderer->GradientBackgroundOn();
 	renderer->SetBackground(colors->GetColor3d("Black").GetData());
-	renderer->SetBackground2(0.5, 0.5, 0.5);
-
-	// Set maximum opacity
-	ui->opacitySlider->setValue(99);
+	renderer->SetBackground2(0, 0.6, 0.5);
 
     ui->qvtkWidget->GetRenderWindow()->Render();
 }
@@ -599,7 +597,7 @@ void MainWindow::on_resetLightingButton_clicked()
 		}
 	
 	// Remove external light
-	ui->lightCheckBox->setChecked(false);
+	ui->intensityCheckBox->setChecked(false);
 	renderer->RemoveAllLights();
 	ui->intensitySlider->setValue(49);
 	ui->intensitySlider->setEnabled(false);
@@ -716,7 +714,7 @@ void MainWindow::on_gradientCheckBox_stateChanged(int state)
 	ui->qvtkWidget->GetRenderWindow()->Render();
 }
 
-void MainWindow::on_lightCheckBox_stateChanged(int state)
+void MainWindow::on_intensityCheckBox_stateChanged(int state)
 {
 	// Note: state == 1 means partially checked
 	if (state == 0) // unchecked
