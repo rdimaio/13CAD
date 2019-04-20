@@ -43,14 +43,8 @@ private:
      * Clears loaded model.
     */
     void clearModel();
+
     void resetCamera();
-
-    // Action *visualizeWireframe;
-    // Action *visualizePoints;
-    // Action *visualizeSurface;
-
-    
-
 
 public slots:
     void handleActionOpen();
@@ -59,16 +53,15 @@ public slots:
     void handleActionPrint(); // Handles actionScreenshot too
     void handleActionStlTest();
     void handleActionModTest();
-//    void handleModelButton();
-//    
-//    void handleBackgButton();
-//
+
 private slots:
     // Properties
     void on_bkgColourButton_clicked();
     void on_gradientCheckBox_stateChanged(int state);
     void on_modColourButton_clicked();
     void on_resetPropertiesButton_clicked();
+
+    // Lighting
     // Note on opacity slider:
     // If a STL model is loaded, there is only one actor,
     // thus changing the opacity as the slider is moved
@@ -77,6 +70,14 @@ private slots:
     // thus the opacity is only changed when the value is changed.
     void on_opacitySlider_sliderMoved(int position);
     void on_opacitySlider_valueChanged(int value);
+
+    void on_specularitySlider_sliderMoved(int position);
+    void on_specularitySlider_valueChanged(int value);
+
+    void on_intensitySlider_sliderMoved(int position);
+    void on_lightCheckBox_stateChanged(int state);
+
+    void on_resetLightingButton_clicked();
 
     // Camera
     // Note for the camera functions:
@@ -95,21 +96,6 @@ private slots:
     void on_wireframeRadio_toggled(bool checked);
     void on_pointsRadio_toggled(bool checked);
     void on_surfaceRadio_toggled(bool checked);
-//    void on_sa_clicked();
-//    
-//    void on_greenButton_clicked();
-//
-//    void on_actionFileOpen_triggered();
-//
-//    void on_horizontalSlider_2_sliderMoved(int position);
-//
-//    void on_horizontalSlider_3_sliderMoved(int position);
-//
-//    void on_actionFileSave_triggered();
-//
-//    void on_actionHelp_triggered();
-//
-//    void on_actionPrint_triggered();
 };
 
 #endif // MAINWINDOW_H

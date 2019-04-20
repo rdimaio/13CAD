@@ -68,8 +68,12 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 	// maybe change it if it breaks
 	this->setupWindow();
 
-    light->SetLightTypeToHeadlight();
-    light->SetIntensity( 1 );
+	// Setup light (but don't add it)
+    light->SetLightTypeToCameraLight();
+    light->SetIntensity(0.5);
+	light->SetFocalPoint(1.875,0.6125,0);
+  	light->SetPosition(0.875,1.6125,1);
+	ui->intensitySlider->setEnabled(false);
 
 	// Setup the renderers's camera
 	renderer->ResetCamera();
@@ -77,7 +81,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 	renderer->GetActiveCamera()->Elevation(30);
 	renderer->ResetCameraClippingRange();
 
-	qInfo() << "Window complete"; // debug
 }
 
 MainWindow::~MainWindow()
@@ -111,11 +114,16 @@ void MainWindow::setupButtons(bool modelLoaded)
 	ui->actionScreenshot->setEnabled(modelLoaded);
 	ui->modColourButton->setEnabled(modelLoaded);
 	ui->gradientCheckBox->setChecked(true); // Initialize gradient on
+	ui->lightCheckBox->setChecked(false); // Initialize ext. light off
 	ui->surfaceRadio->setChecked(true); // Initialize surface visualization on
 	ui->resetCameraButton->setEnabled(modelLoaded);
 	ui->resetPropertiesButton->setEnabled(modelLoaded);
+	ui->resetLightingButton->setEnabled(modelLoaded);
 	ui->opacitySlider->setEnabled(modelLoaded);
 	ui->opacitySlider->setValue(99); // Initialize slider at max value
+	ui->specularitySlider->setEnabled(modelLoaded);
+	ui->specularitySlider->setValue(49); // Initialize slider at half value
+	ui->intensitySlider->setValue(49); // Initialize slider at half value
 	ui->screenshotButton->setEnabled(modelLoaded);
 	ui->posXButton->setEnabled(modelLoaded);
 	ui->posYButton->setEnabled(modelLoaded);
@@ -141,12 +149,15 @@ void MainWindow::setupConnects()
 	connect(ui->actionStlTest, SIGNAL(triggered()), this, SLOT(handleActionStlTest()));
 	connect(ui->actionModTest, SIGNAL(triggered()), this, SLOT(handleActionModTest()));
 	connect(ui->gradientCheckBox, SIGNAL(stateChanged(int)), this, SLOT(on_gradientCheckBox_stateChanged(int)));
+	connect(ui->lightCheckBox, SIGNAL(stateChanged(int)), this, SLOT(on_lightCheckBox_stateChanged(int)));
 	connect(ui->wireframeRadio, SIGNAL(toggled(bool)), this, SLOT(on_wireframeRadio_toggled(bool)));
 	connect(ui->pointsRadio, SIGNAL(toggled(bool)), this, SLOT(on_pointsRadio_toggled(bool)));
 	connect(ui->surfaceRadio, SIGNAL(toggled(bool)), this, SLOT(on_surfaceRadio_toggled(bool)));
 	connect(ui->opacitySlider, SIGNAL(sliderMoved(int)), this, SLOT(on_opacitySlider_sliderMoved(int)));
 	connect(ui->opacitySlider, SIGNAL(valueChanged(int)), this, SLOT(on_opacitySlider_valueChanged(int)));
-	//connect(ui->horizontalSlider, SIGNAL(valueChanged(int)), this, SLOT(on_horizontalSlider_sliderMoved(int)));
+	connect(ui->specularitySlider, SIGNAL(sliderMoved(int)), this, SLOT(on_specularitySlider_sliderMoved(int)));
+	connect(ui->specularitySlider, SIGNAL(valueChanged(int)), this, SLOT(on_specularitySlider_valueChanged(int)));
+	connect(ui->intensitySlider, SIGNAL(sliderMoved(int)), this, SLOT(on_intensitySlider_sliderMoved(int)));
 	//ui->actionSave->setIcon(QIcon("gui/icons/filesave.png")); //choose the icon location
 }
 
@@ -193,6 +204,8 @@ void MainWindow::loadModel(QString inputFilename) {
 	actors[0] = vtkSmartPointer<vtkActor>::New();
 	actors[0]->SetMapper(mappers[0]);
 	actors[0]->GetProperty()->SetColor(colors->GetColor3d("Red").GetData());
+	actors[0]->GetProperty()->SetSpecular(0.5);
+  	actors[0]->GetProperty()->SetSpecularPower(5);
 	renderer->AddActor(actors[0]);
 
 	} else {
@@ -357,6 +370,9 @@ void MainWindow::loadModel(QString inputFilename) {
 			//qInfo() << db;
 
 			actors[poly_count]->GetProperty()->SetColor(dr, dg, db);
+
+			actors[poly_count]->GetProperty()->SetSpecular(0.5);
+  			actors[poly_count]->GetProperty()->SetSpecularPower(5);
 			// Add actor to renderer
 			renderer->AddActor(actors[poly_count]);
 			poly_count++;
@@ -573,6 +589,31 @@ void MainWindow::on_resetPropertiesButton_clicked()
     ui->qvtkWidget->GetRenderWindow()->Render();
 }
 
+void MainWindow::on_resetLightingButton_clicked()
+{
+	// Set maximum opacity
+	ui->opacitySlider->setValue(99);
+	for (int i = 0; i < actors.size(); i++)
+		{
+			actors[i]->GetProperty()->SetOpacity(1);
+		}
+	
+	// Remove external light
+	ui->lightCheckBox->setChecked(false);
+	renderer->RemoveAllLights();
+	ui->intensitySlider->setValue(49);
+	ui->intensitySlider->setEnabled(false);
+
+	// Set specularity to half value
+	ui->specularitySlider->setValue(49);
+	for (int i = 0; i < actors.size(); i++)
+		{
+			actors[i]->GetProperty()->SetSpecular(0.5);
+		}
+
+    ui->qvtkWidget->GetRenderWindow()->Render();
+}
+
 void MainWindow::on_posXButton_clicked()
 {
 	renderer->GetActiveCamera()->SetFocalPoint(0.0, 0.0, 0.0);
@@ -675,6 +716,22 @@ void MainWindow::on_gradientCheckBox_stateChanged(int state)
 	ui->qvtkWidget->GetRenderWindow()->Render();
 }
 
+void MainWindow::on_lightCheckBox_stateChanged(int state)
+{
+	// Note: state == 1 means partially checked
+	if (state == 0) // unchecked
+	{
+		ui->intensitySlider->setEnabled(false);
+		renderer->RemoveAllLights();
+
+	} else if (state == 2) // checked
+	{
+		renderer->AddLight(light);
+		ui->intensitySlider->setEnabled(true);
+	}
+	ui->qvtkWidget->GetRenderWindow()->Render();
+}
+
 void MainWindow::on_wireframeRadio_toggled(bool checked)
 {
 	if (checked)
@@ -757,11 +814,50 @@ void MainWindow::on_opacitySlider_valueChanged(int value)
 	}
 }
 
-/*
-
-void MainWindow::on_lightSlider_sliderMoved(int position)
+void MainWindow::on_specularitySlider_sliderMoved(int position)
 {
-    light->SetIntensity((float)(100-position)/100);
-    ui->qvtkWidget->GetRenderWindow()->Render();
+	float pos;
+	if (position == 99) {
+		pos = 1;
+	} else {
+		pos = (float)position/100;
+	}
+
+	if (actors.size() == 1) {
+  		actors[0]->GetProperty()->SetSpecular(pos);
+
+		ui->qvtkWidget->GetRenderWindow()->Render();
+	}
 }
-*/
+
+void MainWindow::on_specularitySlider_valueChanged(int value)
+{
+    float pos;
+	if (value == 99) {
+		pos = 1;
+	} else {
+		pos = (float)value/100;
+	}
+
+	if (actors.size() != 1) {
+		// Ensure all actors are properly coloured in case it's a .mod file
+		for (int i = 0; i < actors.size(); i++)
+		{
+  			actors[i]->GetProperty()->SetSpecular(pos);
+		}
+    	ui->qvtkWidget->GetRenderWindow()->Render();
+	}
+}
+
+void MainWindow::on_intensitySlider_sliderMoved(int position)
+{
+	float pos;
+	if (position == 99) {
+		pos = 1;
+	} else {
+		pos = (float)position/100;
+	}
+
+	light->SetIntensity(pos);
+	ui->qvtkWidget->GetRenderWindow()->Render();
+}

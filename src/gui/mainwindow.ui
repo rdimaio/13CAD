@@ -23,36 +23,12 @@
       <height>561</height>
      </rect>
     </property>
-    <layout class="QVBoxLayout" name="verticalLayout">
-     <item>
-      <widget class="QVTKOpenGLWidget" name="qvtkWidget" native="true">
-       <property name="minimumSize">
-        <size>
-         <width>600</width>
-         <height>400</height>
-        </size>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </widget>
-   <widget class="QLabel" name="label_4">
-    <property name="geometry">
-     <rect>
-      <x>940</x>
-      <y>590</y>
-      <width>141</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Lighting and colours</string>
-    </property>
+    <layout class="QVBoxLayout" name="verticalLayout"/>
    </widget>
    <widget class="QLabel" name="label_5">
     <property name="geometry">
      <rect>
-      <x>1140</x>
+      <x>1030</x>
       <y>590</y>
       <width>141</width>
       <height>16</height>
@@ -60,19 +36,6 @@
     </property>
     <property name="text">
      <string>Statistics</string>
-    </property>
-   </widget>
-   <widget class="QSlider" name="horizontalSlider">
-    <property name="geometry">
-     <rect>
-      <x>940</x>
-      <y>640</y>
-      <width>160</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="orientation">
-     <enum>Qt::Horizontal</enum>
     </property>
    </widget>
    <widget class="QPushButton" name="screenshotButton">
@@ -248,35 +211,17 @@
    <widget class="QGroupBox" name="propertiesGrid">
     <property name="geometry">
      <rect>
-      <x>450</x>
-      <y>580</y>
-      <width>171</width>
-      <height>151</height>
+      <x>470</x>
+      <y>570</y>
+      <width>181</width>
+      <height>171</height>
      </rect>
     </property>
     <property name="title">
      <string>Properties</string>
     </property>
     <layout class="QGridLayout" name="gridLayout_2">
-     <item row="2" column="0">
-      <layout class="QVBoxLayout" name="verticalLayout_7">
-       <item>
-        <widget class="QLabel" name="opacityLabel">
-         <property name="text">
-          <string>Opacity</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QSlider" name="opacitySlider">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
-     <item row="3" column="0">
+     <item row="4" column="0">
       <widget class="QPushButton" name="resetPropertiesButton">
        <property name="text">
         <string>Reset properties</string>
@@ -301,6 +246,13 @@
        </item>
       </layout>
      </item>
+     <item row="2" column="0">
+      <widget class="QCheckBox" name="gradientCheckBox">
+       <property name="text">
+        <string>Gradient background</string>
+       </property>
+      </widget>
+     </item>
      <item row="1" column="0">
       <layout class="QVBoxLayout" name="verticalLayout_5">
        <item>
@@ -321,17 +273,20 @@
      </item>
     </layout>
    </widget>
-   <widget class="QCheckBox" name="gradientCheckBox">
+   <widget class="QVTKOpenGLWidget" name="qvtkWidget" native="true">
     <property name="geometry">
      <rect>
-      <x>960</x>
-      <y>700</y>
-      <width>151</width>
-      <height>21</height>
+      <x>10</x>
+      <y>10</y>
+      <width>1269</width>
+      <height>559</height>
      </rect>
     </property>
-    <property name="text">
-     <string>Gradient background</string>
+    <property name="minimumSize">
+     <size>
+      <width>600</width>
+      <height>400</height>
+     </size>
     </property>
    </widget>
    <widget class="QGroupBox" name="visualizationGrid">
@@ -365,6 +320,89 @@
       <widget class="QRadioButton" name="surfaceRadio">
        <property name="text">
         <string>Surface</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QGroupBox" name="">
+    <property name="geometry">
+     <rect>
+      <x>770</x>
+      <y>590</y>
+      <width>244</width>
+      <height>141</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>Lighting</string>
+    </property>
+    <layout class="QGridLayout" name="lightGrid">
+     <item row="0" column="1">
+      <widget class="QCheckBox" name="lightCheckBox">
+       <property name="text">
+        <string>Enable external light</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <layout class="QVBoxLayout" name="verticalLayout_7">
+       <item>
+        <widget class="QLabel" name="opacityLabel">
+         <property name="text">
+          <string>Opacity</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QSlider" name="opacitySlider">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item row="1" column="1">
+      <layout class="QVBoxLayout" name="verticalLayout_9">
+       <item>
+        <widget class="QLabel" name="intensityLabel">
+         <property name="text">
+          <string>Intensity</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QSlider" name="intensitySlider">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item row="0" column="0">
+      <layout class="QVBoxLayout" name="verticalLayout_8">
+       <item>
+        <widget class="QLabel" name="specularityLabel">
+         <property name="text">
+          <string>Specularity</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QSlider" name="specularitySlider">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item row="2" column="0" colspan="2">
+      <widget class="QPushButton" name="resetLightingButton">
+       <property name="text">
+        <string>Reset lighting</string>
        </property>
       </widget>
      </item>
