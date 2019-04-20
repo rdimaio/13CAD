@@ -163,76 +163,79 @@ void MainWindow::setupConnects()
 }
 
 void MainWindow::loadModel(QString inputFilename) {
+
+	// Declare strings to display in stats section
+	QString surfAreaString;
+	QString volumeString;
+	QString cellString;
+	QString pointString;
+
 	// Convert QString to std::string
 	std::string modelFileName = inputFileName.toUtf8().constData();
-	
 	// Load model
 	// (maybe only do model mod1 in case it's a .mod file, remove isstl from model,
 	// and check here, so that you don't construct a model in case it's stl.)
   	Model mod1(modelFileName);
 
-	  if (mod1.getIsSTL()) {
 
-	qInfo() << "Model is STL"; // debug
+	if (mod1.getIsSTL()) {
 
-	actors.resize(1);
-	mappers.resize(1);
+		qInfo() << "Model is STL"; // debug
 
-	if (modelLoaded) {
-		actors[0] = NULL;
-		mappers[0] = NULL;
-		clearModel();
-	}
+		actors.resize(1);
+		mappers.resize(1);
 
-	// Visualize
-	vtkSmartPointer<vtkSTLReader> reader = vtkSmartPointer<vtkSTLReader>::New();
-	reader->SetFileName(modelFileName.c_str());
-	reader->Update();
+		if (modelLoaded) {
+			actors[0] = NULL;
+			mappers[0] = NULL;
+			clearModel();
+		}
 
-	// NOTE: datasetmapper is used instead of polydatamapper.
-	// Try to switch back to polydatamapper if there are any bugs.
+		// Visualize
+		vtkSmartPointer<vtkSTLReader> reader = vtkSmartPointer<vtkSTLReader>::New();
+		reader->SetFileName(modelFileName.c_str());
+		reader->Update();
 
-	//vtkSmartPointer<vtkPolyDataMapper> poly_mapper =
-  	//vtkSmartPointer<vtkPolyDataMapper>::New();
-  	//poly_mapper->SetInputConnection(reader->GetOutputPort());
+		// NOTE: datasetmapper is used instead of polydatamapper.
+		// Try to switch back to polydatamapper if there are any bugs.
 
-	mappers[0] = vtkSmartPointer<vtkDataSetMapper>::New();
-	mappers[0]->SetInputConnection(reader->GetOutputPort());
+		//vtkSmartPointer<vtkPolyDataMapper> poly_mapper =
+  		//vtkSmartPointer<vtkPolyDataMapper>::New();
+  		//poly_mapper->SetInputConnection(reader->GetOutputPort());
 
-	actors[0] = vtkSmartPointer<vtkActor>::New();
-	actors[0]->SetMapper(mappers[0]);
-	actors[0]->GetProperty()->SetColor(colors->GetColor3d("Red").GetData());
-	actors[0]->GetProperty()->SetSpecular(0.5);
-  	actors[0]->GetProperty()->SetSpecularPower(5);
+		mappers[0] = vtkSmartPointer<vtkDataSetMapper>::New();
+		mappers[0]->SetInputConnection(reader->GetOutputPort());
 
-	// Get PolyData of model
-	vtkSmartPointer<vtkPolyData> modPolyData = reader->GetOutput();
+		actors[0] = vtkSmartPointer<vtkActor>::New();
+		actors[0]->SetMapper(mappers[0]);
+		actors[0]->GetProperty()->SetColor(colors->GetColor3d("Red").GetData());
+		actors[0]->GetProperty()->SetSpecular(0.5);
+  		actors[0]->GetProperty()->SetSpecularPower(5);
 
-	// Get stats
-	int modCells = modPolyData->GetNumberOfPolys();
-	int modPoints = modPolyData->GetNumberOfPoints();
+		// Get PolyData of model
+		vtkSmartPointer<vtkPolyData> modPolyData = reader->GetOutput();
+
+		// Get stats
+		int modCells = modPolyData->GetNumberOfPolys();
+		int modPoints = modPolyData->GetNumberOfPoints();
 
 
-	// Use a triangle filter to obtain mass and surface area information
-	vtkTriangleFilter *triangleFilter = vtkTriangleFilter::New();
-    triangleFilter->SetInputConnection(reader->GetOutputPort());
-    vtkMassProperties *massProperty = vtkMassProperties::New();
-    massProperty->SetInputConnection(triangleFilter->GetOutputPort());
-    massProperty->Update();
-    double modSurfArea = massProperty->GetSurfaceArea();
-	double modVolume = massProperty->GetVolume();
+		// Use a triangle filter to obtain mass and surface area information
+		vtkTriangleFilter *triangleFilter = vtkTriangleFilter::New();
+    	triangleFilter->SetInputConnection(reader->GetOutputPort());
+    	vtkMassProperties *massProperty = vtkMassProperties::New();
+    	massProperty->SetInputConnection(triangleFilter->GetOutputPort());
+    	massProperty->Update();
+    	double modSurfArea = massProperty->GetSurfaceArea();
+		double modVolume = massProperty->GetVolume();
 
-    QString surfAreaString = QString::number(modSurfArea) + " m^2";
-    QString volumeString = QString::number(modVolume) + " m^3";
-	QString cellString = QString::number(modCells);
-	QString pointString = QString::number(modPoints);
+		// Define the strings to be shown in the stats area
+    	surfAreaString = QString::number(modSurfArea) + " m^2";
+    	volumeString = QString::number(modVolume) + " m^3";
+		cellString = QString::number(modCells);
+		pointString = QString::number(modPoints);
 
-	ui->surfAreaValue->setText(surfAreaString);
-	ui->volValue->setText(volumeString);
-	ui->cellsValue->setText(cellString);
-	ui->pointsValue->setText(pointString);
-
-	renderer->AddActor(actors[0]);
+		renderer->AddActor(actors[0]);
 
 	} else {
 
@@ -403,19 +406,32 @@ void MainWindow::loadModel(QString inputFilename) {
 			renderer->AddActor(actors[poly_count]);
 			poly_count++;
 		}
-		qInfo() << tetra_count; // debug
-		qInfo() << hexa_count; // debug
-		qInfo() << poly_count; // debug
-		qInfo() << last_used_point_id; // debug
+		qInfo() << "Tetras:" << tetra_count;
+		qInfo() << "Pyras:" << pyra_count;
+		qInfo() << "Hexas:" << hexa_count;
+		qInfo() << "Cells:" << poly_count;
+
+		vtkSmartPointer<vtkPolyData> modPolyData = reader->GetOutput(); // WORK ON THIS
+
+		//surfAreaString = QString::number(modSurfArea) + " m^2";
+    	//volumeString = QString::number(modVolume) + " m^3";
+		cellString = QString::number(poly_count);
+		pointString = QString::number(mod1.getVertexCount());
 	}
 	// Set flag back to true
 	modelLoaded = true;
-	
+
 	// Enable buttons relating to model viewing
 	setupButtons(modelLoaded);
 	resetCamera();
 	
 	ui->qvtkWidget->GetRenderWindow()->Render();
+
+	// Display the stats in the stats area
+	ui->surfAreaValue->setText(surfAreaString);
+	ui->volValue->setText(volumeString);
+	ui->cellsValue->setText(cellString);
+	ui->pointsValue->setText(pointString);
 }
 
 void MainWindow::clearModel()
