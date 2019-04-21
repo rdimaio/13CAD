@@ -14,7 +14,6 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QStatusBar" name="statusBar"/>
    <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
@@ -38,64 +37,32 @@
     <property name="title">
      <string>Filters</string>
     </property>
-    <layout class="QHBoxLayout" name="filters">
-     <item>
-      <layout class="QVBoxLayout" name="verticalLayout_2">
-       <item>
-        <widget class="QPushButton" name="pushButton">
-         <property name="text">
-          <string>PushButton</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="pushButton_3">
-         <property name="text">
-          <string>PushButton</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="pushButton_4">
-         <property name="text">
-          <string>PushButton</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
-     <item>
-      <widget class="QFrame" name="frame">
-       <layout class="QVBoxLayout" name="verticalLayout_3">
-        <item>
-         <layout class="QVBoxLayout" name="verticalLayout_6">
-          <item>
-           <widget class="QPushButton" name="pushButton_2">
-            <property name="text">
-             <string>PushButton</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="pushButton_5">
-            <property name="text">
-             <string>PushButton</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="pushButton_6">
-            <property name="text">
-             <string>PushButton</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </item>
-       </layout>
-      </widget>
-     </item>
-    </layout>
+    <widget class="QPushButton" name="shrinkButton">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>30</y>
+       <width>80</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Shrink</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="resetFiltersButton">
+     <property name="geometry">
+      <rect>
+       <x>9</x>
+       <y>100</y>
+       <width>201</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Reset filters</string>
+     </property>
+    </widget>
    </widget>
    <widget class="QGroupBox" name="cameraGrid">
     <property name="geometry">
@@ -388,7 +355,7 @@
      <rect>
       <x>1040</x>
       <y>600</y>
-      <width>221</width>
+      <width>231</width>
       <height>121</height>
      </rect>
     </property>
@@ -514,7 +481,7 @@
    <addaction name="menuView"/>
    <addaction name="menuHelp"/>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
+  <widget class="QStatusBar" name="statusBar"/>
   <widget class="QToolBar" name="toolBar">
    <property name="windowTitle">
     <string>toolBar</string>

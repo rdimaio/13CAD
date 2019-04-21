@@ -59,6 +59,10 @@ class MainWindow : public QMainWindow
         void handleActionModTest();
 
     private slots:
+        // Filters
+        void on_shrinkButton_clicked();
+        void on_resetFiltersButton_clicked();
+
         // Properties
         void on_bkgColourButton_clicked();
         void on_gradientCheckBox_stateChanged(int state);

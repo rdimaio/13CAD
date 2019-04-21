@@ -86,8 +86,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 	light->SetFocalPoint(1.875,0.6125,0);
   	light->SetPosition(0.875,1.6125,1);
 	ui->intensitySlider->setEnabled(false);
-	ui->shrinkButton->setEnabled(false);
-	ui->resetFiltersButton->setEnabled(false);
 
 	// Setup the renderers's camera
 	renderer->ResetCamera();
@@ -203,10 +201,6 @@ void MainWindow::loadModel(QString inputFilename) {
 
 		qInfo() << "Model is STL"; // debug
 
-		// Allow user to select STL only filters
-		ui->shrinkButton->setEnabled(true);
-		ui->resetFiltersButton->setEnabled(true);
-
 		actors.resize(1);
 		mappers.resize(1);
 
@@ -268,10 +262,6 @@ void MainWindow::loadModel(QString inputFilename) {
 	} else {
 
 		qInfo() << "Model is of .mod format"; // debug
-
-		// Prevent user from selecting STL only filters
-		ui->shrinkButton->setEnabled(false);
-		ui->resetFiltersButton->setEnabled(false);
 
 		int poly_count = 0;
 		int tetra_count = 0; // Number of tetrahedrons
@@ -518,10 +508,6 @@ void MainWindow::clearModel()
 	ui->cellsValue->setText("");
 	ui->pointsValue->setText("");
 
-	// Disable STL only filters
-	ui->shrinkButton->setEnabled(false);
-	ui->resetFiltersButton->setEnabled(false);
-
 	modelLoaded = false;
 	ui->qvtkWidget->GetRenderWindow()->Render();
 }
@@ -691,27 +677,24 @@ void MainWindow::handleActionExportData()
 
 void MainWindow::on_shrinkButton_clicked()
 {
-	// Prompt user for shrink factor
-	bool success;
-    double shrinkFactor = QInputDialog::getDouble(this, tr("Input dialog"),
-                                         tr("Insert shrink factor (0 to 1)"), 0.5,
-										 0, 1, 2, &success);
-    if (success) {
-		// Connect shrink filter to STL reader
-		vtkSmartPointer<vtkShrinkFilter> shrinkFilter = vtkSmartPointer<vtkShrinkFilter>::New();
-		shrinkFilter->SetInputConnection(reader->GetOutputPort());
-		shrinkFilter->SetShrinkFactor(shrinkFactor);
-		shrinkFilter->Update();
-		mappers[0]->SetInputConnection(shrinkFilter->GetOutputPort());
+	// Prompt user for colour
+    //QColor rgbColours = QColorDialog::getColor(Qt::white, this, "Choose Background Colour");
+
+	//shrinkMapper = vtkSmartPointer<vtkDataSetMapper>::New();
+	//shrinkMapper = actors[0]->GetMapper();
+
+	//mappers[0] = vtkSmartPointer<vtkDataSetMapper>::New();
+	vtkSmartPointer<vtkShrinkFilter> shrinkFilter = vtkSmartPointer<vtkShrinkFilter>::New();
+	shrinkFilter->SetInputConnection(reader->GetOutputPort());
+	shrinkFilter->SetShrinkFactor(.8);
+	shrinkFilter->Update();
+	mappers[0]->SetInputConnection(shrinkFilter->GetOutputPort());
 
 		actors[0]->SetMapper(mappers[0]);
 
 		ui->qvtkWidget->GetRenderWindow()->Render();
-		ui->shrinkButton->setCheckable(true);
-		emit statusUpdateMessage(QString("Shrink filter enabled"), 0);
-    } else {
-		emit statusUpdateMessage(QString("Error while enabling shrink filter"), 0);
-	}
+	ui->shrinkButton->setCheckable(true);
+	emit statusUpdateMessage(QString("Shrink filter enabled"), 0);
 }
 
 void MainWindow::on_bkgColourButton_clicked()
@@ -805,23 +788,6 @@ void MainWindow::on_resetLightingButton_clicked()
 
 	emit statusUpdateMessage(QString("Lighting has been reset"), 0);
     ui->qvtkWidget->GetRenderWindow()->Render();
-}
-
-void MainWindow::on_resetFiltersButton_clicked()
-{
-    if (modelLoaded)
-	{
-		clearModel();
-	}
-	
-	// Recolor model
-	loadModel(inputFileName);
-
-	// Uncheck buttons
-	ui->shrinkButton->setCheckable(false);
-	
-	emit statusUpdateMessage(QString("Filters have been reset"), 0);
-	ui->qvtkWidget->GetRenderWindow()->Render();
 }
 
 void MainWindow::on_posXButton_clicked()
