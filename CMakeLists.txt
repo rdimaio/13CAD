@@ -83,7 +83,7 @@ else()
     set( UIS src/gui/mainwindow.ui )
     qt5_wrap_ui( UI_Srcs ${UIS} )
 
-    set( ICONS src/gui/Icons/icons.qrc )
+    set( ICONS src/gui/icons/icons.qrc )
     qt5_add_resources( QRC_Srcs ${ICONS} )
 
     # Also link to VTK

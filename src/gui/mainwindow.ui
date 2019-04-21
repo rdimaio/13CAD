@@ -480,13 +480,13 @@
     <addaction name="separator"/>
     <addaction name="actionAbout"/>
     <addaction name="actionLIcense"/>
-    <addaction name="actionContact_Us"/>
+    <addaction name="actionContactUs"/>
    </widget>
    <widget class="QMenu" name="menuView">
     <property name="title">
      <string>View</string>
     </property>
-    <addaction name="actionFull_Screen"/>
+    <addaction name="actionFullScreen"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuEdit"/>
@@ -518,7 +518,7 @@
    </property>
    <property name="icon">
     <iconset>
-     <normaloff>icons/fileopen.png</normaloff>icons/fileopen.png</iconset>
+     <normaloff>icons/open.png</normaloff>icons/open.png</iconset>
    </property>
    <property name="text">
     <string>Open File</string>
@@ -530,7 +530,7 @@
   <action name="actionSave">
    <property name="icon">
     <iconset>
-     <normaloff>icons/filesave.png</normaloff>icons/filesave.png</iconset>
+     <normaloff>icons/save.png</normaloff>icons/save.png</iconset>
    </property>
    <property name="text">
     <string>Save File</string>
@@ -558,6 +558,10 @@
    </property>
   </action>
   <action name="actionAbout">
+   <property name="icon">
+    <iconset>
+     <normaloff>icons/info.png</normaloff>icons/info.png</iconset>
+   </property>
    <property name="text">
     <string>About</string>
    </property>
@@ -567,37 +571,43 @@
     <string>License</string>
    </property>
   </action>
-  <action name="actionUndo">
-   <property name="text">
-    <string>Undo</string>
-   </property>
-  </action>
-  <action name="actionRedo">
-   <property name="text">
-    <string>Redo</string>
-   </property>
-  </action>
   <action name="actionResetFilters">
    <property name="text">
     <string>Reset Filters</string>
    </property>
   </action>
   <action name="actionStlTest">
+   <property name="icon">
+    <iconset>
+     <normaloff>icons/stltest.png</normaloff>icons/stltest.png</iconset>
+   </property>
    <property name="text">
     <string>Load test STL model</string>
    </property>
   </action>
   <action name="actionModTest">
+   <property name="icon">
+    <iconset>
+     <normaloff>icons/modtest.png</normaloff>icons/modtest.png</iconset>
+   </property>
    <property name="text">
     <string>Load test proprietary model</string>
    </property>
   </action>
-  <action name="actionContact_Us">
+  <action name="actionContactUs">
+   <property name="icon">
+    <iconset>
+     <normaloff>icons/contact.png</normaloff>icons/contact.png</iconset>
+   </property>
    <property name="text">
     <string>Contact Us</string>
    </property>
   </action>
   <action name="actionClose">
+   <property name="icon">
+    <iconset>
+     <normaloff>icons/close.png</normaloff>icons/close.png</iconset>
+   </property>
    <property name="text">
     <string>Close Model</string>
    </property>
@@ -606,11 +616,19 @@
    </property>
   </action>
   <action name="actionExportData">
+   <property name="icon">
+    <iconset>
+     <normaloff>icons/data.png</normaloff>icons/data.png</iconset>
+   </property>
    <property name="text">
     <string>Export Data</string>
    </property>
   </action>
-  <action name="actionFull_Screen">
+  <action name="actionFullScreen">
+   <property name="icon">
+    <iconset>
+     <normaloff>icons/fullscreen.png</normaloff>icons/fullscreen.png</iconset>
+   </property>
    <property name="text">
     <string>Full Screen</string>
    </property>

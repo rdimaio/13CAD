@@ -37,6 +37,7 @@ class MainWindow : public QMainWindow
         Ui::MainWindow *ui;
         void setupWindow();
         void setupButtons(bool modelLoaded);
+        void setupIcons();
         void setupConnects();
         /**
         * Loads model.

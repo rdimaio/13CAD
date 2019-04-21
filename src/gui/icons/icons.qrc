@@ -1,0 +1,16 @@
+<!DOCTYPE RCC>
+<RCC version="1.0">
+  <qresource>
+    <file alias="open">open.png</file>
+    <file alias="save">save.png</file>
+    <file alias="close">close.png</file>
+    <file alias="print">print.png</file>
+    <file alias="help">help.png</file>
+    <file alias="stltest">stltest.png</file>
+    <file alias="modtest">modtest.png</file>
+    <file alias="contact">contact.png</file>
+    <file alias="data">data.png</file>
+    <file alias="fullscreen">fullscreen.png</file>
+    <file alias="info">info.png</file>
+  </qresource>
+</RCC>

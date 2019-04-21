@@ -105,9 +105,12 @@ MainWindow::~MainWindow()
 
 void MainWindow::setupWindow()
 {
-    // standard call to setup Qt UI (same as previously)
+    
+	// standard call to setup Qt UI (same as previously)
     ui->setupUi(this);
+	
 	setupButtons(modelLoaded);
+	setupIcons();
 	setupConnects();
 	
     setWindowTitle(tr("13CAD"));
@@ -118,6 +121,23 @@ void MainWindow::setupWindow()
 
 	// Add the renderer to the render window
 	ui->qvtkWidget->GetRenderWindow()->AddRenderer(renderer);
+}
+
+void MainWindow::setupIcons()
+{
+	ui->actionOpen->setIcon(QIcon(":/open")); 
+	ui->actionSave->setIcon(QIcon(":/save")); 
+	ui->actionClose->setIcon(QIcon(":/close"));
+	ui->actionPrint->setIcon(QIcon(":/print"));
+	ui->actionHelp->setIcon(QIcon(":/help"));
+	ui->actionExportData->setIcon(QIcon(":/data"));
+	ui->actionPrint->setIcon(QIcon(":/print"));
+	ui->actionScreenshot->setIcon(QIcon(":/print"));
+	ui->actionContactUs->setIcon(QIcon(":/contact"));
+	ui->actionAbout->setIcon(QIcon(":/info"));
+	ui->actionStlTest->setIcon(QIcon(":/stltest"));
+	ui->actionModTest->setIcon(QIcon(":/modtest"));
+	ui->actionFullScreen->setIcon(QIcon(":/fullscreen"));
 }
 
 void MainWindow::setupButtons(bool modelLoaded)
@@ -173,7 +193,6 @@ void MainWindow::setupConnects()
 	connect(ui->specularitySlider, SIGNAL(sliderMoved(int)), this, SLOT(on_specularitySlider_sliderMoved(int)));
 	connect(ui->specularitySlider, SIGNAL(valueChanged(int)), this, SLOT(on_specularitySlider_valueChanged(int)));
 	connect(ui->intensitySlider, SIGNAL(sliderMoved(int)), this, SLOT(on_intensitySlider_sliderMoved(int)));
-	//ui->actionSave->setIcon(QIcon("gui/icons/filesave.png")); //choose the icon location
 }
 
 void MainWindow::loadModel(QString inputFilename) {
