@@ -10,6 +10,7 @@
 #include <vtkRenderer.h>
 #include <vtkNamedColors.h>
 #include <vtkNew.h>
+#include <vtkPlane.h>
 #include <vtkGenericOpenGLRenderWindow.h>
 #include <vtkLight.h>
 
@@ -21,13 +22,12 @@
 #include <vtkTetra.h>
 #include <vtkPyramid.h>
 #include <vtkHexahedron.h>
-
-// VTK libraries - volume calculations
 #include <vtkMassProperties.h>
-#include <vtkTriangleFilter.h>
 
 // VTK libraries - filters
+#include <vtkTriangleFilter.h>
 #include <vtkShrinkFilter.h>
+#include <vtkClipDataSet.h>
 
 // VTK libraries - STL reading
 #include <vtkSTLReader.h>
@@ -87,6 +87,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
   	light->SetPosition(0.875,1.6125,1);
 	ui->intensitySlider->setEnabled(false);
 	ui->shrinkButton->setEnabled(false);
+	ui->clipButton->setEnabled(false);
 	ui->resetFiltersButton->setEnabled(false);
 
 	// Setup the renderers's camera
@@ -206,6 +207,7 @@ void MainWindow::loadModel(QString inputFilename) {
 		// Allow user to select STL only filters
 		ui->shrinkButton->setEnabled(true);
 		ui->resetFiltersButton->setEnabled(true);
+		ui->clipButton->setEnabled(true);
 
 		actors.resize(1);
 		mappers.resize(1);
@@ -272,6 +274,7 @@ void MainWindow::loadModel(QString inputFilename) {
 		// Prevent user from selecting STL only filters
 		ui->shrinkButton->setEnabled(false);
 		ui->resetFiltersButton->setEnabled(false);
+		ui->clipButton->setEnabled(false);
 
 		int poly_count = 0;
 		int tetra_count = 0; // Number of tetrahedrons
@@ -521,6 +524,7 @@ void MainWindow::clearModel()
 	// Disable STL only filters
 	ui->shrinkButton->setEnabled(false);
 	ui->resetFiltersButton->setEnabled(false);
+	ui->clipButton->setEnabled(false);
 
 	modelLoaded = false;
 	ui->qvtkWidget->GetRenderWindow()->Render();
@@ -544,27 +548,39 @@ void MainWindow::handleActionOpen()
 		QDir::currentPath(),
 		tr("Supported Models (*.mod, *.stl);;STL Model (*.stl);;Proprietary Model (*.mod)"));
 
-	if (modelLoaded) {
-		clearModel();
+	if (!inputFileName.isEmpty() && !inputFileName.isNull())
+	{
+		if (modelLoaded) 
+		{
+			clearModel();
+		}
+		loadModel(inputFileName);
+	} else
+	{
+		emit statusUpdateMessage(QString("Error while opening file"), 0);
 	}
-
-	loadModel(inputFileName);
+	
 }
 
 void MainWindow::handleActionSave()
 {
 	// Only save if a model is already loaded
     if (!modelLoaded) {
-		// debug - add error saying no model has been loaded
+		emit statusUpdateMessage(QString("Error: cannot save when a model is not loaded"), 0);
 	} else {
-	
 		// Prompt user for a filename
 		QString outputFileName = QFileDialog::getSaveFileName(this, tr("Save File"),
 			QDir::currentPath(),
 			tr("Supported Models (*.mod *.stl);;STL Model (*.stl);;Proprietary Model (*.mod)"));
 
-		if(!QFile::copy(inputFileName, outputFileName)) {
-			// debug - insert error message here - couldn't copy
+		if (!outputFileName.isEmpty() && !outputFileName.isNull())
+		{
+			if(!QFile::copy(inputFileName, outputFileName)) {
+				emit statusUpdateMessage(QString("Error while saving file"), 0);
+			}
+		} else
+		{
+			emit statusUpdateMessage(QString("Error: no save name inserted"), 0);
 		}
 	}
 }
@@ -714,6 +730,33 @@ void MainWindow::on_shrinkButton_clicked()
 	}
 }
 
+void MainWindow::on_clipButton_clicked()
+{
+	
+	// Prompt user for clipping plane parameters
+	bool success;
+    double shrinkFactor = QInputDialog::getDouble(this, tr("Input dialog"),
+                                         tr("Insert shrink factor (0 to 1)"), 0.5,
+										 0, 1, 2, &success);
+    if (success) {
+		// Connect clip filter to STL reader
+		vtkSmartPointer<vtkClipDataSet> clipFilter = vtkSmartPointer<vtkClipDataSet>::New();
+		clipFilter->SetInputConnection(reader->GetOutputPort());
+		vtkSmartPointer<vtkPlane> clipPlane = vtkSmartPointer<vtkPlane>::New();
+		clipPlane->SetOrigin(0.0, 0.0, 0.0);
+		clipPlane->SetNormal(-1.0, 0.0, 0.0);
+		clipFilter->SetClipFunction(clipPlane.Get());
+		mappers[0]->SetInputConnection(clipFilter->GetOutputPort());
+		actors[0]->SetMapper(mappers[0]);
+
+		ui->qvtkWidget->GetRenderWindow()->Render();
+		ui->shrinkButton->setCheckable(true);
+		emit statusUpdateMessage(QString("Clip filter enabled"), 0);
+    } else {
+		emit statusUpdateMessage(QString("Error while enabling clip filter"), 0);
+	}
+}
+
 void MainWindow::on_bkgColourButton_clicked()
 {
 	// Prompt user for colour
@@ -819,6 +862,7 @@ void MainWindow::on_resetFiltersButton_clicked()
 
 	// Uncheck buttons
 	ui->shrinkButton->setCheckable(false);
+	ui->clipButton->setCheckable(false);
 	
 	emit statusUpdateMessage(QString("Filters have been reset"), 0);
 	ui->qvtkWidget->GetRenderWindow()->Render();

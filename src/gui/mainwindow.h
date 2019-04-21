@@ -61,6 +61,7 @@ class MainWindow : public QMainWindow
     private slots:
         // Filters
         void on_shrinkButton_clicked();
+        void on_clipButton_clicked();
         void on_resetFiltersButton_clicked();
 
         // Properties

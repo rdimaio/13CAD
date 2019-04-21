@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1298</width>
-    <height>821</height>
+    <width>1301</width>
+    <height>819</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -29,13 +29,13 @@
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>600</y>
+      <y>580</y>
       <width>218</width>
-      <height>131</height>
+      <height>151</height>
      </rect>
     </property>
     <property name="title">
-     <string>Filters</string>
+     <string>Filters (STL only)</string>
     </property>
     <widget class="QPushButton" name="shrinkButton">
      <property name="geometry">
@@ -53,14 +53,27 @@
     <widget class="QPushButton" name="resetFiltersButton">
      <property name="geometry">
       <rect>
-       <x>9</x>
-       <y>100</y>
+       <x>10</x>
+       <y>120</y>
        <width>201</width>
        <height>23</height>
       </rect>
      </property>
      <property name="text">
       <string>Reset filters</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="clipButton">
+     <property name="geometry">
+      <rect>
+       <x>110</x>
+       <y>30</y>
+       <width>80</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Clip</string>
      </property>
     </widget>
    </widget>
@@ -288,7 +301,7 @@
       </widget>
      </item>
      <item row="1" column="0">
-      <layout class="QVBoxLayout" name="verticalLayout_7">
+      <layout class="QVBoxLayout" name="opacityLayout">
        <item>
         <widget class="QLabel" name="opacityLabel">
          <property name="text">
@@ -427,7 +440,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1298</width>
+     <width>1301</width>
      <height>20</height>
     </rect>
    </property>
@@ -630,7 +643,7 @@
   </action>
   <action name="actionReset_lighting">
    <property name="text">
-    <string>Reset lighting</string>
+    <string>Reset LIghting</string>
    </property>
   </action>
  </widget>
