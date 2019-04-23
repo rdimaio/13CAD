@@ -43,6 +43,7 @@
 #include <QDebug>
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "helpdialog.h"
 
 // Local headers
 #include "model.h"
@@ -138,10 +139,8 @@ void MainWindow::setupIcons()
 	ui->actionSave->setIcon(QIcon(":/save"));
 	ui->actionClose->setIcon(QIcon(":/close"));
 	ui->actionPrint->setIcon(QIcon(":/print"));
-	ui->actionHelp->setIcon(QIcon(":/help"));
 	ui->actionExportData->setIcon(QIcon(":/data"));
 	ui->actionScreenshot->setIcon(QIcon(":/print"));
-	ui->actionContactUs->setIcon(QIcon(":/contact"));
 	ui->actionAbout->setIcon(QIcon(":/info"));
 	ui->actionStlTest->setIcon(QIcon(":/stltest"));
 	ui->actionModTest->setIcon(QIcon(":/modtest"));
@@ -190,6 +189,7 @@ void MainWindow::setupConnects()
 	connect(ui->actionScreenshot, SIGNAL(triggered()), this, SLOT(handleActionPrint()));
 	connect(ui->actionFullScreen, SIGNAL(triggered()), this, SLOT(handleActionFullScreen()));
 	connect(ui->actionExportData, SIGNAL(triggered()), this, SLOT(handleActionExportData()));
+	connect(ui->actionAbout, SIGNAL(triggered()), this, SLOT(handleActionAbout()));
 	connect(ui->actionResetFilters, SIGNAL(triggered()), this, SLOT(handleActionResetFilters()));
 	connect(ui->actionResetCamera, SIGNAL(triggered()), this, SLOT(handleActionResetCamera()));
 	connect(ui->actionResetLighting, SIGNAL(triggered()), this, SLOT(handleActionResetLighting()));
@@ -715,6 +715,12 @@ void MainWindow::handleActionFullScreen()
 	{
 		this->showFullScreen();
 	}
+}
+
+void MainWindow::handleActionAbout()
+{
+	HelpDialog* helpWindow = new HelpDialog();
+	helpWindow->show();
 }
 
 void MainWindow::handleActionExportData()

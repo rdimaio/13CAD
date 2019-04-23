@@ -506,7 +506,6 @@
     <addaction name="separator"/>
     <addaction name="actionScreenshot"/>
     <addaction name="actionExportData"/>
-    <addaction name="separator"/>
    </widget>
    <widget class="QMenu" name="menuEdit">
     <property name="title">
@@ -525,8 +524,6 @@
     <addaction name="actionModTest"/>
     <addaction name="separator"/>
     <addaction name="actionAbout"/>
-    <addaction name="actionLIcense"/>
-    <addaction name="actionContactUs"/>
    </widget>
    <widget class="QMenu" name="menuView">
     <property name="title">
@@ -555,10 +552,16 @@
    </attribute>
    <addaction name="actionOpen"/>
    <addaction name="actionSave"/>
+   <addaction name="actionClose"/>
    <addaction name="separator"/>
    <addaction name="actionPrint"/>
-   <addaction name="actionHelp"/>
+   <addaction name="actionExportData"/>
    <addaction name="separator"/>
+   <addaction name="actionFullScreen"/>
+   <addaction name="separator"/>
+   <addaction name="actionStlTest"/>
+   <addaction name="actionModTest"/>
+   <addaction name="actionAbout"/>
   </widget>
   <action name="actionOpen">
    <property name="checkable">
@@ -587,13 +590,16 @@
     <string>Ctrl+S</string>
    </property>
   </action>
-  <action name="actionHelp">
+  <action name="actionAboutUs">
    <property name="icon">
     <iconset>
-     <normaloff>icons/help.png</normaloff>icons/help.png</iconset>
+     <normaloff>icons/info.png</normaloff>icons/info.png</iconset>
    </property>
    <property name="text">
-    <string>Help</string>
+    <string>About 13CAD</string>
+   </property>
+   <property name="toolTip">
+    <string>About</string>
    </property>
   </action>
   <action name="actionPrint">
@@ -611,7 +617,7 @@
      <normaloff>icons/info.png</normaloff>icons/info.png</iconset>
    </property>
    <property name="text">
-    <string>About</string>
+    <string>About 13CAD</string>
    </property>
   </action>
   <action name="actionLIcense">
@@ -640,15 +646,6 @@
    </property>
    <property name="text">
     <string>Load test proprietary model</string>
-   </property>
-  </action>
-  <action name="actionContactUs">
-   <property name="icon">
-    <iconset>
-     <normaloff>icons/contact.png</normaloff>icons/contact.png</iconset>
-   </property>
-   <property name="text">
-    <string>Contact Us</string>
    </property>
   </action>
   <action name="actionClose">
