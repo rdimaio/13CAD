@@ -59,6 +59,10 @@ class MainWindow : public QMainWindow
         void handleActionShowAxes();
         void handleActionFullScreen();
         void handleActionExportData();
+        void handleActionResetFilters();
+        void handleActionResetCamera();
+        void handleActionResetLighting();
+        void handleActionResetProperties();
         void handleActionStlTest();
         void handleActionModTest();
 

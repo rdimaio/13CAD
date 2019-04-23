@@ -513,9 +513,9 @@
      <string>Edit</string>
     </property>
     <addaction name="actionResetFilters"/>
-    <addaction name="actionReset_Camera_View"/>
-    <addaction name="actionReset_Properties"/>
-    <addaction name="actionReset_lighting"/>
+    <addaction name="actionResetCamera"/>
+    <addaction name="actionResetProperties"/>
+    <addaction name="actionResetLighting"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
@@ -697,17 +697,17 @@
     <string>Ctrl+P</string>
    </property>
   </action>
-  <action name="actionReset_Camera_View">
+  <action name="actionResetCamera">
    <property name="text">
     <string>Reset Camera View</string>
    </property>
   </action>
-  <action name="actionReset_Properties">
+  <action name="actionResetProperties">
    <property name="text">
     <string>Reset Properties</string>
    </property>
   </action>
-  <action name="actionReset_lighting">
+  <action name="actionResetLighting">
    <property name="text">
     <string>Reset LIghting</string>
    </property>

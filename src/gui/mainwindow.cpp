@@ -140,7 +140,6 @@ void MainWindow::setupIcons()
 	ui->actionPrint->setIcon(QIcon(":/print"));
 	ui->actionHelp->setIcon(QIcon(":/help"));
 	ui->actionExportData->setIcon(QIcon(":/data"));
-	ui->actionPrint->setIcon(QIcon(":/print"));
 	ui->actionScreenshot->setIcon(QIcon(":/print"));
 	ui->actionContactUs->setIcon(QIcon(":/contact"));
 	ui->actionAbout->setIcon(QIcon(":/info"));
@@ -191,6 +190,10 @@ void MainWindow::setupConnects()
 	connect(ui->actionScreenshot, SIGNAL(triggered()), this, SLOT(handleActionPrint()));
 	connect(ui->actionFullScreen, SIGNAL(triggered()), this, SLOT(handleActionFullScreen()));
 	connect(ui->actionExportData, SIGNAL(triggered()), this, SLOT(handleActionExportData()));
+	connect(ui->actionResetFilters, SIGNAL(triggered()), this, SLOT(handleActionResetFilters()));
+	connect(ui->actionResetCamera, SIGNAL(triggered()), this, SLOT(handleActionResetCamera()));
+	connect(ui->actionResetLighting, SIGNAL(triggered()), this, SLOT(handleActionResetLighting()));
+	connect(ui->actionResetProperties, SIGNAL(triggered()), this, SLOT(handleActionResetProperties()));
 	connect(ui->actionStlTest, SIGNAL(triggered()), this, SLOT(handleActionStlTest()));
 	connect(ui->actionModTest, SIGNAL(triggered()), this, SLOT(handleActionModTest()));
 	connect(ui->actionShowAxes, SIGNAL(triggered()), this, SLOT(handleActionShowAxes()));
@@ -768,6 +771,26 @@ void MainWindow::handleActionExportData()
 
 		emit statusUpdateMessage(QString("Data exported successfully"), 0);
 	}
+}
+
+void MainWindow::handleActionResetFilters()
+{
+	ui->resetFiltersButton->click();
+}
+
+void MainWindow::handleActionResetCamera()
+{
+	ui->resetCameraButton->click();
+}
+
+void MainWindow::handleActionResetProperties()
+{
+	ui->resetPropertiesButton->click();
+}
+
+void MainWindow::handleActionResetLighting()
+{
+	ui->resetLightingButton->click();
 }
 
 void MainWindow::on_shrinkButton_clicked()
