@@ -466,11 +466,6 @@
     <addaction name="actionReset_Properties"/>
     <addaction name="actionReset_lighting"/>
    </widget>
-   <widget class="QMenu" name="menuSettings">
-    <property name="title">
-     <string>Settings</string>
-    </property>
-   </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
      <string>Help</string>
@@ -490,7 +485,6 @@
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuEdit"/>
-   <addaction name="menuSettings"/>
    <addaction name="menuView"/>
    <addaction name="menuHelp"/>
   </widget>
@@ -630,10 +624,10 @@
      <normaloff>icons/fullscreen.png</normaloff>icons/fullscreen.png</iconset>
    </property>
    <property name="text">
-    <string>Full Screen</string>
+    <string>Toggle Full Screen</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+F</string>
+    <string>F11</string>
    </property>
   </action>
   <action name="actionScreenshot">

@@ -55,6 +55,7 @@ class MainWindow : public QMainWindow
         void handleActionSave();
         void handleActionClose();
         void handleActionPrint(); // Handles actionScreenshot too
+        void handleActionFullScreen();
         void handleActionExportData();
         void handleActionStlTest();
         void handleActionModTest();

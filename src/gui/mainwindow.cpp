@@ -180,6 +180,7 @@ void MainWindow::setupConnects()
 	connect(ui->actionClose, SIGNAL(triggered()), this, SLOT(handleActionClose()));
 	connect(ui->actionPrint, SIGNAL(triggered()), this, SLOT(handleActionPrint()));
 	connect(ui->actionScreenshot, SIGNAL(triggered()), this, SLOT(handleActionPrint()));
+	connect(ui->actionFullScreen, SIGNAL(triggered()), this, SLOT(handleActionFullScreen()));
 	connect(ui->actionExportData, SIGNAL(triggered()), this, SLOT(handleActionExportData()));
 	connect(ui->actionStlTest, SIGNAL(triggered()), this, SLOT(handleActionStlTest()));
 	connect(ui->actionModTest, SIGNAL(triggered()), this, SLOT(handleActionModTest()));
@@ -667,6 +668,17 @@ void MainWindow::handleActionPrint()
     	writer->Write();
 
 		emit statusUpdateMessage(QString("Screenshot saved successfully"), 0);
+	}
+}
+
+void MainWindow::handleActionFullScreen()
+{
+	if (this->isFullScreen())
+	{
+		this->showNormal();
+	} else 
+	{
+		this->showFullScreen();
 	}
 }
 
