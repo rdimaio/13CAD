@@ -140,7 +140,6 @@ void MainWindow::setupIcons()
 	ui->actionClose->setIcon(QIcon(":/close"));
 	ui->actionPrint->setIcon(QIcon(":/print"));
 	ui->actionExportData->setIcon(QIcon(":/data"));
-	ui->actionScreenshot->setIcon(QIcon(":/print"));
 	ui->actionAbout->setIcon(QIcon(":/info"));
 	ui->actionStlTest->setIcon(QIcon(":/stltest"));
 	ui->actionModTest->setIcon(QIcon(":/modtest"));
@@ -153,7 +152,6 @@ void MainWindow::setupButtons(bool modelLoaded)
 	ui->actionSave->setEnabled(modelLoaded);
 	ui->actionClose->setEnabled(modelLoaded);
 	ui->actionPrint->setEnabled(modelLoaded);
-	ui->actionScreenshot->setEnabled(modelLoaded);
 	ui->actionExportData->setEnabled(modelLoaded);
 	ui->modColourButton->setEnabled(modelLoaded);
 	ui->gradientCheckBox->setChecked(true); // Initialize gradient on
@@ -186,7 +184,6 @@ void MainWindow::setupConnects()
 	connect(ui->actionSave, SIGNAL(triggered()), this, SLOT(handleActionSave()));
 	connect(ui->actionClose, SIGNAL(triggered()), this, SLOT(handleActionClose()));
 	connect(ui->actionPrint, SIGNAL(triggered()), this, SLOT(handleActionPrint()));
-	connect(ui->actionScreenshot, SIGNAL(triggered()), this, SLOT(handleActionPrint()));
 	connect(ui->actionFullScreen, SIGNAL(triggered()), this, SLOT(handleActionFullScreen()));
 	connect(ui->actionExportData, SIGNAL(triggered()), this, SLOT(handleActionExportData()));
 	connect(ui->actionAbout, SIGNAL(triggered()), this, SLOT(handleActionAbout()));

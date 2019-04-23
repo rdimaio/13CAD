@@ -504,7 +504,7 @@
     <addaction name="actionSave"/>
     <addaction name="actionClose"/>
     <addaction name="separator"/>
-    <addaction name="actionScreenshot"/>
+    <addaction name="actionPrint"/>
     <addaction name="actionExportData"/>
    </widget>
    <widget class="QMenu" name="menuEdit">
@@ -608,7 +608,7 @@
      <normaloff>icons/print.png</normaloff>icons/print.png</iconset>
    </property>
    <property name="text">
-    <string>Print</string>
+    <string>Export Screenshot</string>
    </property>
   </action>
   <action name="actionAbout">
