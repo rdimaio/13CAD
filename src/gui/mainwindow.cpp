@@ -13,6 +13,8 @@
 #include <vtkPlane.h>
 #include <vtkGenericOpenGLRenderWindow.h>
 #include <vtkLight.h>
+#include <vtkAxesActor.h>
+#include <vtkTransform.h>
 
 // VTK libraries - cells
 #include <vtkCellArray.h>
@@ -55,6 +57,9 @@ vtkSmartPointer<vtkSTLReader> reader;
 vtkSmartPointer<vtkNamedColors> colors = vtkSmartPointer<vtkNamedColors>::New();
 // Setup the light
 vtkSmartPointer<vtkLight> light = vtkSmartPointer<vtkLight>::New();
+// Setup axes
+vtkSmartPointer<vtkTransform> transform = vtkSmartPointer<vtkTransform>::New();
+vtkSmartPointer<vtkAxesActor> axes = vtkSmartPointer<vtkAxesActor>::New();
 // Initialise vectors for mappers and actors
 // .mod files have an actor/mapper per cell,
 // while .stl files only require one actor/mapper for the entire file
@@ -65,7 +70,7 @@ std::vector<vtkSmartPointer<vtkUnstructuredGrid>> unstructuredGrids;
 std::vector<vtkSmartPointer<vtkTetra>> tetras;
 std::vector<vtkSmartPointer<vtkPyramid>> pyras;
 std::vector<vtkSmartPointer<vtkHexahedron>> hexas;
-QString inputFileName; // Global string for model's filename
+QString inputFileName;	// Global string for model's filename
 bool modelLoaded = false; // Global flag that indicates a model is currently loaded
 
 // Declare stats QStrings (needed as global strings for the export data function)
@@ -81,10 +86,15 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 	this->setupWindow();
 
 	// Setup light (but don't add it)
-    light->SetLightTypeToCameraLight();
-    light->SetIntensity(0.5);
-	light->SetFocalPoint(1.875,0.6125,0);
-  	light->SetPosition(0.875,1.6125,1);
+	light->SetLightTypeToCameraLight();
+	light->SetIntensity(0.5);
+	light->SetFocalPoint(1.875, 0.6125, 0);
+	light->SetPosition(0.875, 1.6125, 1);
+
+	// The axes are positioned with a user transform
+	transform->Translate(1.0, 0.0, 0.0);
+	axes->SetUserTransform(transform);
+
 	ui->intensitySlider->setEnabled(false);
 	ui->shrinkButton->setEnabled(false);
 	ui->clipButton->setEnabled(false);
@@ -95,25 +105,24 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 	renderer->GetActiveCamera()->Azimuth(30);
 	renderer->GetActiveCamera()->Elevation(30);
 	renderer->ResetCameraClippingRange();
-
 }
 
 MainWindow::~MainWindow()
 {
-    delete ui;
+	delete ui;
 }
 
 void MainWindow::setupWindow()
 {
-    
+
 	// standard call to setup Qt UI (same as previously)
-    ui->setupUi(this);
-	
+	ui->setupUi(this);
+
 	setupButtons(modelLoaded);
 	setupIcons();
 	setupConnects();
-	
-    setWindowTitle(tr("13CAD"));
+
+	setWindowTitle(tr("13CAD"));
 
 	// Link the VTK render window to the QtVTK widget
 	// (qvtkWidget is the name gave to QtVTKOpenGLWidget in Qt Creator)
@@ -125,8 +134,8 @@ void MainWindow::setupWindow()
 
 void MainWindow::setupIcons()
 {
-	ui->actionOpen->setIcon(QIcon(":/open")); 
-	ui->actionSave->setIcon(QIcon(":/save")); 
+	ui->actionOpen->setIcon(QIcon(":/open"));
+	ui->actionSave->setIcon(QIcon(":/save"));
 	ui->actionClose->setIcon(QIcon(":/close"));
 	ui->actionPrint->setIcon(QIcon(":/print"));
 	ui->actionHelp->setIcon(QIcon(":/help"));
@@ -152,7 +161,7 @@ void MainWindow::setupButtons(bool modelLoaded)
 	ui->gradientCheckBox->setChecked(true); // Initialize gradient on
 	ui->intensityCheckBox->setEnabled(modelLoaded);
 	ui->intensityCheckBox->setChecked(false); // Initialize ext. light off
-	ui->surfaceRadio->setChecked(true); // Initialize surface visualization on
+	ui->surfaceRadio->setChecked(true);		  // Initialize surface visualization on
 	ui->resetCameraButton->setEnabled(modelLoaded);
 	ui->resetPropertiesButton->setEnabled(modelLoaded);
 	ui->resetLightingButton->setEnabled(modelLoaded);
@@ -160,7 +169,7 @@ void MainWindow::setupButtons(bool modelLoaded)
 	ui->opacitySlider->setValue(99); // Initialize slider at max value
 	ui->specularitySlider->setEnabled(modelLoaded);
 	ui->specularitySlider->setValue(49); // Initialize slider at half value
-	ui->intensitySlider->setValue(49); // Initialize slider at half value
+	ui->intensitySlider->setValue(49);   // Initialize slider at half value
 	ui->posXButton->setEnabled(modelLoaded);
 	ui->posYButton->setEnabled(modelLoaded);
 	ui->posZButton->setEnabled(modelLoaded);
@@ -184,8 +193,11 @@ void MainWindow::setupConnects()
 	connect(ui->actionExportData, SIGNAL(triggered()), this, SLOT(handleActionExportData()));
 	connect(ui->actionStlTest, SIGNAL(triggered()), this, SLOT(handleActionStlTest()));
 	connect(ui->actionModTest, SIGNAL(triggered()), this, SLOT(handleActionModTest()));
+	connect(ui->actionShowAxes, SIGNAL(triggered()), this, SLOT(handleActionShowAxes()));
+	connect(ui->actionEnableIntensity, SIGNAL(triggered()), this, SLOT(handleActionEnableIntensity()));
 	connect(ui->gradientCheckBox, SIGNAL(stateChanged(int)), this, SLOT(on_gradientCheckBox_stateChanged(int)));
 	connect(ui->intensityCheckBox, SIGNAL(stateChanged(int)), this, SLOT(on_intensityCheckBox_stateChanged(int)));
+	connect(ui->showAxesCheckBox, SIGNAL(stateChanged(int)), this, SLOT(on_showAxesCheckBox_stateChanged(int)));
 	connect(ui->wireframeRadio, SIGNAL(toggled(bool)), this, SLOT(on_wireframeRadio_toggled(bool)));
 	connect(ui->pointsRadio, SIGNAL(toggled(bool)), this, SLOT(on_pointsRadio_toggled(bool)));
 	connect(ui->surfaceRadio, SIGNAL(toggled(bool)), this, SLOT(on_surfaceRadio_toggled(bool)));
@@ -196,7 +208,8 @@ void MainWindow::setupConnects()
 	connect(ui->intensitySlider, SIGNAL(sliderMoved(int)), this, SLOT(on_intensitySlider_sliderMoved(int)));
 }
 
-void MainWindow::loadModel(QString inputFilename) {
+void MainWindow::loadModel(QString inputFilename)
+{
 
 	// Declare data to display in stats section
 	double modSurfArea;
@@ -205,7 +218,8 @@ void MainWindow::loadModel(QString inputFilename) {
 	int modPoints;
 	vtkSmartPointer<vtkPolyData> modPolyData;
 
-	if (modelLoaded) {
+	if (modelLoaded)
+	{
 		double modSurfArea = 0;
 		double modVolume = 0;
 		int modCells = 0;
@@ -218,9 +232,10 @@ void MainWindow::loadModel(QString inputFilename) {
 	// Load model
 	// (maybe only do model mod1 in case it's a .mod file, remove isstl from model,
 	// and check here, so that you don't construct a model in case it's stl.)
-  	Model mod1(modelFileName);
+	Model mod1(modelFileName);
 
-	if (mod1.getIsSTL()) {
+	if (mod1.getIsSTL())
+	{
 
 		qInfo() << "Model is STL"; // debug
 
@@ -232,7 +247,8 @@ void MainWindow::loadModel(QString inputFilename) {
 		actors.resize(1);
 		mappers.resize(1);
 
-		if (modelLoaded) {
+		if (modelLoaded)
+		{
 			actors[0] = NULL;
 			mappers[0] = NULL;
 			reader = NULL;
@@ -248,8 +264,8 @@ void MainWindow::loadModel(QString inputFilename) {
 		// Try to switch back to polydatamapper if there are any bugs.
 
 		//vtkSmartPointer<vtkPolyDataMapper> poly_mapper =
-  		//vtkSmartPointer<vtkPolyDataMapper>::New();
-  		//poly_mapper->SetInputConnection(reader->GetOutputPort());
+		//vtkSmartPointer<vtkPolyDataMapper>::New();
+		//poly_mapper->SetInputConnection(reader->GetOutputPort());
 
 		mappers[0] = vtkSmartPointer<vtkDataSetMapper>::New();
 		mappers[0]->SetInputConnection(reader->GetOutputPort());
@@ -258,7 +274,7 @@ void MainWindow::loadModel(QString inputFilename) {
 		actors[0]->SetMapper(mappers[0]);
 		actors[0]->GetProperty()->SetColor(colors->GetColor3d("Red").GetData());
 		actors[0]->GetProperty()->SetSpecular(0.5);
-  		actors[0]->GetProperty()->SetSpecularPower(5);
+		actors[0]->GetProperty()->SetSpecularPower(5);
 
 		// Get PolyData of model
 		modPolyData = reader->GetOutput();
@@ -267,27 +283,27 @@ void MainWindow::loadModel(QString inputFilename) {
 		modCells = modPolyData->GetNumberOfPolys();
 		modPoints = modPolyData->GetNumberOfPoints();
 
-
 		// Use a triangle filter to obtain mass and surface area information
 		vtkTriangleFilter *triangleFilter = vtkTriangleFilter::New();
-    	triangleFilter->SetInputConnection(reader->GetOutputPort());
+		triangleFilter->SetInputConnection(reader->GetOutputPort());
 		triangleFilter->Update();
-    	vtkMassProperties *massProperty = vtkMassProperties::New();
-    	massProperty->SetInputConnection(triangleFilter->GetOutputPort());
-    	massProperty->Update();
-    	modSurfArea = massProperty->GetSurfaceArea();
+		vtkMassProperties *massProperty = vtkMassProperties::New();
+		massProperty->SetInputConnection(triangleFilter->GetOutputPort());
+		massProperty->Update();
+		modSurfArea = massProperty->GetSurfaceArea();
 		modVolume = massProperty->GetVolume();
 
 		// Define the strings to be shown in the stats area
-    	surfAreaString = QString::number(modSurfArea) + " m^2";
-    	volumeString = QString::number(modVolume) + " m^3";
+		surfAreaString = QString::number(modSurfArea) + " m^2";
+		volumeString = QString::number(modVolume) + " m^3";
 		cellString = QString::number(modCells);
 		pointString = QString::number(modPoints);
 
 		renderer->AddActor(actors[0]);
 		emit statusUpdateMessage(QString("Loaded STL model"), 0);
-
-	} else {
+	}
+	else
+	{
 
 		qInfo() << "Model is of .mod format"; // debug
 
@@ -297,9 +313,9 @@ void MainWindow::loadModel(QString inputFilename) {
 		ui->clipButton->setEnabled(false);
 
 		int poly_count = 0;
-		int tetra_count = 0; // Number of tetrahedrons
-		int pyra_count = 0; // Number of pyramids
-		int hexa_count = 0; // Number of hexahedrons
+		int tetra_count = 0;		// Number of tetrahedrons
+		int pyra_count = 0;			// Number of pyramids
+		int hexa_count = 0;			// Number of hexahedrons
 		int last_used_point_id = 0; // ID of last point used
 		// Get vector of cells from the model
 		std::vector<Cell> modCells = mod1.getCells();
@@ -309,13 +325,14 @@ void MainWindow::loadModel(QString inputFilename) {
 
 		// Resize to new model
 		unstructuredGrids.resize(modCells.size());
-    	actors.resize(modCells.size());
-    	mappers.resize(modCells.size());
+		actors.resize(modCells.size());
+		mappers.resize(modCells.size());
 
 		vtkSmartPointer<vtkCellArray> cellArray = vtkSmartPointer<vtkCellArray>::New();
 		vtkSmartPointer<vtkPoints> points = vtkSmartPointer<vtkPoints>::New();
 
-		if (modelLoaded) {
+		if (modelLoaded)
+		{
 			/*// Clear pointers to previous model - debug
 			for (int i = 0; i < modCells.size(); i++)
 			{
@@ -333,11 +350,11 @@ void MainWindow::loadModel(QString inputFilename) {
 			points->Reset();
 
 			clearModel();
-
 		}
 
 		// For each cell
-		for(std::vector<Cell>::iterator it = modCells.begin(); it != modCells.end(); ++it) {
+		for (std::vector<Cell>::iterator it = modCells.begin(); it != modCells.end(); ++it)
+		{
 
 			// Get vertices of the cell
 			std::vector<Vector3D> cellVertices = it->getVertices();
@@ -352,8 +369,9 @@ void MainWindow::loadModel(QString inputFilename) {
 			// qInfo() << cellVertices[0].getZ(); // debug
 
 			// Tetrahedron
-			if (cellVertices.size() == 4) {
-				tetras.resize(tetra_count+1); 
+			if (cellVertices.size() == 4)
+			{
+				tetras.resize(tetra_count + 1);
 				qInfo() << "tetra"; // debug
 				// Insert vertices into vtkPoints vector
 				for (int i = 0; i < 4; i++)
@@ -362,23 +380,25 @@ void MainWindow::loadModel(QString inputFilename) {
 				}
 
 				unstructuredGrids[poly_count] = vtkSmartPointer<vtkUnstructuredGrid>::New();
-    			unstructuredGrids[poly_count]->SetPoints(points);
+				unstructuredGrids[poly_count]->SetPoints(points);
 				tetras[tetra_count] = vtkSmartPointer<vtkTetra>::New();
 
 				// Set points to the tetra
 				for (int i = 0; i < 4; i++)
 				{
-					tetras[tetra_count]->GetPointIds()->SetId(i, last_used_point_id+i);
+					tetras[tetra_count]->GetPointIds()->SetId(i, last_used_point_id + i);
 				}
 				last_used_point_id += 4;
 
 				cellArray->InsertNextCell(tetras[tetra_count]);
-    			unstructuredGrids[poly_count]->SetCells(VTK_TETRA, cellArray);
+				unstructuredGrids[poly_count]->SetCells(VTK_TETRA, cellArray);
 				tetra_count++;
-			
-			// Pyramid
-			} else if (cellVertices.size() == 5) {
-				pyras.resize(pyra_count+1); 
+
+				// Pyramid
+			}
+			else if (cellVertices.size() == 5)
+			{
+				pyras.resize(pyra_count + 1);
 				// Insert vertices into vtkPoints vector
 				for (int i = 0; i < 5; i++)
 				{
@@ -386,24 +406,26 @@ void MainWindow::loadModel(QString inputFilename) {
 				}
 
 				unstructuredGrids[poly_count] = vtkSmartPointer<vtkUnstructuredGrid>::New();
-    			unstructuredGrids[poly_count]->SetPoints(points);
+				unstructuredGrids[poly_count]->SetPoints(points);
 				pyras[pyra_count] = vtkSmartPointer<vtkPyramid>::New();
 
 				// Set points to the pyramid
 				for (int i = 0; i < 4; i++)
 				{
-					pyras[pyra_count]->GetPointIds()->SetId(i, last_used_point_id+i);
+					pyras[pyra_count]->GetPointIds()->SetId(i, last_used_point_id + i);
 				}
 				last_used_point_id += 4;
 
 				cellArray->InsertNextCell(pyras[pyra_count]);
-    			unstructuredGrids[poly_count]->SetCells(VTK_PYRAMID, cellArray);
+				unstructuredGrids[poly_count]->SetCells(VTK_PYRAMID, cellArray);
 				pyra_count++;
 
-			// Hexahedron
-			} else if (cellVertices.size() == 8) {
+				// Hexahedron
+			}
+			else if (cellVertices.size() == 8)
+			{
 
-				hexas.resize(hexa_count+1);
+				hexas.resize(hexa_count + 1);
 
 				// Insert vertices into vtkPoints vector
 				for (int i = 0; i < 8; i++)
@@ -413,13 +435,13 @@ void MainWindow::loadModel(QString inputFilename) {
 
 				unstructuredGrids[poly_count] = vtkSmartPointer<vtkUnstructuredGrid>::New();
 				// Maybe this needs to go after set points
-    			unstructuredGrids[poly_count]->SetPoints(points);
+				unstructuredGrids[poly_count]->SetPoints(points);
 				hexas[hexa_count] = vtkSmartPointer<vtkHexahedron>::New();
 
 				// Set points to the hexa
 				for (int i = 0; i < 8; i++)
 				{
-					hexas[hexa_count]->GetPointIds()->SetId(i, last_used_point_id+1+i);
+					hexas[hexa_count]->GetPointIds()->SetId(i, last_used_point_id + 1 + i);
 				}
 				last_used_point_id += 4;
 
@@ -439,17 +461,17 @@ void MainWindow::loadModel(QString inputFilename) {
 
 			// Get material of current cell
 			Material mat1 = modCells[poly_count].getMaterial();
-			
+
 			// Get colour as hexadecimal string, convert it to separate r, g and b
 			std::string matColour = mat1.getColour();
-			const char * rgbColour = matColour.c_str();
+			const char *rgbColour = matColour.c_str();
 			int r, g, b;
 			sscanf(rgbColour, "%02x%02x%02x", &r, &g, &b);
 
 			// Convert it to double and set it to range from 0 to 1
-			double dr = (double)r/255;
-			double dg = (double)g/255;
-			double db = (double)b/255;
+			double dr = (double)r / 255;
+			double dg = (double)g / 255;
+			double db = (double)b / 255;
 
 			// debug
 			//qInfo() << dr;
@@ -459,7 +481,7 @@ void MainWindow::loadModel(QString inputFilename) {
 			actors[poly_count]->GetProperty()->SetColor(dr, dg, db);
 
 			actors[poly_count]->GetProperty()->SetSpecular(0.5);
-  			actors[poly_count]->GetProperty()->SetSpecularPower(5);
+			actors[poly_count]->GetProperty()->SetSpecularPower(5);
 			// Add actor to renderer
 			renderer->AddActor(actors[poly_count]);
 			poly_count++;
@@ -477,16 +499,16 @@ void MainWindow::loadModel(QString inputFilename) {
 		// Use a triangle filter to obtain mass and surface area information
 		vtkTriangleFilter *triangleFilter = vtkTriangleFilter::New();
 		vtkMassProperties *massProperty = vtkMassProperties::New();
-    	triangleFilter->SetInputData(modPolyData);
+		triangleFilter->SetInputData(modPolyData);
 		triangleFilter->Update();
-    	massProperty->SetInputConnection(triangleFilter->GetOutputPort());
-    	massProperty->Update();
-    	modSurfArea = massProperty->GetSurfaceArea();
+		massProperty->SetInputConnection(triangleFilter->GetOutputPort());
+		massProperty->Update();
+		modSurfArea = massProperty->GetSurfaceArea();
 		modVolume = massProperty->GetVolume();
 
 		// Store all information in the stats strings
 		surfAreaString = QString::number(modSurfArea) + " m^2";
-    	volumeString = QString::number(modVolume) + " m^3";
+		volumeString = QString::number(modVolume) + " m^3";
 		cellString = QString::number(poly_count);
 		pointString = QString::number(mod1.getVertexCount());
 
@@ -498,7 +520,7 @@ void MainWindow::loadModel(QString inputFilename) {
 	// Enable buttons relating to model viewing
 	setupButtons(modelLoaded);
 	resetCamera();
-	
+
 	ui->qvtkWidget->GetRenderWindow()->Render();
 
 	// Display the stats in the stats area
@@ -506,6 +528,7 @@ void MainWindow::loadModel(QString inputFilename) {
 	ui->volValue->setText(volumeString);
 	ui->cellsValue->setText(cellString);
 	ui->pointsValue->setText(pointString);
+	
 }
 
 void MainWindow::clearModel()
@@ -516,7 +539,7 @@ void MainWindow::clearModel()
 	renderer->GetBackground(r, g, b);
 	renderer->GetBackground2(r2, g2, b2);
 	bool isGradient = renderer->GetGradientBackground();
-	
+
 	// Remove renderer from render window
 	ui->qvtkWidget->GetRenderWindow()->RemoveRenderer(renderer);
 	// Free previous renderer by assigning it to a NULL pointer
@@ -531,7 +554,8 @@ void MainWindow::clearModel()
 	renderer->SetBackground(r, g, b);
 	renderer->SetBackground2(r2, g2, b2);
 
-	if (isGradient) {
+	if (isGradient)
+	{
 		renderer->GradientBackgroundOn();
 	}
 
@@ -550,55 +574,61 @@ void MainWindow::clearModel()
 	ui->qvtkWidget->GetRenderWindow()->Render();
 }
 
-void MainWindow::resetCamera() {
+void MainWindow::resetCamera()
+{
 	// These lines are needed to ensure the button can be pressed more than
 	// once per each model
 	renderer->GetActiveCamera()->SetFocalPoint(0.0, 0.0, 0.0);
-    renderer->GetActiveCamera()->SetViewUp(0.201282, 0.526811, -0.299848);
-    renderer->GetActiveCamera()->SetPosition(0.795337, -0.696117, -0.689135);
+	renderer->GetActiveCamera()->SetViewUp(0.201282, 0.526811, -0.299848);
+	renderer->GetActiveCamera()->SetPosition(0.795337, -0.696117, -0.689135);
 
 	// Reset camera and re-render scene
-    renderer->ResetCamera();
+	renderer->ResetCamera();
 }
 
 void MainWindow::handleActionOpen()
 {
-    // Prompt user for a filename
+	// Prompt user for a filename
 	inputFileName = QFileDialog::getOpenFileName(this, tr("Open File"),
-		QDir::currentPath(),
-		tr("Supported Models (*.mod, *.stl);;STL Model (*.stl);;Proprietary Model (*.mod)"));
+												 QDir::currentPath(),
+												 tr("Supported Models (*.mod, *.stl);;STL Model (*.stl);;Proprietary Model (*.mod)"));
 
 	if (!inputFileName.isEmpty() && !inputFileName.isNull())
 	{
-		if (modelLoaded) 
+		if (modelLoaded)
 		{
 			clearModel();
 		}
 		loadModel(inputFileName);
-	} else
+	}
+	else
 	{
 		emit statusUpdateMessage(QString("Error while opening file"), 0);
 	}
-	
 }
 
 void MainWindow::handleActionSave()
 {
 	// Only save if a model is already loaded
-    if (!modelLoaded) {
+	if (!modelLoaded)
+	{
 		emit statusUpdateMessage(QString("Error: cannot save when a model is not loaded"), 0);
-	} else {
+	}
+	else
+	{
 		// Prompt user for a filename
 		QString outputFileName = QFileDialog::getSaveFileName(this, tr("Save File"),
-			QDir::currentPath(),
-			tr("Supported Models (*.mod *.stl);;STL Model (*.stl);;Proprietary Model (*.mod)"));
+															  QDir::currentPath(),
+															  tr("Supported Models (*.mod *.stl);;STL Model (*.stl);;Proprietary Model (*.mod)"));
 
 		if (!outputFileName.isEmpty() && !outputFileName.isNull())
 		{
-			if(!QFile::copy(inputFileName, outputFileName)) {
+			if (!QFile::copy(inputFileName, outputFileName))
+			{
 				emit statusUpdateMessage(QString("Error while saving file"), 0);
 			}
-		} else
+		}
+		else
 		{
 			emit statusUpdateMessage(QString("Error: no save name inserted"), 0);
 		}
@@ -618,7 +648,7 @@ void MainWindow::handleActionClose()
 
 void MainWindow::handleActionStlTest()
 {
-    inputFileName = "tests/ExampleSTL.stl";
+	inputFileName = "tests/ExampleSTL.stl";
 	if (modelLoaded)
 	{
 		clearModel();
@@ -634,16 +664,17 @@ void MainWindow::handleActionModTest()
 	{
 		clearModel();
 	}
-    loadModel(inputFileName);
+	loadModel(inputFileName);
 	//emit statusUpdateMessage(QString("Loaded test MOD model"), 0);
 }
 
 void MainWindow::handleActionPrint()
 {
 	// Prompt the user for filename
-    QString screenshotName = QFileDialog::getSaveFileName(this, tr("Save Image"), "", tr("Images (*.png)"));
+	QString screenshotName = QFileDialog::getSaveFileName(this, tr("Save Image"), "", tr("Images (*.png)"));
 	// Only export if a filename has been entered
-	if(!screenshotName.isEmpty() && !screenshotName.isNull()) {
+	if (!screenshotName.isEmpty() && !screenshotName.isNull())
+	{
 		// Enable usage of alpha channel
 		renderWindow->SetAlphaBitPlanes(1);
 		ui->qvtkWidget->GetRenderWindow()->Render();
@@ -655,17 +686,17 @@ void MainWindow::handleActionPrint()
 		windowToImageFilter->ReadFrontBufferOff(); // read from the back buffer
 		windowToImageFilter->Update();
 
-		screenshotName += ".png"; 
+		screenshotName += ".png";
 
 		// Convert QString
-    	vtkSmartPointer<vtkPNGWriter> writer = vtkSmartPointer<vtkPNGWriter>::New();
-    	std::string stdName = screenshotName.toStdString();
-    	const char * charName = stdName.c_str();
+		vtkSmartPointer<vtkPNGWriter> writer = vtkSmartPointer<vtkPNGWriter>::New();
+		std::string stdName = screenshotName.toStdString();
+		const char *charName = stdName.c_str();
 
 		// Write PNG
-    	writer->SetFileName(charName);
-    	writer->SetInputConnection(windowToImageFilter->GetOutputPort());
-    	writer->Write();
+		writer->SetFileName(charName);
+		writer->SetInputConnection(windowToImageFilter->GetOutputPort());
+		writer->Write();
 
 		emit statusUpdateMessage(QString("Screenshot saved successfully"), 0);
 	}
@@ -676,7 +707,8 @@ void MainWindow::handleActionFullScreen()
 	if (this->isFullScreen())
 	{
 		this->showNormal();
-	} else 
+	}
+	else
 	{
 		this->showFullScreen();
 	}
@@ -686,11 +718,12 @@ void MainWindow::handleActionExportData()
 {
 	// Prompt user for a filename
 	QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"),
-		QDir::currentPath(),
-		tr("Text file (*.txt)"));
+													QDir::currentPath(),
+													tr("Text file (*.txt)"));
 
 	// Only export if a filename has been entered
-	if(!fileName.isEmpty() && !fileName.isNull()){
+	if (!fileName.isEmpty() && !fileName.isNull())
+	{
 		fileName += ".txt";
 
 		// Open the file
@@ -698,7 +731,8 @@ void MainWindow::handleActionExportData()
 		outFile.open(QIODevice::WriteOnly);
 
 		// Print an error if file fails to open
-		if (!outFile.isOpen()) {
+		if (!outFile.isOpen())
+		{
 			QMessageBox messageBox;
 			messageBox.critical(0, "Error", "Error while writing to the file");
 			messageBox.setFixedSize(500, 200);
@@ -740,10 +774,11 @@ void MainWindow::on_shrinkButton_clicked()
 {
 	// Prompt user for shrink factor
 	bool success;
-    double shrinkFactor = QInputDialog::getDouble(this, tr("Input dialog"),
-                                         tr("Insert shrink factor (0 to 1)"), 0.5,
-										 0, 1, 2, &success);
-    if (success) {
+	double shrinkFactor = QInputDialog::getDouble(this, tr("Input dialog"),
+												  tr("Insert shrink factor (0 to 1)"), 0.5,
+												  0, 1, 2, &success);
+	if (success)
+	{
 		// Connect shrink filter to STL reader
 		vtkSmartPointer<vtkShrinkFilter> shrinkFilter = vtkSmartPointer<vtkShrinkFilter>::New();
 		shrinkFilter->SetInputConnection(reader->GetOutputPort());
@@ -756,20 +791,23 @@ void MainWindow::on_shrinkButton_clicked()
 		ui->qvtkWidget->GetRenderWindow()->Render();
 		ui->shrinkButton->setCheckable(true);
 		emit statusUpdateMessage(QString("Shrink filter enabled"), 0);
-    } else {
+	}
+	else
+	{
 		emit statusUpdateMessage(QString("Error while enabling shrink filter"), 0);
 	}
 }
 
 void MainWindow::on_clipButton_clicked()
 {
-	
+
 	// Prompt user for clipping plane parameters
 	bool success;
-    double shrinkFactor = QInputDialog::getDouble(this, tr("Input dialog"),
-                                         tr("Insert shrink factor (0 to 1)"), 0.5,
-										 0, 1, 2, &success);
-    if (success) {
+	double shrinkFactor = QInputDialog::getDouble(this, tr("Input dialog"),
+												  tr("Insert shrink factor (0 to 1)"), 0.5,
+												  0, 1, 2, &success);
+	if (success)
+	{
 		// Connect clip filter to STL reader
 		vtkSmartPointer<vtkClipDataSet> clipFilter = vtkSmartPointer<vtkClipDataSet>::New();
 		clipFilter->SetInputConnection(reader->GetOutputPort());
@@ -783,7 +821,9 @@ void MainWindow::on_clipButton_clicked()
 		ui->qvtkWidget->GetRenderWindow()->Render();
 		ui->shrinkButton->setCheckable(true);
 		emit statusUpdateMessage(QString("Clip filter enabled"), 0);
-    } else {
+	}
+	else
+	{
 		emit statusUpdateMessage(QString("Error while enabling clip filter"), 0);
 	}
 }
@@ -791,16 +831,19 @@ void MainWindow::on_clipButton_clicked()
 void MainWindow::on_bkgColourButton_clicked()
 {
 	// Prompt user for colour
-    QColor rgbColours = QColorDialog::getColor(Qt::white, this, "Choose Background Colour");
-    double r = rgbColours.redF();
-    double g = rgbColours.greenF();
-    double b = rgbColours.blueF();
+	QColor rgbColours = QColorDialog::getColor(Qt::white, this, "Choose Background Colour");
+	double r = rgbColours.redF();
+	double g = rgbColours.greenF();
+	double b = rgbColours.blueF();
 
 	// Check that colour is valid, otherwise show an error
-    if(rgbColours.isValid()){
-        renderer->SetBackground(r, g, b);
-        ui->qvtkWidget->GetRenderWindow()->Render();
-    } else {
+	if (rgbColours.isValid())
+	{
+		renderer->SetBackground(r, g, b);
+		ui->qvtkWidget->GetRenderWindow()->Render();
+	}
+	else
+	{
 		// debug - show error saying error while changing background colour
 	}
 	emit statusUpdateMessage(QString("Background colour changed"), 0);
@@ -808,44 +851,47 @@ void MainWindow::on_bkgColourButton_clicked()
 
 void MainWindow::on_modColourButton_clicked()
 {
-    // Prompt user for colour
-    QColor rgbColours = QColorDialog::getColor(Qt::white, this, "Choose Model Colour");
-    double r = rgbColours.redF();
-    double g = rgbColours.greenF();
-    double b = rgbColours.blueF();
+	// Prompt user for colour
+	QColor rgbColours = QColorDialog::getColor(Qt::white, this, "Choose Model Colour");
+	double r = rgbColours.redF();
+	double g = rgbColours.greenF();
+	double b = rgbColours.blueF();
 
 	// Check that colour is valid, otherwise show an error
-    if(rgbColours.isValid()) {
+	if (rgbColours.isValid())
+	{
 
 		// Ensure all actors are properly coloured in case it's a .mod file
 		for (int i = 0; i < actors.size(); i++)
 		{
 			actors[i]->GetProperty()->SetColor(r, g, b);
 		}
-        ui->qvtkWidget->GetRenderWindow()->Render();
-    } else {
-        // debug - show error saying error while changing background colour
-    }
+		ui->qvtkWidget->GetRenderWindow()->Render();
+	}
+	else
+	{
+		// debug - show error saying error while changing background colour
+	}
 	emit statusUpdateMessage(QString("Model colour changed"), 0);
 }
 
 void MainWindow::on_resetCameraButton_clicked()
 {
-    resetCamera();
-    ui->qvtkWidget->GetRenderWindow()->Render();
+	resetCamera();
+	ui->qvtkWidget->GetRenderWindow()->Render();
 	emit statusUpdateMessage(QString("Camera has been reset"), 0);
 }
 
 void MainWindow::on_resetPropertiesButton_clicked()
 {
-    if (modelLoaded)
+	if (modelLoaded)
 	{
 		clearModel();
 	}
-	
+
 	// Recolor model
 	loadModel(inputFileName);
-	
+
 	// Set default background colour
 	renderer->GradientBackgroundOn();
 	renderer->SetBackground(colors->GetColor3d("Black").GetData());
@@ -860,10 +906,10 @@ void MainWindow::on_resetLightingButton_clicked()
 	// Set maximum opacity
 	ui->opacitySlider->setValue(99);
 	for (int i = 0; i < actors.size(); i++)
-		{
-			actors[i]->GetProperty()->SetOpacity(1);
-		}
-	
+	{
+		actors[i]->GetProperty()->SetOpacity(1);
+	}
+
 	// Remove external light
 	ui->intensityCheckBox->setChecked(false);
 	renderer->RemoveAllLights();
@@ -873,28 +919,28 @@ void MainWindow::on_resetLightingButton_clicked()
 	// Set specularity to half value
 	ui->specularitySlider->setValue(49);
 	for (int i = 0; i < actors.size(); i++)
-		{
-			actors[i]->GetProperty()->SetSpecular(0.5);
-		}
+	{
+		actors[i]->GetProperty()->SetSpecular(0.5);
+	}
 
 	emit statusUpdateMessage(QString("Lighting has been reset"), 0);
-    ui->qvtkWidget->GetRenderWindow()->Render();
+	ui->qvtkWidget->GetRenderWindow()->Render();
 }
 
 void MainWindow::on_resetFiltersButton_clicked()
 {
-    if (modelLoaded)
+	if (modelLoaded)
 	{
 		clearModel();
 	}
-	
+
 	// Recolor model
 	loadModel(inputFileName);
 
 	// Uncheck buttons
 	ui->shrinkButton->setCheckable(false);
 	ui->clipButton->setCheckable(false);
-	
+
 	emit statusUpdateMessage(QString("Filters have been reset"), 0);
 	ui->qvtkWidget->GetRenderWindow()->Render();
 }
@@ -902,34 +948,34 @@ void MainWindow::on_resetFiltersButton_clicked()
 void MainWindow::on_posXButton_clicked()
 {
 	renderer->GetActiveCamera()->SetFocalPoint(0.0, 0.0, 0.0);
-    renderer->GetActiveCamera()->SetViewUp(0, 0, 0);
-    renderer->GetActiveCamera()->SetPosition(1, 0, 0);
+	renderer->GetActiveCamera()->SetViewUp(0, 0, 0);
+	renderer->GetActiveCamera()->SetPosition(1, 0, 0);
 
 	// Re-render scene
-    renderer->ResetCamera();
-    ui->qvtkWidget->GetRenderWindow()->Render();
+	renderer->ResetCamera();
+	ui->qvtkWidget->GetRenderWindow()->Render();
 }
 
 void MainWindow::on_posYButton_clicked()
 {
 	renderer->GetActiveCamera()->SetFocalPoint(0.0, 0.0, 0.0);
-    renderer->GetActiveCamera()->SetViewUp(1, 0, 0);
-    renderer->GetActiveCamera()->SetPosition(0, 1, 0);
+	renderer->GetActiveCamera()->SetViewUp(1, 0, 0);
+	renderer->GetActiveCamera()->SetPosition(0, 1, 0);
 
 	// Re-render scene
-    renderer->ResetCamera();
-    ui->qvtkWidget->GetRenderWindow()->Render();
+	renderer->ResetCamera();
+	ui->qvtkWidget->GetRenderWindow()->Render();
 }
 
 void MainWindow::on_posZButton_clicked()
 {
-    renderer->GetActiveCamera()->SetFocalPoint(0.0, 0.0, 0.0);
-    renderer->GetActiveCamera()->SetViewUp(0, 1, 0);
-    renderer->GetActiveCamera()->SetPosition(0, 0, 1);
+	renderer->GetActiveCamera()->SetFocalPoint(0.0, 0.0, 0.0);
+	renderer->GetActiveCamera()->SetViewUp(0, 1, 0);
+	renderer->GetActiveCamera()->SetPosition(0, 0, 1);
 
 	// Re-render scene
-    renderer->ResetCamera();
-    ui->qvtkWidget->GetRenderWindow()->Render();
+	renderer->ResetCamera();
+	ui->qvtkWidget->GetRenderWindow()->Render();
 }
 
 void MainWindow::on_pos90Button_clicked()
@@ -937,41 +983,41 @@ void MainWindow::on_pos90Button_clicked()
 	renderer->GetActiveCamera()->Roll(-90);
 
 	// Re-render scene
-    renderer->ResetCamera();
-    ui->qvtkWidget->GetRenderWindow()->Render();
+	renderer->ResetCamera();
+	ui->qvtkWidget->GetRenderWindow()->Render();
 }
 
 void MainWindow::on_negXButton_clicked()
 {
-    renderer->GetActiveCamera()->SetFocalPoint(0.0, 0.0, 0.0);
-    renderer->GetActiveCamera()->SetViewUp(0, 1, 0);
-    renderer->GetActiveCamera()->SetPosition(-1, 0, 0);
+	renderer->GetActiveCamera()->SetFocalPoint(0.0, 0.0, 0.0);
+	renderer->GetActiveCamera()->SetViewUp(0, 1, 0);
+	renderer->GetActiveCamera()->SetPosition(-1, 0, 0);
 
 	// Re-render scene
-    renderer->ResetCamera();
-    ui->qvtkWidget->GetRenderWindow()->Render();
+	renderer->ResetCamera();
+	ui->qvtkWidget->GetRenderWindow()->Render();
 }
 
 void MainWindow::on_negYButton_clicked()
 {
-    renderer->GetActiveCamera()->SetFocalPoint(0.0, 0.0, 0.0);
-    renderer->GetActiveCamera()->SetViewUp(1, 0, 0);
-    renderer->GetActiveCamera()->SetPosition(0, -1, 0);
+	renderer->GetActiveCamera()->SetFocalPoint(0.0, 0.0, 0.0);
+	renderer->GetActiveCamera()->SetViewUp(1, 0, 0);
+	renderer->GetActiveCamera()->SetPosition(0, -1, 0);
 
 	// Re-render scene
-    renderer->ResetCamera();
-    ui->qvtkWidget->GetRenderWindow()->Render();
+	renderer->ResetCamera();
+	ui->qvtkWidget->GetRenderWindow()->Render();
 }
 
 void MainWindow::on_negZButton_clicked()
 {
-    renderer->GetActiveCamera()->SetFocalPoint(0.0, 0.0, 0.0);
-    renderer->GetActiveCamera()->SetViewUp(0, 1, 0);
-    renderer->GetActiveCamera()->SetPosition(0, 0, -1);
+	renderer->GetActiveCamera()->SetFocalPoint(0.0, 0.0, 0.0);
+	renderer->GetActiveCamera()->SetViewUp(0, 1, 0);
+	renderer->GetActiveCamera()->SetPosition(0, 0, -1);
 
 	// Re-render scene
-    renderer->ResetCamera();
-    ui->qvtkWidget->GetRenderWindow()->Render();
+	renderer->ResetCamera();
+	ui->qvtkWidget->GetRenderWindow()->Render();
 }
 
 void MainWindow::on_neg90Button_clicked()
@@ -979,8 +1025,32 @@ void MainWindow::on_neg90Button_clicked()
 	renderer->GetActiveCamera()->Roll(90);
 
 	// Re-render scene
-    renderer->ResetCamera();
-    ui->qvtkWidget->GetRenderWindow()->Render();
+	renderer->ResetCamera();
+	ui->qvtkWidget->GetRenderWindow()->Render();
+}
+
+void MainWindow::handleActionEnableIntensity()
+{
+	Qt::CheckState state = ui->intensityCheckBox->checkState();
+	if (state == Qt::Unchecked)
+	{
+		ui->intensityCheckBox->setCheckState(Qt::Checked);
+	} else if (state == Qt::Checked)
+	{
+		ui->intensityCheckBox->setCheckState(Qt::Unchecked);
+	}
+}
+
+void MainWindow::handleActionShowAxes()
+{
+	Qt::CheckState state = ui->showAxesCheckBox->checkState();
+	if (state == Qt::Unchecked)
+	{
+		ui->showAxesCheckBox->setCheckState(Qt::Checked);
+	} else if (state == Qt::Checked)
+	{
+		ui->showAxesCheckBox->setCheckState(Qt::Unchecked);
+	}
 }
 
 void MainWindow::on_gradientCheckBox_stateChanged(int state)
@@ -990,7 +1060,8 @@ void MainWindow::on_gradientCheckBox_stateChanged(int state)
 	{
 		renderer->GradientBackgroundOff();
 		emit statusUpdateMessage(QString("Gradient background disabled"), 0);
-	} else if (state == 2) // checked
+	}
+	else if (state == 2) // checked
 	{
 		double r, g, b;
 		renderer->GetBackground(r, g, b);
@@ -1010,11 +1081,28 @@ void MainWindow::on_intensityCheckBox_stateChanged(int state)
 		ui->intensitySlider->setEnabled(false);
 		renderer->RemoveAllLights();
 		emit statusUpdateMessage(QString("External light disabled"), 0);
-	} else if (state == 2) // checked
+	}
+	else if (state == 2) // checked
 	{
 		renderer->AddLight(light);
 		ui->intensitySlider->setEnabled(true);
 		emit statusUpdateMessage(QString("External light enabled"), 0);
+	}
+	ui->qvtkWidget->GetRenderWindow()->Render();
+}
+
+void MainWindow::on_showAxesCheckBox_stateChanged(int state)
+{
+	// Note: state == 1 means partially checked
+	if (state == 0) // unchecked
+	{
+		renderer->RemoveActor(axes);
+		emit statusUpdateMessage(QString("Coordinate axes disabled"), 0);
+	}
+	else if (state == 2) // checked
+	{
+		renderer->AddActor(axes);
+		emit statusUpdateMessage(QString("Coordinate axes enabled"), 0);
 	}
 	ui->qvtkWidget->GetRenderWindow()->Render();
 }
@@ -1061,10 +1149,13 @@ void MainWindow::on_surfaceRadio_toggled(bool checked)
 void MainWindow::on_opacitySlider_sliderMoved(int position)
 {
 	float pos;
-	if (position == 99) {
+	if (position == 99)
+	{
 		pos = 1;
-	} else {
-		pos = (float)position/100;
+	}
+	else
+	{
+		pos = (float)position / 100;
 	}
 
 	// // debug
@@ -1074,12 +1165,13 @@ void MainWindow::on_opacitySlider_sliderMoved(int position)
 	// double x;
 	// double y;
 	// double z;
- 	// renderer->GetActiveCamera()->GetViewUp(xview, yview, zview);
- 	// renderer->GetActiveCamera()->GetDirectionOfProjection(x, y, z);
+	// renderer->GetActiveCamera()->GetViewUp(xview, yview, zview);
+	// renderer->GetActiveCamera()->GetDirectionOfProjection(x, y, z);
 	// qInfo() << xview << " " << yview << " " << zview;
 	// qInfo() << x << " " << y << " " << z;
 
-	if (actors.size() == 1) {
+	if (actors.size() == 1)
+	{
 		actors[0]->GetProperty()->SetOpacity(pos);
 		ui->qvtkWidget->GetRenderWindow()->Render();
 	}
@@ -1087,34 +1179,42 @@ void MainWindow::on_opacitySlider_sliderMoved(int position)
 
 void MainWindow::on_opacitySlider_valueChanged(int value)
 {
-    float pos;
-	if (value == 99) {
+	float pos;
+	if (value == 99)
+	{
 		pos = 1;
-	} else {
-		pos = (float)value/100;
+	}
+	else
+	{
+		pos = (float)value / 100;
 	}
 
-	if (actors.size() != 1) {
+	if (actors.size() != 1)
+	{
 		// Ensure all actors are properly coloured in case it's a .mod file
 		for (int i = 0; i < actors.size(); i++)
 		{
 			actors[i]->GetProperty()->SetOpacity(pos);
 		}
-    	ui->qvtkWidget->GetRenderWindow()->Render();
+		ui->qvtkWidget->GetRenderWindow()->Render();
 	}
 }
 
 void MainWindow::on_specularitySlider_sliderMoved(int position)
 {
 	float pos;
-	if (position == 99) {
+	if (position == 99)
+	{
 		pos = 1;
-	} else {
-		pos = (float)position/100;
+	}
+	else
+	{
+		pos = (float)position / 100;
 	}
 
-	if (actors.size() == 1) {
-  		actors[0]->GetProperty()->SetSpecular(pos);
+	if (actors.size() == 1)
+	{
+		actors[0]->GetProperty()->SetSpecular(pos);
 
 		ui->qvtkWidget->GetRenderWindow()->Render();
 	}
@@ -1122,30 +1222,37 @@ void MainWindow::on_specularitySlider_sliderMoved(int position)
 
 void MainWindow::on_specularitySlider_valueChanged(int value)
 {
-    float pos;
-	if (value == 99) {
+	float pos;
+	if (value == 99)
+	{
 		pos = 1;
-	} else {
-		pos = (float)value/100;
+	}
+	else
+	{
+		pos = (float)value / 100;
 	}
 
-	if (actors.size() != 1) {
+	if (actors.size() != 1)
+	{
 		// Ensure all actors are properly coloured in case it's a .mod file
 		for (int i = 0; i < actors.size(); i++)
 		{
-  			actors[i]->GetProperty()->SetSpecular(pos);
+			actors[i]->GetProperty()->SetSpecular(pos);
 		}
-    	ui->qvtkWidget->GetRenderWindow()->Render();
+		ui->qvtkWidget->GetRenderWindow()->Render();
 	}
 }
 
 void MainWindow::on_intensitySlider_sliderMoved(int position)
 {
 	float pos;
-	if (position == 99) {
+	if (position == 99)
+	{
 		pos = 1;
-	} else {
-		pos = (float)position/100;
+	}
+	else
+	{
+		pos = (float)position / 100;
 	}
 
 	light->SetIntensity(pos);

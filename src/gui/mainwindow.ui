@@ -14,24 +14,13 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QWidget" name="layoutWidget">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>10</y>
-      <width>1271</width>
-      <height>561</height>
-     </rect>
-    </property>
-    <layout class="QVBoxLayout" name="verticalLayout"/>
-   </widget>
    <widget class="QGroupBox" name="groupBox">
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>580</y>
-      <width>218</width>
-      <height>151</height>
+      <y>570</y>
+      <width>221</width>
+      <height>161</height>
      </rect>
     </property>
     <property name="title">
@@ -81,10 +70,16 @@
     <property name="geometry">
      <rect>
       <x>260</x>
-      <y>580</y>
+      <y>570</y>
       <width>172</width>
-      <height>151</height>
+      <height>161</height>
      </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>172</width>
+      <height>161</height>
+     </size>
     </property>
     <property name="title">
      <string>Camera</string>
@@ -166,67 +161,105 @@
    <widget class="QGroupBox" name="propertiesGrid">
     <property name="geometry">
      <rect>
-      <x>470</x>
+      <x>440</x>
       <y>570</y>
-      <width>181</width>
-      <height>171</height>
+      <width>211</width>
+      <height>161</height>
      </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>211</width>
+      <height>161</height>
+     </size>
     </property>
     <property name="title">
      <string>Properties</string>
     </property>
-    <layout class="QGridLayout" name="gridLayout_2">
-     <item row="4" column="0">
-      <widget class="QPushButton" name="resetPropertiesButton">
-       <property name="text">
-        <string>Reset properties</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="0">
-      <layout class="QVBoxLayout" name="verticalLayout_4">
-       <item>
-        <widget class="QLabel" name="bkgColourLabel">
-         <property name="text">
-          <string>Background colour</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="bkgColourButton">
-         <property name="text">
-          <string>Change...</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
-     <item row="2" column="0">
-      <widget class="QCheckBox" name="gradientCheckBox">
-       <property name="text">
-        <string>Gradient background</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="0">
-      <layout class="QVBoxLayout" name="verticalLayout_5">
-       <item>
-        <widget class="QLabel" name="modColourLabel">
-         <property name="text">
-          <string>Model colour</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="modColourButton">
-         <property name="text">
-          <string>Change...</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
-    </layout>
+    <widget class="QPushButton" name="resetPropertiesButton">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>126</y>
+       <width>185</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>185</width>
+       <height>0</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>Reset properties</string>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="gradientCheckBox">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>100</y>
+       <width>151</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Gradient background</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="modColourLabel">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>66</y>
+       <width>185</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Model colour</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="bkgColourLabel">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>30</y>
+       <width>185</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Background colour</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="modColourButton">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>82</y>
+       <width>185</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Change...</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="bkgColourButton">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>48</y>
+       <width>185</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Change...</string>
+     </property>
+    </widget>
    </widget>
    <widget class="QVTKOpenGLWidget" name="qvtkWidget" native="true">
     <property name="geometry">
@@ -248,33 +281,46 @@
     <property name="geometry">
      <rect>
       <x>670</x>
-      <y>586</y>
-      <width>91</width>
-      <height>121</height>
+      <y>570</y>
+      <width>111</width>
+      <height>161</height>
      </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>111</width>
+      <height>161</height>
+     </size>
     </property>
     <property name="title">
      <string>Visualization</string>
     </property>
     <layout class="QGridLayout" name="gridLayout_3">
-     <item row="0" column="0">
+     <item row="1" column="0">
       <widget class="QRadioButton" name="wireframeRadio">
        <property name="text">
         <string>Wireframe</string>
        </property>
       </widget>
      </item>
-     <item row="1" column="0">
+     <item row="3" column="0">
+      <widget class="QRadioButton" name="surfaceRadio">
+       <property name="text">
+        <string>Surface</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="0">
       <widget class="QRadioButton" name="pointsRadio">
        <property name="text">
         <string>Points</string>
        </property>
       </widget>
      </item>
-     <item row="2" column="0">
-      <widget class="QRadioButton" name="surfaceRadio">
+     <item row="0" column="0">
+      <widget class="QCheckBox" name="showAxesCheckBox">
        <property name="text">
-        <string>Surface</string>
+        <string>Axes</string>
        </property>
       </widget>
      </item>
@@ -283,10 +329,10 @@
    <widget class="QGroupBox" name="lightingGrid">
     <property name="geometry">
      <rect>
-      <x>770</x>
-      <y>590</y>
+      <x>790</x>
+      <y>570</y>
       <width>244</width>
-      <height>141</height>
+      <height>161</height>
      </rect>
     </property>
     <property name="title">
@@ -367,10 +413,16 @@
     <property name="geometry">
      <rect>
       <x>1040</x>
-      <y>600</y>
-      <width>231</width>
-      <height>121</height>
+      <y>570</y>
+      <width>251</width>
+      <height>161</height>
      </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>251</width>
+      <height>141</height>
+     </size>
     </property>
     <property name="title">
      <string>Statistics</string>
@@ -460,7 +512,6 @@
     <property name="title">
      <string>Edit</string>
     </property>
-    <addaction name="separator"/>
     <addaction name="actionResetFilters"/>
     <addaction name="actionReset_Camera_View"/>
     <addaction name="actionReset_Properties"/>
@@ -481,6 +532,9 @@
     <property name="title">
      <string>View</string>
     </property>
+    <addaction name="actionEnableIntensity"/>
+    <addaction name="actionShowAxes"/>
+    <addaction name="separator"/>
     <addaction name="actionFullScreen"/>
    </widget>
    <addaction name="menuFile"/>
@@ -656,6 +710,16 @@
   <action name="actionReset_lighting">
    <property name="text">
     <string>Reset LIghting</string>
+   </property>
+  </action>
+  <action name="actionShowAxes">
+   <property name="text">
+    <string>Toggle Coordinate Axes</string>
+   </property>
+  </action>
+  <action name="actionEnableIntensity">
+   <property name="text">
+    <string>Toggle External Light</string>
    </property>
   </action>
  </widget>

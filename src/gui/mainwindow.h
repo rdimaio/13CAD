@@ -55,6 +55,8 @@ class MainWindow : public QMainWindow
         void handleActionSave();
         void handleActionClose();
         void handleActionPrint(); // Handles actionScreenshot too
+        void handleActionEnableIntensity();
+        void handleActionShowAxes();
         void handleActionFullScreen();
         void handleActionExportData();
         void handleActionStlTest();
@@ -87,6 +89,7 @@ class MainWindow : public QMainWindow
 
         void on_intensitySlider_sliderMoved(int position);
         void on_intensityCheckBox_stateChanged(int state);
+        void on_showAxesCheckBox_stateChanged(int state);
 
         void on_resetLightingButton_clicked();
 
