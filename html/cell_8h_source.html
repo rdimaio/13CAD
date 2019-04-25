@@ -95,66 +95,69 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="vector3d_8h.html">vector3d.h</a>&quot;</span></div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="material_8h.html">material.h</a>&quot;</span></div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;</div>
-<div class="line"><a name="l00019"></a><span class="lineno"><a class="line" href="classCell.html">   19</a></span>&#160;<span class="keyword">class </span><a class="code" href="classCell.html">Cell</a> {</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;    <span class="keyword">protected</span>:</div>
-<div class="line"><a name="l00024"></a><span class="lineno"><a class="line" href="classCell.html#a71cac84693be6a01a97e097e7433271d">   24</a></span>&#160;        std::vector&lt;Vector3D&gt; <a class="code" href="classCell.html#a71cac84693be6a01a97e097e7433271d">vertices</a>;</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;        </div>
-<div class="line"><a name="l00029"></a><span class="lineno"><a class="line" href="classCell.html#affa982d31e4c42fe7bb58b9ac81d443f">   29</a></span>&#160;        <a class="code" href="classMaterial.html">Material</a> <a class="code" href="classCell.html#affa982d31e4c42fe7bb58b9ac81d443f">material</a>;</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    </div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;        <a class="code" href="classCell.html">Cell</a>();</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;        ~<a class="code" href="classCell.html">Cell</a>();</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;        <span class="comment">// Accessors</span></div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;        </div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">double</span> <a class="code" href="classCell.html#a4ca5d1d8ea0a578ff520d2eea389d217">getVolume</a>();</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;        <span class="keywordtype">double</span> <a class="code" href="classCell.html#afddd8cc5cabef0dd943b4fa21019c95e">getMass</a>();</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        std::vector&lt;Vector3D&gt; <a class="code" href="classCell.html#ac1bdb6bdfd9fee9c6f65c9a115e7d850">getVertices</a>();</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;        <a class="code" href="classVector3D.html">Vector3D</a> <a class="code" href="classCell.html#a5c465eeceb71663c09d5760a8084586f">getCentre</a>();</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;        <a class="code" href="classMaterial.html">Material</a> <a class="code" href="classCell.html#a0b438b2a52cbc2faac025b3b2533db8e">getMaterial</a>();</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;</div>
+<div class="line"><a name="l00019"></a><span class="lineno"><a class="line" href="classCell.html">   19</a></span>&#160;<span class="keyword">class </span><a class="code" href="classCell.html">Cell</a></div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;{</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;  <span class="keyword">protected</span>:</div>
+<div class="line"><a name="l00025"></a><span class="lineno"><a class="line" href="classCell.html#a71cac84693be6a01a97e097e7433271d">   25</a></span>&#160;    std::vector&lt;Vector3D&gt; <a class="code" href="classCell.html#a71cac84693be6a01a97e097e7433271d">vertices</a>;</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;</div>
+<div class="line"><a name="l00030"></a><span class="lineno"><a class="line" href="classCell.html#affa982d31e4c42fe7bb58b9ac81d443f">   30</a></span>&#160;    <a class="code" href="classMaterial.html">Material</a> <a class="code" href="classCell.html#affa982d31e4c42fe7bb58b9ac81d443f">material</a>;</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;  <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    <a class="code" href="classCell.html">Cell</a>();</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    ~<a class="code" href="classCell.html">Cell</a>();</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    <span class="comment">// Accessors</span></div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">double</span> <a class="code" href="classCell.html#a4ca5d1d8ea0a578ff520d2eea389d217">getVolume</a>();</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    <span class="keywordtype">double</span> <a class="code" href="classCell.html#afddd8cc5cabef0dd943b4fa21019c95e">getMass</a>();</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    std::vector&lt;Vector3D&gt; <a class="code" href="classCell.html#ac1bdb6bdfd9fee9c6f65c9a115e7d850">getVertices</a>();</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    <a class="code" href="classVector3D.html">Vector3D</a> <a class="code" href="classCell.html#a5c465eeceb71663c09d5760a8084586f">getCentre</a>();</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    <a class="code" href="classMaterial.html">Material</a> <a class="code" href="classCell.html#a0b438b2a52cbc2faac025b3b2533db8e">getMaterial</a>();</div>
 <div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;};</div>
 <div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;</div>
-<div class="line"><a name="l00067"></a><span class="lineno"><a class="line" href="classPyramid.html">   67</a></span>&#160;<span class="keyword">class </span><a class="code" href="classPyramid.html">Pyramid</a> : <span class="keyword">public</span> <a class="code" href="classCell.html">Cell</a> {</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        <a class="code" href="classPyramid.html">Pyramid</a>();</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;        <a class="code" href="classPyramid.html">Pyramid</a>(std::vector&lt;Vector3D&gt; &amp;<a class="code" href="classCell.html#a71cac84693be6a01a97e097e7433271d">vertices</a>, <a class="code" href="classMaterial.html">Material</a> &amp;<a class="code" href="classCell.html#affa982d31e4c42fe7bb58b9ac81d443f">material</a>);</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;        ~<a class="code" href="classPyramid.html">Pyramid</a>();</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;        <span class="comment">// Accessors</span></div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">double</span> <a class="code" href="classPyramid.html#aceaa825551fabfe9526c9aeef237ec6e">getVolume</a>();</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;};</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;</div>
-<div class="line"><a name="l00080"></a><span class="lineno"><a class="line" href="classHexahedron.html">   80</a></span>&#160;<span class="keyword">class </span><a class="code" href="classHexahedron.html">Hexahedron</a> : <span class="keyword">public</span> <a class="code" href="classCell.html">Cell</a> {</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;        <a class="code" href="classHexahedron.html">Hexahedron</a>();</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;        <a class="code" href="classHexahedron.html">Hexahedron</a>(std::vector&lt;Vector3D&gt; &amp;<a class="code" href="classCell.html#a71cac84693be6a01a97e097e7433271d">vertices</a>, <a class="code" href="classMaterial.html">Material</a> &amp;<a class="code" href="classCell.html#affa982d31e4c42fe7bb58b9ac81d443f">material</a>);</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;        ~<a class="code" href="classHexahedron.html">Hexahedron</a>();</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;        <span class="comment">// Accessors</span></div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">double</span> <a class="code" href="classHexahedron.html#ac4a20b74fb9189c76c3b300f3e4facd8">getVolume</a>();</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;};</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;</div>
-<div class="line"><a name="l00093"></a><span class="lineno"><a class="line" href="classTetrahedron.html">   93</a></span>&#160;<span class="keyword">class </span><a class="code" href="classTetrahedron.html">Tetrahedron</a> : <span class="keyword">public</span> <a class="code" href="classCell.html">Cell</a> {</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;        <a class="code" href="classTetrahedron.html">Tetrahedron</a>();</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;        <a class="code" href="classTetrahedron.html">Tetrahedron</a>(std::vector&lt;Vector3D&gt; &amp;<a class="code" href="classCell.html#a71cac84693be6a01a97e097e7433271d">vertices</a>, <a class="code" href="classMaterial.html">Material</a> &amp;<a class="code" href="classCell.html#affa982d31e4c42fe7bb58b9ac81d443f">material</a>);</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;        ~<a class="code" href="classTetrahedron.html">Tetrahedron</a>();</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;        <span class="comment">// Accessors</span></div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">double</span> <a class="code" href="classTetrahedron.html#a23de8eb8f8a7d6dc847779d23de59d72">getVolume</a>();</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;};</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* CELL_H */</span><span class="preprocessor"></span></div>
-<div class="ttc" id="classCell_html_a71cac84693be6a01a97e097e7433271d"><div class="ttname"><a href="classCell.html#a71cac84693be6a01a97e097e7433271d">Cell::vertices</a></div><div class="ttdeci">std::vector&lt; Vector3D &gt; vertices</div><div class="ttdef"><b>Definition:</b> cell.h:24</div></div>
+<div class="line"><a name="l00067"></a><span class="lineno"><a class="line" href="classPyramid.html">   67</a></span>&#160;<span class="keyword">class </span><a class="code" href="classPyramid.html">Pyramid</a> : <span class="keyword">public</span> <a class="code" href="classCell.html">Cell</a></div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;{</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;  <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    <a class="code" href="classPyramid.html">Pyramid</a>();</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    <a class="code" href="classPyramid.html">Pyramid</a>(std::vector&lt;Vector3D&gt; &amp;<a class="code" href="classCell.html#a71cac84693be6a01a97e097e7433271d">vertices</a>, <a class="code" href="classMaterial.html">Material</a> &amp;<a class="code" href="classCell.html#affa982d31e4c42fe7bb58b9ac81d443f">material</a>);</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    ~<a class="code" href="classPyramid.html">Pyramid</a>();</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    <span class="comment">// Accessors</span></div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">double</span> <a class="code" href="classPyramid.html#aceaa825551fabfe9526c9aeef237ec6e">getVolume</a>();</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;};</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;</div>
+<div class="line"><a name="l00081"></a><span class="lineno"><a class="line" href="classHexahedron.html">   81</a></span>&#160;<span class="keyword">class </span><a class="code" href="classHexahedron.html">Hexahedron</a> : <span class="keyword">public</span> <a class="code" href="classCell.html">Cell</a></div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;{</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;  <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    <a class="code" href="classHexahedron.html">Hexahedron</a>();</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    <a class="code" href="classHexahedron.html">Hexahedron</a>(std::vector&lt;Vector3D&gt; &amp;<a class="code" href="classCell.html#a71cac84693be6a01a97e097e7433271d">vertices</a>, <a class="code" href="classMaterial.html">Material</a> &amp;<a class="code" href="classCell.html#affa982d31e4c42fe7bb58b9ac81d443f">material</a>);</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    ~<a class="code" href="classHexahedron.html">Hexahedron</a>();</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    <span class="comment">// Accessors</span></div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">double</span> <a class="code" href="classHexahedron.html#ac4a20b74fb9189c76c3b300f3e4facd8">getVolume</a>();</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;};</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;</div>
+<div class="line"><a name="l00095"></a><span class="lineno"><a class="line" href="classTetrahedron.html">   95</a></span>&#160;<span class="keyword">class </span><a class="code" href="classTetrahedron.html">Tetrahedron</a> : <span class="keyword">public</span> <a class="code" href="classCell.html">Cell</a></div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;{</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;  <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;    <a class="code" href="classTetrahedron.html">Tetrahedron</a>();</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;    <a class="code" href="classTetrahedron.html">Tetrahedron</a>(std::vector&lt;Vector3D&gt; &amp;<a class="code" href="classCell.html#a71cac84693be6a01a97e097e7433271d">vertices</a>, <a class="code" href="classMaterial.html">Material</a> &amp;<a class="code" href="classCell.html#affa982d31e4c42fe7bb58b9ac81d443f">material</a>);</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;    ~<a class="code" href="classTetrahedron.html">Tetrahedron</a>();</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;    <span class="comment">// Accessors</span></div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">double</span> <a class="code" href="classTetrahedron.html#a23de8eb8f8a7d6dc847779d23de59d72">getVolume</a>();</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;};</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* CELL_H */</span><span class="preprocessor"></span></div>
+<div class="ttc" id="classCell_html_a71cac84693be6a01a97e097e7433271d"><div class="ttname"><a href="classCell.html#a71cac84693be6a01a97e097e7433271d">Cell::vertices</a></div><div class="ttdeci">std::vector&lt; Vector3D &gt; vertices</div><div class="ttdef"><b>Definition:</b> cell.h:25</div></div>
 <div class="ttc" id="classCell_html"><div class="ttname"><a href="classCell.html">Cell</a></div><div class="ttdef"><b>Definition:</b> cell.h:19</div></div>
 <div class="ttc" id="material_8h_html"><div class="ttname"><a href="material_8h.html">material.h</a></div><div class="ttdoc">Header file for the Material class. </div></div>
-<div class="ttc" id="classCell_html_affa982d31e4c42fe7bb58b9ac81d443f"><div class="ttname"><a href="classCell.html#affa982d31e4c42fe7bb58b9ac81d443f">Cell::material</a></div><div class="ttdeci">Material material</div><div class="ttdef"><b>Definition:</b> cell.h:29</div></div>
-<div class="ttc" id="classTetrahedron_html"><div class="ttname"><a href="classTetrahedron.html">Tetrahedron</a></div><div class="ttdef"><b>Definition:</b> cell.h:93</div></div>
+<div class="ttc" id="classCell_html_affa982d31e4c42fe7bb58b9ac81d443f"><div class="ttname"><a href="classCell.html#affa982d31e4c42fe7bb58b9ac81d443f">Cell::material</a></div><div class="ttdeci">Material material</div><div class="ttdef"><b>Definition:</b> cell.h:30</div></div>
+<div class="ttc" id="classTetrahedron_html"><div class="ttname"><a href="classTetrahedron.html">Tetrahedron</a></div><div class="ttdef"><b>Definition:</b> cell.h:95</div></div>
 <div class="ttc" id="classHexahedron_html_ac4a20b74fb9189c76c3b300f3e4facd8"><div class="ttname"><a href="classHexahedron.html#ac4a20b74fb9189c76c3b300f3e4facd8">Hexahedron::getVolume</a></div><div class="ttdeci">virtual double getVolume()</div></div>
 <div class="ttc" id="classTetrahedron_html_a23de8eb8f8a7d6dc847779d23de59d72"><div class="ttname"><a href="classTetrahedron.html#a23de8eb8f8a7d6dc847779d23de59d72">Tetrahedron::getVolume</a></div><div class="ttdeci">virtual double getVolume()</div></div>
 <div class="ttc" id="vector3d_8h_html"><div class="ttname"><a href="vector3d_8h.html">vector3d.h</a></div><div class="ttdoc">Header file for the Vector3D class. </div></div>
@@ -165,7 +168,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="ttc" id="classCell_html_afddd8cc5cabef0dd943b4fa21019c95e"><div class="ttname"><a href="classCell.html#afddd8cc5cabef0dd943b4fa21019c95e">Cell::getMass</a></div><div class="ttdeci">double getMass()</div></div>
 <div class="ttc" id="classCell_html_a0b438b2a52cbc2faac025b3b2533db8e"><div class="ttname"><a href="classCell.html#a0b438b2a52cbc2faac025b3b2533db8e">Cell::getMaterial</a></div><div class="ttdeci">Material getMaterial()</div></div>
 <div class="ttc" id="classMaterial_html"><div class="ttname"><a href="classMaterial.html">Material</a></div><div class="ttdef"><b>Definition:</b> material.h:16</div></div>
-<div class="ttc" id="classHexahedron_html"><div class="ttname"><a href="classHexahedron.html">Hexahedron</a></div><div class="ttdef"><b>Definition:</b> cell.h:80</div></div>
+<div class="ttc" id="classHexahedron_html"><div class="ttname"><a href="classHexahedron.html">Hexahedron</a></div><div class="ttdef"><b>Definition:</b> cell.h:81</div></div>
 <div class="ttc" id="classCell_html_a5c465eeceb71663c09d5760a8084586f"><div class="ttname"><a href="classCell.html#a5c465eeceb71663c09d5760a8084586f">Cell::getCentre</a></div><div class="ttdeci">Vector3D getCentre()</div></div>
 <div class="ttc" id="classCell_html_ac1bdb6bdfd9fee9c6f65c9a115e7d850"><div class="ttname"><a href="classCell.html#ac1bdb6bdfd9fee9c6f65c9a115e7d850">Cell::getVertices</a></div><div class="ttdeci">std::vector&lt; Vector3D &gt; getVertices()</div></div>
 </div><!-- fragment --></div><!-- contents -->

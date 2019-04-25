@@ -17,12 +17,12 @@ Warning: ignoring unsupported tag `DOCBOOK_PROGRAMLISTING =' at line 2037, file 
 Warning: ignoring unsupported tag `PLANTUML_JAR_PATH      =' at line 2466, file /home/travis/build/rdimaio/ModelLoader/Doxyfile
 Warning: ignoring unsupported tag `PLANTUML_CFG_FILE      =' at line 2471, file /home/travis/build/rdimaio/ModelLoader/Doxyfile
 Warning: ignoring unsupported tag `PLANTUML_INCLUDE_PATH  =' at line 2476, file /home/travis/build/rdimaio/ModelLoader/Doxyfile
-/home/travis/build/rdimaio/ModelLoader/include/cell.h:83: warning: Member Hexahedron(std::vector< Vector3D > &vertices, Material &material) (function) of class Hexahedron is not documented.
-/home/travis/build/rdimaio/ModelLoader/include/material.h:43: warning: Member Material(int id, double density, std::string colour, std::string name) (function) of class Material is not documented.
-/home/travis/build/rdimaio/ModelLoader/include/model.h:79: warning: Member Model(std::string filename) (function) of class Model is not documented.
-/home/travis/build/rdimaio/ModelLoader/include/cell.h:70: warning: Member Pyramid(std::vector< Vector3D > &vertices, Material &material) (function) of class Pyramid is not documented.
-/home/travis/build/rdimaio/ModelLoader/include/cell.h:96: warning: Member Tetrahedron(std::vector< Vector3D > &vertices, Material &material) (function) of class Tetrahedron is not documented.
-/home/travis/build/rdimaio/ModelLoader/include/vector3d.h:43: warning: Member Vector3D(double x, double y, double z) (function) of class Vector3D is not documented.
+/home/travis/build/rdimaio/ModelLoader/include/cell.h:85: warning: Member Hexahedron(std::vector< Vector3D > &vertices, Material &material) (function) of class Hexahedron is not documented.
+/home/travis/build/rdimaio/ModelLoader/include/material.h:41: warning: Member Material(int id, double density, std::string colour, std::string name) (function) of class Material is not documented.
+/home/travis/build/rdimaio/ModelLoader/include/model.h:80: warning: Member Model(std::string filename) (function) of class Model is not documented.
+/home/travis/build/rdimaio/ModelLoader/include/cell.h:71: warning: Member Pyramid(std::vector< Vector3D > &vertices, Material &material) (function) of class Pyramid is not documented.
+/home/travis/build/rdimaio/ModelLoader/include/cell.h:99: warning: Member Tetrahedron(std::vector< Vector3D > &vertices, Material &material) (function) of class Tetrahedron is not documented.
+/home/travis/build/rdimaio/ModelLoader/include/vector3d.h:41: warning: Member Vector3D(double x, double y, double z) (function) of class Vector3D is not documented.
 Searching for include files...
 Searching for example files...
 Searching for images...
