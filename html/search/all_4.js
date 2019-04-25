@@ -1,5 +1,8 @@
 var searchData=
 [
+  ['mainwindow',['MainWindow',['../classMainWindow.html',1,'']]],
+  ['mainwindow_2ecpp',['mainwindow.cpp',['../mainwindow_8cpp.html',1,'']]],
+  ['mainwindow_2eh',['mainwindow.h',['../mainwindow_8h.html',1,'']]],
   ['material',['Material',['../classMaterial.html',1,'Material'],['../classCell.html#affa982d31e4c42fe7bb58b9ac81d443f',1,'Cell::material()']]],
   ['material_2ecpp',['material.cpp',['../material_8cpp.html',1,'']]],
   ['material_2eh',['material.h',['../material_8h.html',1,'']]],

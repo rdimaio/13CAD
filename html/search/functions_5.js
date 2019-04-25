@@ -1,12 +1,8 @@
 var searchData=
 [
-  ['savetofile',['saveToFile',['../classModel.html#a8d959d80bb3ff0d8efe2b86a5b6fb3b4',1,'Model']]],
-  ['setcolour',['setColour',['../classMaterial.html#a952a9a4cd7dc59b8ae60c785e7eddab6',1,'Material']]],
-  ['setdensity',['setDensity',['../classMaterial.html#af69052530ff348e10bb73fe6790d7b9a',1,'Material']]],
-  ['setdiagonal',['setDiagonal',['../classMatrix3x3.html#a0b9f2f7137c232f6246a4cc474138e45',1,'Matrix3x3']]],
-  ['setid',['setId',['../classMaterial.html#afba388b17b8669ad0b3503c1d8e059a7',1,'Material']]],
-  ['setname',['setName',['../classMaterial.html#a8d3228e94c92ffffc1c5a9504ee5fd90',1,'Material']]],
-  ['setx',['setX',['../classVector3D.html#a32b5b166189ccb48ee1e7a4cbea1719e',1,'Vector3D']]],
-  ['sety',['setY',['../classVector3D.html#a7a1ec37357274ad482062b1b35928bbf',1,'Vector3D']]],
-  ['setz',['setZ',['../classVector3D.html#afc123137fab8bc02c4cdc12af684fdc9',1,'Vector3D']]]
+  ['operator_2a',['operator*',['../classVector3D.html#a07cb34672e196c774c628d408ea3ac1f',1,'Vector3D::operator*()'],['../vector3d_8cpp.html#a8f6f631b89c5cf10873f75e15e825290',1,'operator*():&#160;vector3d.cpp']]],
+  ['operator_2b',['operator+',['../classVector3D.html#aa7668bb9a784940dcc9252aa7ebe8b62',1,'Vector3D']]],
+  ['operator_2d',['operator-',['../classVector3D.html#a22668e242a3eb010d2055ce70d3ed054',1,'Vector3D']]],
+  ['operator_3c_3c',['operator&lt;&lt;',['../vector3d_8cpp.html#a45b8872c1a1f9cd64e0966bf8f33523b',1,'vector3d.cpp']]],
+  ['operator_3d_3d',['operator==',['../material_8cpp.html#a3a34804be337286a8e4bfca353ec119d',1,'operator==(const Material &amp;lhsMaterial, const Material &amp;rhsMaterial):&#160;material.cpp'],['../vector3d_8cpp.html#ac522c21bf1be991d6fc22312f7ce5fb1',1,'operator==(const Vector3D &amp;lhsVector, const Vector3D &amp;rhsVector):&#160;vector3d.cpp']]]
 ];

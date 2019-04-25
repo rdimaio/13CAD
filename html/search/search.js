@@ -9,8 +9,8 @@ var indexSectionsWithContent =
 {
   0: "cdghmopstvxyz",
   1: "chmptv",
-  2: "cmv",
-  3: "cdgmos",
+  2: "chmv",
+  3: "cdghmosxyz",
   4: "mvxyz",
   5: "o"
 };
