@@ -6,493 +6,449 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1301</width>
-    <height>819</height>
+    <width>1133</width>
+    <height>668</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QGroupBox" name="groupBox">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>570</y>
-      <width>221</width>
-      <height>161</height>
-     </rect>
-    </property>
-    <property name="title">
-     <string>Filters (STL only)</string>
-    </property>
-    <widget class="QPushButton" name="shrinkButton">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>30</y>
-       <width>80</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Shrink</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="resetFiltersButton">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>120</y>
-       <width>201</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Reset filters</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="clipButton">
-     <property name="geometry">
-      <rect>
-       <x>110</x>
-       <y>30</y>
-       <width>80</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Clip</string>
-     </property>
-    </widget>
-   </widget>
-   <widget class="QGroupBox" name="cameraGrid">
-    <property name="geometry">
-     <rect>
-      <x>260</x>
-      <y>570</y>
-      <width>172</width>
-      <height>161</height>
-     </rect>
-    </property>
-    <property name="minimumSize">
-     <size>
-      <width>172</width>
-      <height>161</height>
-     </size>
-    </property>
-    <property name="title">
-     <string>Camera</string>
-    </property>
-    <layout class="QGridLayout" name="gridLayout">
-     <item row="0" column="0">
-      <layout class="QVBoxLayout" name="posCamera">
+   <layout class="QVBoxLayout" name="verticalLayout_2">
+    <item>
+     <widget class="QVTKOpenGLWidget" name="qvtkWidget" native="true">
+      <property name="minimumSize">
+       <size>
+        <width>600</width>
+        <height>400</height>
+       </size>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QFrame" name="">
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>180</height>
+       </size>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout">
        <item>
-        <widget class="QPushButton" name="posXButton">
-         <property name="text">
-          <string>X Plane</string>
+        <widget class="QGroupBox" name="">
+         <property name="title">
+          <string>Filters</string>
          </property>
+         <layout class="QVBoxLayout" name="verticalLayout">
+          <item>
+           <widget class="QPushButton" name="shrinkButton">
+            <property name="text">
+             <string>Shrink</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="clipButton">
+            <property name="text">
+             <string>Clip</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="resetFiltersButton">
+            <property name="text">
+             <string>Reset filters</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="posYButton">
-         <property name="text">
-          <string>Y Plane</string>
+        <widget class="QGroupBox" name="cameraGrid">
+         <property name="minimumSize">
+          <size>
+           <width>172</width>
+           <height>161</height>
+          </size>
          </property>
+         <property name="title">
+          <string>Camera</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout">
+          <item row="0" column="0">
+           <layout class="QVBoxLayout" name="posCamera">
+            <item>
+             <widget class="QPushButton" name="posXButton">
+              <property name="text">
+               <string>X Plane</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="posYButton">
+              <property name="text">
+               <string>Y Plane</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="posZButton">
+              <property name="text">
+               <string>Z Plane</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="pos90Button">
+              <property name="text">
+               <string>+90°</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item row="0" column="1">
+           <layout class="QVBoxLayout" name="negCamera">
+            <item>
+             <widget class="QPushButton" name="negXButton">
+              <property name="text">
+               <string>-X Plane</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="negYButton">
+              <property name="text">
+               <string>-Y Plane</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="negZButton">
+              <property name="text">
+               <string>-Z plane</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="neg90Button">
+              <property name="text">
+               <string>-90°</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item row="1" column="0" colspan="2">
+           <widget class="QPushButton" name="resetCameraButton">
+            <property name="text">
+             <string>Reset camera view</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="posZButton">
-         <property name="text">
-          <string>Z Plane</string>
+        <widget class="QGroupBox" name="propertiesGrid">
+         <property name="minimumSize">
+          <size>
+           <width>211</width>
+           <height>161</height>
+          </size>
          </property>
+         <property name="title">
+          <string>Properties</string>
+         </property>
+         <widget class="QPushButton" name="resetPropertiesButton">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>126</y>
+            <width>185</width>
+            <height>23</height>
+           </rect>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>185</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>Reset properties</string>
+          </property>
+         </widget>
+         <widget class="QCheckBox" name="gradientCheckBox">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>100</y>
+            <width>151</width>
+            <height>21</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Gradient background</string>
+          </property>
+         </widget>
+         <widget class="QLabel" name="modColourLabel">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>66</y>
+            <width>185</width>
+            <height>16</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Model colour</string>
+          </property>
+         </widget>
+         <widget class="QLabel" name="bkgColourLabel">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>30</y>
+            <width>185</width>
+            <height>16</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Background colour</string>
+          </property>
+         </widget>
+         <widget class="QPushButton" name="modColourButton">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>82</y>
+            <width>185</width>
+            <height>16</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Change...</string>
+          </property>
+         </widget>
+         <widget class="QPushButton" name="bkgColourButton">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>48</y>
+            <width>185</width>
+            <height>16</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Change...</string>
+          </property>
+         </widget>
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="pos90Button">
-         <property name="text">
-          <string>+90°</string>
+        <widget class="QGroupBox" name="visualizationGrid">
+         <property name="minimumSize">
+          <size>
+           <width>111</width>
+           <height>161</height>
+          </size>
          </property>
+         <property name="title">
+          <string>Visualization</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_3">
+          <item row="1" column="0">
+           <widget class="QRadioButton" name="wireframeRadio">
+            <property name="text">
+             <string>Wireframe</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QRadioButton" name="surfaceRadio">
+            <property name="text">
+             <string>Surface</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QRadioButton" name="pointsRadio">
+            <property name="text">
+             <string>Points</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QCheckBox" name="showAxesCheckBox">
+            <property name="text">
+             <string>Axes</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="lightingGrid">
+         <property name="title">
+          <string>Lighting</string>
+         </property>
+         <layout class="QGridLayout" name="lightGrid">
+          <item row="0" column="1">
+           <widget class="QCheckBox" name="intensityCheckBox">
+            <property name="text">
+             <string>Enable external light</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <layout class="QVBoxLayout" name="opacityLayout">
+            <item>
+             <widget class="QLabel" name="opacityLabel">
+              <property name="text">
+               <string>Opacity</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QSlider" name="opacitySlider">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item row="1" column="1">
+           <layout class="QVBoxLayout" name="verticalLayout_9">
+            <item>
+             <widget class="QLabel" name="intensityLabel">
+              <property name="text">
+               <string>Intensity</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QSlider" name="intensitySlider">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item row="0" column="0">
+           <layout class="QVBoxLayout" name="verticalLayout_8">
+            <item>
+             <widget class="QLabel" name="specularityLabel">
+              <property name="text">
+               <string>Specularity</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QSlider" name="specularitySlider">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item row="2" column="0" colspan="2">
+           <widget class="QPushButton" name="resetLightingButton">
+            <property name="text">
+             <string>Reset lighting</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="statsGrid">
+         <property name="minimumSize">
+          <size>
+           <width>251</width>
+           <height>141</height>
+          </size>
+         </property>
+         <property name="title">
+          <string>Statistics</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_4">
+          <item row="0" column="0">
+           <widget class="QLabel" name="volLabel">
+            <property name="text">
+             <string>Volume: </string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QLabel" name="volValue">
+            <property name="text">
+             <string/>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="surfAreaLabel">
+            <property name="text">
+             <string>Surface area:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QLabel" name="surfAreaValue">
+            <property name="text">
+             <string/>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="cellsLabel">
+            <property name="text">
+             <string>Cells:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QLabel" name="cellsValue">
+            <property name="text">
+             <string/>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="pointsLabel">
+            <property name="text">
+             <string>Points:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1">
+           <widget class="QLabel" name="pointsValue">
+            <property name="text">
+             <string/>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </widget>
        </item>
       </layout>
-     </item>
-     <item row="0" column="1">
-      <layout class="QVBoxLayout" name="negCamera">
-       <item>
-        <widget class="QPushButton" name="negXButton">
-         <property name="text">
-          <string>-X Plane</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="negYButton">
-         <property name="text">
-          <string>-Y Plane</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="negZButton">
-         <property name="text">
-          <string>-Z plane</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="neg90Button">
-         <property name="text">
-          <string>-90°</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
-     <item row="1" column="0" colspan="2">
-      <widget class="QPushButton" name="resetCameraButton">
-       <property name="text">
-        <string>Reset camera view</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </widget>
-   <widget class="QGroupBox" name="propertiesGrid">
-    <property name="geometry">
-     <rect>
-      <x>440</x>
-      <y>570</y>
-      <width>211</width>
-      <height>161</height>
-     </rect>
-    </property>
-    <property name="minimumSize">
-     <size>
-      <width>211</width>
-      <height>161</height>
-     </size>
-    </property>
-    <property name="title">
-     <string>Properties</string>
-    </property>
-    <widget class="QPushButton" name="resetPropertiesButton">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>126</y>
-       <width>185</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="minimumSize">
-      <size>
-       <width>185</width>
-       <height>0</height>
-      </size>
-     </property>
-     <property name="text">
-      <string>Reset properties</string>
-     </property>
-    </widget>
-    <widget class="QCheckBox" name="gradientCheckBox">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>100</y>
-       <width>151</width>
-       <height>21</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Gradient background</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="modColourLabel">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>66</y>
-       <width>185</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Model colour</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="bkgColourLabel">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>30</y>
-       <width>185</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Background colour</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="modColourButton">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>82</y>
-       <width>185</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Change...</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="bkgColourButton">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>48</y>
-       <width>185</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Change...</string>
-     </property>
-    </widget>
-   </widget>
-   <widget class="QVTKOpenGLWidget" name="qvtkWidget" native="true">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>10</y>
-      <width>1269</width>
-      <height>559</height>
-     </rect>
-    </property>
-    <property name="minimumSize">
-     <size>
-      <width>600</width>
-      <height>400</height>
-     </size>
-    </property>
-   </widget>
-   <widget class="QGroupBox" name="visualizationGrid">
-    <property name="geometry">
-     <rect>
-      <x>670</x>
-      <y>570</y>
-      <width>111</width>
-      <height>161</height>
-     </rect>
-    </property>
-    <property name="minimumSize">
-     <size>
-      <width>111</width>
-      <height>161</height>
-     </size>
-    </property>
-    <property name="title">
-     <string>Visualization</string>
-    </property>
-    <layout class="QGridLayout" name="gridLayout_3">
-     <item row="1" column="0">
-      <widget class="QRadioButton" name="wireframeRadio">
-       <property name="text">
-        <string>Wireframe</string>
-       </property>
-      </widget>
-     </item>
-     <item row="3" column="0">
-      <widget class="QRadioButton" name="surfaceRadio">
-       <property name="text">
-        <string>Surface</string>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="0">
-      <widget class="QRadioButton" name="pointsRadio">
-       <property name="text">
-        <string>Points</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="0">
-      <widget class="QCheckBox" name="showAxesCheckBox">
-       <property name="text">
-        <string>Axes</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </widget>
-   <widget class="QGroupBox" name="lightingGrid">
-    <property name="geometry">
-     <rect>
-      <x>790</x>
-      <y>570</y>
-      <width>244</width>
-      <height>161</height>
-     </rect>
-    </property>
-    <property name="title">
-     <string>Lighting</string>
-    </property>
-    <layout class="QGridLayout" name="lightGrid">
-     <item row="0" column="1">
-      <widget class="QCheckBox" name="intensityCheckBox">
-       <property name="text">
-        <string>Enable external light</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="0">
-      <layout class="QVBoxLayout" name="opacityLayout">
-       <item>
-        <widget class="QLabel" name="opacityLabel">
-         <property name="text">
-          <string>Opacity</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QSlider" name="opacitySlider">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
-     <item row="1" column="1">
-      <layout class="QVBoxLayout" name="verticalLayout_9">
-       <item>
-        <widget class="QLabel" name="intensityLabel">
-         <property name="text">
-          <string>Intensity</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QSlider" name="intensitySlider">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
-     <item row="0" column="0">
-      <layout class="QVBoxLayout" name="verticalLayout_8">
-       <item>
-        <widget class="QLabel" name="specularityLabel">
-         <property name="text">
-          <string>Specularity</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QSlider" name="specularitySlider">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
-     <item row="2" column="0" colspan="2">
-      <widget class="QPushButton" name="resetLightingButton">
-       <property name="text">
-        <string>Reset lighting</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </widget>
-   <widget class="QGroupBox" name="statsGrid">
-    <property name="geometry">
-     <rect>
-      <x>1040</x>
-      <y>570</y>
-      <width>251</width>
-      <height>161</height>
-     </rect>
-    </property>
-    <property name="minimumSize">
-     <size>
-      <width>251</width>
-      <height>141</height>
-     </size>
-    </property>
-    <property name="title">
-     <string>Statistics</string>
-    </property>
-    <layout class="QGridLayout" name="gridLayout_4">
-     <item row="0" column="0">
-      <widget class="QLabel" name="volLabel">
-       <property name="text">
-        <string>Volume: </string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="1">
-      <widget class="QLabel" name="volValue">
-       <property name="text">
-        <string/>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="0">
-      <widget class="QLabel" name="surfAreaLabel">
-       <property name="text">
-        <string>Surface area:</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="1">
-      <widget class="QLabel" name="surfAreaValue">
-       <property name="text">
-        <string/>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="0">
-      <widget class="QLabel" name="cellsLabel">
-       <property name="text">
-        <string>Cells:</string>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="1">
-      <widget class="QLabel" name="cellsValue">
-       <property name="text">
-        <string/>
-       </property>
-      </widget>
-     </item>
-     <item row="3" column="0">
-      <widget class="QLabel" name="pointsLabel">
-       <property name="text">
-        <string>Points:</string>
-       </property>
-      </widget>
-     </item>
-     <item row="3" column="1">
-      <widget class="QLabel" name="pointsValue">
-       <property name="text">
-        <string/>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </widget>
+     </widget>
+    </item>
+   </layout>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1301</width>
+     <width>1133</width>
      <height>20</height>
     </rect>
    </property>
