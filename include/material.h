@@ -13,87 +13,85 @@
 /**
  * Material with specific density and colour.
  */
-class Material {
-	private:
+class Material
+{
+  private:
+	/**
+	* ID that uniquely identifies the material
+	*/
+	int id;
 
-		/**
-		 * ID that uniquely identifies the material
-		 */
-		int id;
+	/**
+	* Density of the material
+	*/
+	double density;
 
-		/**
-		 * Density of the material
-		 */
-		double density;
+	/**
+	* Colour of the material
+	*/
+	std::string colour;
 
-		/**
-		 * Colour of the material
-		 */
-		std::string colour;
+	/**
+	* Name of the material
+	*/
+	std::string name;
 
-		/**
-		 * Name of the material
-		 */
-		std::string name;
+  public:
+	Material(); // Empty initialisation case
+	Material(int id, double density, std::string colour, std::string name);
+	~Material();
 
-	public:
-		Material(); // Empty initialisation case
-		// maybe just do:
-		// Material(double id = 0.0, double density = 0.0, etc.)
-		Material(int id, double density, std::string colour, std::string name);
-		~Material();
-  
-		// Accessors
+	// Accessors
 
-		/**
-		 * Return material's ID
-		 */
-		int getId();
+	/**
+	 * Return material's ID
+	*/
+	int getId();
 
-		/**
-		 * Return material's density
-		 */
-		double getDensity();
+	/**
+	* Return material's density
+	*/
+	double getDensity();
 
-		/**
-		 * Return material's colour
-		 */
-		std::string getColour();
+	/**
+	* Return material's colour
+	*/
+	std::string getColour();
 
-		/**
-		 * Return material's name
-		 */
-		std::string getName();
+	/**
+	* Return material's name
+	*/
+	std::string getName();
 
-		// Mutators
+	// Mutators
 
-		/**
-		 * Set material's ID
-		 */
-		void setId(int id);
+	/**
+	* Set material's ID
+	*/
+	void setId(int id);
 
-		/**
-		 * Set material's density
-		 */
-		void setDensity(double density);
+	/**
+	* Set material's density
+	*/
+	void setDensity(double density);
 
-		/**
-		 * Set material's colour
-		 */
-		void setColour(std::string colour);
+	/**
+	* Set material's colour
+	*/
+	void setColour(std::string colour);
 
-		/**
-		 * Set material's name
-		 */
-		void setName(std::string name);
+	/**
+	* Set material's name
+	*/
+	void setName(std::string name);
 
-		// Operator overloading
-        // Note: rhs stands for right hand side
+	// Operator overloading
+	// Note: rhs stands for right hand side
 
-		/**
-		 * Equality operator between two materials
-		 */
-		friend bool operator==(const Material& lhsMaterial, const Material& rhsMaterial);
+	/**
+	* Equality operator between two materials
+	*/
+	friend bool operator==(const Material &lhsMaterial, const Material &rhsMaterial);
 };
 
 #endif /* MATERIAL_H */

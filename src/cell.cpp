@@ -17,42 +17,49 @@ Cell::~Cell() {}
 
 double Cell::getVolume() {}
 
-double Cell::getMass() {
+double Cell::getMass()
+{
     double volume = this->getVolume();
     double density = this->material.getDensity();
     double mass = density * volume;
     return mass;
 }
 
-Material Cell::getMaterial() {
+Material Cell::getMaterial()
+{
     return this->material;
 }
 
-std::vector<Vector3D> Cell::getVertices() {
+std::vector<Vector3D> Cell::getVertices()
+{
     return this->vertices;
 }
 
-Vector3D Cell::getCentre() {
+Vector3D Cell::getCentre()
+{
     double x_sum = 0;
-	double y_sum = 0;
-	double z_sum = 0;
+    double y_sum = 0;
+    double z_sum = 0;
 
-	for (int i = 0; i < this->vertices.size(); i++) {
-		x_sum += this->vertices[i].getX();
-		y_sum += this->vertices[i].getY();
-		z_sum += this->vertices[i].getZ();
-	}
+    for (int i = 0; i < this->vertices.size(); i++)
+    {
+        x_sum += this->vertices[i].getX();
+        y_sum += this->vertices[i].getY();
+        z_sum += this->vertices[i].getZ();
+    }
 
-	double x = x_sum / this->vertices.size();
-	double y = y_sum / this->vertices.size();
-	double z = z_sum / this->vertices.size();
+    double x = x_sum / this->vertices.size();
+    double y = y_sum / this->vertices.size();
+    double z = z_sum / this->vertices.size();
 
-	Vector3D centre(x, y, z);
-	return centre;
+    Vector3D centre(x, y, z);
+    return centre;
 }
 
-Pyramid::Pyramid(std::vector<Vector3D> &vertices, Material &material) {
-    for (int i = 0; i < 5; i++) {
+Pyramid::Pyramid(std::vector<Vector3D> &vertices, Material &material)
+{
+    for (int i = 0; i < 5; i++)
+    {
         this->vertices.push_back(vertices[i]);
     }
     this->material = material;
@@ -62,7 +69,8 @@ Pyramid::Pyramid() {}
 
 Pyramid::~Pyramid() {}
 
-double Pyramid::getVolume() {
+double Pyramid::getVolume()
+{
     double length = vertices[0].distance(vertices[1]);
     double width = vertices[1].distance(vertices[2]);
     Vector3D baseCentre = vertices[0].midpoint(vertices[2]);
@@ -72,8 +80,10 @@ double Pyramid::getVolume() {
     return volume;
 }
 
-Hexahedron::Hexahedron(std::vector<Vector3D> &vertices, Material &material) {
-    for (int i = 0; i < 8; i++) {
+Hexahedron::Hexahedron(std::vector<Vector3D> &vertices, Material &material)
+{
+    for (int i = 0; i < 8; i++)
+    {
         this->vertices.push_back(vertices[i]);
     }
     this->material = material;
@@ -83,12 +93,14 @@ Hexahedron::Hexahedron() {}
 
 Hexahedron::~Hexahedron() {}
 
-double Hexahedron::getVolume() {
-    
+double Hexahedron::getVolume()
+{
 }
 
-Tetrahedron::Tetrahedron(std::vector<Vector3D> &vertices, Material &material) {
-    for (int i = 0; i < 4; i++) {
+Tetrahedron::Tetrahedron(std::vector<Vector3D> &vertices, Material &material)
+{
+    for (int i = 0; i < 4; i++)
+    {
         this->vertices.push_back(vertices[i]);
     }
     this->material = material;
@@ -98,7 +110,8 @@ Tetrahedron::Tetrahedron() {}
 
 Tetrahedron::~Tetrahedron() {}
 
-double Tetrahedron::getVolume() {
+double Tetrahedron::getVolume()
+{
     // Source: http://mathworld.wolfram.com/Tetrahedron.html
 
     Vector3D va = this->vertices[1] - this->vertices[0];
@@ -109,7 +122,7 @@ double Tetrahedron::getVolume() {
 
     double scalar = va.dot(vCross);
 
-    double volume = scalar/6;
+    double volume = scalar / 6;
 
     return volume;
 }

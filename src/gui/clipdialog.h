@@ -4,7 +4,7 @@
 #include <QDialog>
 
 namespace Ui {
-class ClipDialog;
+    class ClipDialog;
 }
 
 class ClipDialog : public QDialog

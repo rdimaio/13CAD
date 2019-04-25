@@ -57,7 +57,7 @@ CPackSourceConfig.cmake
 
 # GUI
 qrc_icons.cpp
-ui_mainwindow.h
+ui_*
 ModelLoader_autogen/*
 icons.qrc.depends
 

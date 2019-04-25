@@ -14,21 +14,22 @@
 /**
  * 3x3 matrix.
  */
-class Matrix3x3 {
-    protected:
-        /**
-         * Values that make up the matrix
-         */
-        std::vector<float> values;
+class Matrix3x3
+{
+  protected:
+    /**
+    * Values that make up the matrix
+    */
+    std::vector<float> values;
 
-    public:
-        Matrix3x3();
-        ~Matrix3x3();
+  public:
+    Matrix3x3();
+    ~Matrix3x3();
 
-        /**
-         * Set diagonal of the matrix
-         */
-        void setDiagonal(Vector3D &v);
+    /**
+    * Set diagonal of the matrix
+    */
+    void setDiagonal(Vector3D &v);
 };
 
 #endif /* MATRIX_H */

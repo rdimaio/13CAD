@@ -3,19 +3,19 @@
 
 #include <QDialog>
 
-namespace Ui {
-class HelpDialog;
+namespace Ui{
+    class HelpDialog;
 }
 
 class HelpDialog : public QDialog
 {
     Q_OBJECT
 
-public:
+  public:
     explicit HelpDialog(QWidget *parent = nullptr);
     ~HelpDialog();
 
-private:
+  private:
     Ui::HelpDialog *ui;
 };
 

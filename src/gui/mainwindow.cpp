@@ -101,11 +101,8 @@ QString pointString;
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
 {
 	clipWindow = new ClipDialog();
-	// debug - works with both this-> and just setupWindow(); on its own;
-	// maybe change it if it breaks
-	this->setupWindow();
 
-	
+	this->setupWindow();
 
 	// Setup light (but don't add it)
 	light->SetLightTypeToCameraLight();
@@ -121,7 +118,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 	ui->shrinkButton->setEnabled(false);
 	ui->clipButton->setEnabled(false);
 	ui->resetFiltersButton->setEnabled(false);
-	
 
 	// Setup the renderers's camera
 	renderer->ResetCamera();
@@ -201,8 +197,6 @@ void MainWindow::setupButtons(bool modelLoaded)
 	ui->clipButton->setCheckable(true);
 	ui->shrinkButton->setChecked(false);
 	ui->clipButton->setChecked(false);
-	
-	// debug - grey out remaining buttons too
 }
 
 void MainWindow::setupConnects()
@@ -272,9 +266,6 @@ void MainWindow::loadModel(QString inputFilename)
 
 	if (mod1.getIsSTL())
 	{
-
-		qInfo() << "Model is STL"; // debug
-
 		// Allow user to select STL only filters
 		ui->shrinkButton->setEnabled(true);
 		ui->resetFiltersButton->setEnabled(true);
@@ -340,9 +331,6 @@ void MainWindow::loadModel(QString inputFilename)
 	}
 	else
 	{
-
-		qInfo() << "Model is of .mod format"; // debug
-
 		// Prevent user from selecting STL only filters
 		ui->shrinkButton->setEnabled(false);
 		ui->resetFiltersButton->setEnabled(false);
@@ -369,13 +357,6 @@ void MainWindow::loadModel(QString inputFilename)
 
 		if (modelLoaded)
 		{
-			/*// Clear pointers to previous model - debug
-			for (int i = 0; i < modCells.size(); i++)
-			{
-				unstructuredGrids[i] = NULL;
-				actors[i] = NULL;
-				mappers[i] = NULL;
-			} */
 			unstructuredGrids.clear();
 			actors.clear();
 			mappers.clear();
@@ -395,20 +376,11 @@ void MainWindow::loadModel(QString inputFilename)
 			// Get vertices of the cell
 			std::vector<Vector3D> cellVertices = it->getVertices();
 
-			// qInfo() << "x:";
-			// qInfo() << cellVertices[0].getX(); // debug
-
-			// qInfo() << "y:";
-			// qInfo() << cellVertices[0].getY(); // debug
-
-			// qInfo() << "z:";
-			// qInfo() << cellVertices[0].getZ(); // debug
-
 			// Tetrahedron
 			if (cellVertices.size() == 4)
 			{
 				tetras.resize(tetra_count + 1);
-				qInfo() << "tetra"; // debug
+
 				// Insert vertices into vtkPoints vector
 				for (int i = 0; i < 4; i++)
 				{
@@ -509,11 +481,6 @@ void MainWindow::loadModel(QString inputFilename)
 			double dg = (double)g / 255;
 			double db = (double)b / 255;
 
-			// debug
-			//qInfo() << dr;
-			//qInfo() << dg;
-			//qInfo() << db;
-
 			actors[poly_count]->GetProperty()->SetColor(dr, dg, db);
 
 			actors[poly_count]->GetProperty()->SetSpecular(0.5);
@@ -522,10 +489,6 @@ void MainWindow::loadModel(QString inputFilename)
 			renderer->AddActor(actors[poly_count]);
 			poly_count++;
 		}
-		qInfo() << "Tetras:" << tetra_count;
-		qInfo() << "Pyras:" << pyra_count;
-		qInfo() << "Hexas:" << hexa_count;
-		qInfo() << "Cells:" << poly_count;
 
 		modPolyData = vtkSmartPointer<vtkPolyData>::New();
 
@@ -564,7 +527,6 @@ void MainWindow::loadModel(QString inputFilename)
 	ui->volValue->setText(volumeString);
 	ui->cellsValue->setText(cellString);
 	ui->pointsValue->setText(pointString);
-	
 }
 
 void MainWindow::clearModel()
@@ -752,7 +714,7 @@ void MainWindow::handleActionFullScreen()
 
 void MainWindow::handleActionAbout()
 {
-	HelpDialog* helpWindow = new HelpDialog();
+	HelpDialog *helpWindow = new HelpDialog();
 	helpWindow->show();
 }
 
@@ -863,12 +825,12 @@ void MainWindow::on_shrinkButton_clicked()
 }
 
 void MainWindow::on_clipDialog_dialogAccepted()
-{	
+{
 	clipWindowShown = false;
 }
 
 void MainWindow::on_clipDialog_dialogRejected()
-{	
+{
 	// Set clip plane parameters to how they were before the dialog was opened
 	clipX = prevClipX;
 	clipY = prevClipY;
@@ -885,14 +847,15 @@ void MainWindow::on_clipDialog_dialogRejected()
 }
 
 void MainWindow::on_clipButton_clicked()
-{	
-	
+{
+
 	// Toggle clip dialog between shown and hidden depending on its current state
 	if (clipWindowShown)
 	{
 		clipWindow->close();
 		clipWindowShown = false;
-	} else
+	}
+	else
 	{
 		clipWindow->show();
 		clipWindowShown = true;
@@ -906,9 +869,9 @@ void MainWindow::on_clipButton_clicked()
 		prevClipNormalY = clipNormalY;
 		prevClipNormalZ = clipNormalZ;
 
-	// When clicked for the first time, initialise clip plane with these parameters
-	if (!clipFilterEnabled)
-		clipFilter = NULL;
+		// When clicked for the first time, initialise clip plane with these parameters
+		if (!clipFilterEnabled)
+			clipFilter = NULL;
 		clipPlane = NULL;
 		// Connect clip filter to STL reader
 		clipFilter = vtkSmartPointer<vtkClipDataSet>::New();
@@ -938,7 +901,7 @@ void MainWindow::on_clipXSlider_sliderMoved(int position)
 	}
 	else
 	{
-		clipX = -(float)position*10;
+		clipX = -(float)position * 10;
 	}
 	clipPlane->SetOrigin(clipX, clipY, clipZ);
 	clipFilter->SetClipFunction(clipPlane.Get());
@@ -956,14 +919,14 @@ void MainWindow::on_clipYSlider_sliderMoved(int position)
 	}
 	else
 	{
-		clipY = (float)position*20;
+		clipY = (float)position * 20;
 	}
 	clipPlane->SetOrigin(clipX, clipY, clipZ);
 	clipFilter->SetClipFunction(clipPlane.Get());
 	mappers[0]->SetInputConnection(clipFilter->GetOutputPort());
 	actors[0]->SetMapper(mappers[0]);
 	ui->qvtkWidget->GetRenderWindow()->Render();
-    emit statusUpdateMessage(QString("Y parameter of clip filter changed"), 0);
+	emit statusUpdateMessage(QString("Y parameter of clip filter changed"), 0);
 }
 
 void MainWindow::on_clipZSlider_sliderMoved(int position)
@@ -974,14 +937,14 @@ void MainWindow::on_clipZSlider_sliderMoved(int position)
 	}
 	else
 	{
-		clipZ = (float)position*20;
+		clipZ = (float)position * 20;
 	}
 	clipPlane->SetOrigin(clipX, clipY, clipZ);
 	clipFilter->SetClipFunction(clipPlane.Get());
 	mappers[0]->SetInputConnection(clipFilter->GetOutputPort());
 	actors[0]->SetMapper(mappers[0]);
 	ui->qvtkWidget->GetRenderWindow()->Render();
-    emit statusUpdateMessage(QString("Z parameter of clip filter changed"), 0);
+	emit statusUpdateMessage(QString("Z parameter of clip filter changed"), 0);
 }
 
 void MainWindow::on_clipXDial_sliderMoved(int position)
@@ -992,7 +955,7 @@ void MainWindow::on_clipXDial_sliderMoved(int position)
 	}
 	else
 	{
-		clipNormalX = (float)position*10;
+		clipNormalX = (float)position * 10;
 	}
 	clipPlane->SetNormal(clipNormalX, clipNormalY, clipNormalZ);
 	clipFilter->SetClipFunction(clipPlane.Get());
@@ -1010,7 +973,7 @@ void MainWindow::on_clipYDial_sliderMoved(int position)
 	}
 	else
 	{
-		clipNormalY = (float)position*10;
+		clipNormalY = (float)position * 10;
 	}
 	clipPlane->SetNormal(clipNormalX, clipNormalY, clipNormalZ);
 	clipFilter->SetClipFunction(clipPlane.Get());
@@ -1028,7 +991,7 @@ void MainWindow::on_clipZDial_sliderMoved(int position)
 	}
 	else
 	{
-		clipNormalZ = (float)position*10;
+		clipNormalZ = (float)position * 10;
 	}
 	clipPlane->SetNormal(clipNormalX, clipNormalY, clipNormalZ);
 	clipFilter->SetClipFunction(clipPlane.Get());
@@ -1054,7 +1017,7 @@ void MainWindow::on_bkgColourButton_clicked()
 	}
 	else
 	{
-		// debug - show error saying error while changing background colour
+		emit statusUpdateMessage(QString("Errour while changing background colour"), 0);
 	}
 	emit statusUpdateMessage(QString("Background colour changed"), 0);
 }
@@ -1080,7 +1043,7 @@ void MainWindow::on_modColourButton_clicked()
 	}
 	else
 	{
-		// debug - show error saying error while changing background colour
+		emit statusUpdateMessage(QString("Error while changing model colour"), 0);
 	}
 	emit statusUpdateMessage(QString("Model colour changed"), 0);
 }
@@ -1256,7 +1219,8 @@ void MainWindow::handleActionEnableIntensity()
 	if (state == Qt::Unchecked)
 	{
 		ui->intensityCheckBox->setCheckState(Qt::Checked);
-	} else if (state == Qt::Checked)
+	}
+	else if (state == Qt::Checked)
 	{
 		ui->intensityCheckBox->setCheckState(Qt::Unchecked);
 	}
@@ -1268,7 +1232,8 @@ void MainWindow::handleActionShowAxes()
 	if (state == Qt::Unchecked)
 	{
 		ui->showAxesCheckBox->setCheckState(Qt::Checked);
-	} else if (state == Qt::Checked)
+	}
+	else if (state == Qt::Checked)
 	{
 		ui->showAxesCheckBox->setCheckState(Qt::Unchecked);
 	}
@@ -1378,18 +1343,6 @@ void MainWindow::on_opacitySlider_sliderMoved(int position)
 	{
 		pos = (float)position / 100;
 	}
-
-	// // debug
-	// double xview;
-	// double yview;
-	// double zview;
-	// double x;
-	// double y;
-	// double z;
-	// renderer->GetActiveCamera()->GetViewUp(xview, yview, zview);
-	// renderer->GetActiveCamera()->GetDirectionOfProjection(x, y, z);
-	// qInfo() << xview << " " << yview << " " << zview;
-	// qInfo() << x << " " << y << " " << z;
 
 	if (actors.size() == 1)
 	{

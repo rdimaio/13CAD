@@ -14,123 +14,121 @@
 /**
  * 3D vector representation of a vertex.
  */
-class Vector3D {
+class Vector3D
+{
     friend class Matrix3x3;
-    
-    protected:
-        // Spatial coordinates
 
-        /**
-         * X coordinate
-         */
-        double x;
-        
-        /**
-         * Y coordinate
-         */
-        double y;
-        
-        /**
-         * Z coordinate
-         */
-        double z;
-    
-    public:
-        Vector3D();
-        // version that holds the id as well
-        // Vector3D(int id, double x, double y, double z);
-        // make this constructor hold a NULL in the id variable
-        Vector3D(double x, double y, double z);
-        ~Vector3D();
+  protected:
+    // Spatial coordinates
 
-		// Accessors
+    /**
+    * X coordinate
+    */
+    double x;
 
-        /**
-         * Return X coordinate
-         */
-		double getX();
+    /**
+    * Y coordinate
+    */
+    double y;
 
-        /**
-         * Return Y coordinate
-         */
-		double getY();
-		
-        /**
-         * Return Z coordinate
-         */
-        double getZ();
-		
-		// Mutators
+    /**
+    * Z coordinate
+    */
+    double z;
 
-        /**
-         * Set X coordinate
-         */
-		void setX(double x);
+  public:
+    Vector3D();
+    Vector3D(double x, double y, double z);
+    ~Vector3D();
 
-        /**
-         * Set Y coordinate
-         */
-		void setY(double y);
-		
-        /**
-         * Set Z coordinate
-         */
-        void setZ(double z);
+    // Accessors
 
-        // Operator overloading
-        // Note: rhs stands for right hand side
+    /**
+    * Return X coordinate
+    */
+    double getX();
 
-        /**
-         * Addition operation
-         */
-        Vector3D operator+(Vector3D rhsVector);
+    /**
+    * Return Y coordinate
+    */
+    double getY();
 
-        /**
-         * Subtract operation
-         */
-        Vector3D operator-(Vector3D rhsVector);
-        
-        /**
-         * Equality operation
-         */
-        friend bool operator==(const Vector3D& lhsVector, const Vector3D& rhsVector);
-        
-        /**
-         * Dot product (returns a single value)
-         */
-        double dot(Vector3D rhsVector);
+    /**
+    * Return Z coordinate
+    */
+    double getZ();
 
-        /**
-         * Cross product (returns a Vector3D)
-         */
-        Vector3D cross(Vector3D rhsVector);
+    // Mutators
 
-        /**
-         * Scalar multiplication (Vector3D on left hand side)
-         */
-        Vector3D operator*(double scalar);
+    /**
+    * Set X coordinate
+    */
+    void setX(double x);
 
-        /**
-         * Scalar multiplication (Vector3D on right hand side)
-         */
-        friend Vector3D operator*(double scalar, Vector3D v);
+    /**
+    * Set Y coordinate
+    */
+    void setY(double y);
 
-        /**
-         * Output Vector3D
-         */
-        friend std::ostream& operator<<(std::ostream& os, Vector3D &v); // cout
+    /**
+    * Set Z coordinate
+    */
+    void setZ(double z);
 
-        // Misc functions
+    // Operator overloading
+    // Note: rhs stands for right hand side
 
-        /**
-         * Return distance between two vertices
-         */
-        double distance(Vector3D &v2);
+    /**
+    * Addition operation
+    */
+    Vector3D operator+(Vector3D rhsVector);
 
-        /**
-         * Return midpoint between two vertices
-         */
-        Vector3D midpoint(Vector3D &v2);
+    /**
+    * Subtract operation
+    */
+    Vector3D operator-(Vector3D rhsVector);
+
+    /**
+    * Equality operation
+    */
+    friend bool operator==(const Vector3D &lhsVector, const Vector3D &rhsVector);
+
+    /**
+    * Dot product (returns a single value)
+    */
+    double dot(Vector3D rhsVector);
+
+    /**
+    * Cross product (returns a Vector3D)
+    */
+    Vector3D cross(Vector3D rhsVector);
+
+    /**
+    * Scalar multiplication (Vector3D on left hand side)
+    */
+    Vector3D operator*(double scalar);
+
+    /**
+    * Scalar multiplication (Vector3D on right hand side)
+    */
+    friend Vector3D operator*(double scalar, Vector3D v);
+
+    /**
+    * Output Vector3D
+    */
+    friend std::ostream &operator<<(std::ostream &os, Vector3D &v); // cout
+
+    // Misc functions
+
+    /**
+    * Return distance between two vertices
+    */
+    double distance(Vector3D &v2);
+
+    /**
+    * Return midpoint between two vertices
+    */
+    Vector3D midpoint(Vector3D &v2);
 };
 
 #endif /* VECTOR_H */

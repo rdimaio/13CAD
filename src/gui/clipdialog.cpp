@@ -2,12 +2,11 @@
 #include "ui_clipdialog.h"
 #include "mainwindow.h"
 
-ClipDialog::ClipDialog(QWidget *parent) :
-    QDialog(parent),
-    ui(new Ui::ClipDialog)
+ClipDialog::ClipDialog(QWidget *parent) : QDialog(parent),
+                                          ui(new Ui::ClipDialog)
 {
     ui->setupUi(this);
-    
+
     connect(ui->xSlider, SIGNAL(sliderMoved(int)), this, SLOT(on_xSlider_sliderMoved(int)));
     connect(ui->ySlider, SIGNAL(sliderMoved(int)), this, SLOT(on_ySlider_sliderMoved(int)));
     connect(ui->zSlider, SIGNAL(sliderMoved(int)), this, SLOT(on_zSlider_sliderMoved(int)));
