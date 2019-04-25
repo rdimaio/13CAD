@@ -1,6 +1,6 @@
 /**
  * @file matrix.h
- * @brief Header file for the Matrix class
+ * @brief Header file for the Matrix3x3 class
  * @author Riccardo Di Maio
  * @version 1.0 14/12/18
  */

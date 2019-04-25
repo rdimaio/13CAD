@@ -14,6 +14,9 @@ namespace Ui{
     class HelpDialog;
 }
 
+/**
+ * Help dialog that displays information regarding 13CAD.
+ */
 class HelpDialog : public QDialog
 {
     Q_OBJECT

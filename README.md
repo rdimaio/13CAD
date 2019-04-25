@@ -129,9 +129,10 @@ runs the ```.travis.yml``` configuration on a hosted environment (generally
 a virtual machine running Linux, specifically Ubuntu) and sends you an email 
 in case the latest commit breaks the tests in any way.
 
-# Useful info
-
-- A cell is a shape (e.g. tetrahedron)
+# Possible future implementations
+- Code could be cleaned up, especially in mainwindow.cpp.
+The different functions could be put in different files,
+improving the ease of navigating the GUI source code.
 
 ## Useful links
 
