@@ -18,22 +18,14 @@ TEST(parseMaterialTest, modelBase) {
     std::vector<Material> materials = mod.getMaterials();
 
     std::string name1 = materials[0].getName();
-    std::string name2 = materials[1].getName();
     std::string colour1 = materials[0].getColour();
-    std::string colour2 = materials[1].getColour();
     int id1 = materials[0].getId();
-    int id2 = materials[1].getId();
     double density1 = materials[0].getDensity();
-    double density2 = materials[1].getDensity();
 
 	ASSERT_EQ(name1, "cu");
-    ASSERT_EQ(name2, "pkg_plastic");
     ASSERT_EQ(colour1, "b87333");
-    ASSERT_EQ(colour2, "000000");
     ASSERT_EQ(id1, 0);
-    ASSERT_EQ(id2, 1);
     ASSERT_EQ(density1, 8940);
-    ASSERT_EQ(density2, 100);
 }
 
 TEST(parseVertexTest, modelBase) {
@@ -49,12 +41,12 @@ TEST(parseVertexTest, modelBase) {
     double z1 = vertices[0].getZ();
     double z2 = vertices[1].getZ();
 
-    ASSERT_NEAR(x1, 0.00195, 0.009);
-    ASSERT_NEAR(y1, 0.00115, 0.009);
-    ASSERT_NEAR(z1, 0.0015, 0.009);
-    ASSERT_NEAR(x2, 0.00295, 0.009);
-    ASSERT_NEAR(y2, 0.00115, 0.009);
-    ASSERT_NEAR(z2, 0.0015, 0.009);
+    ASSERT_NEAR(x1, 0, 0.009);
+    ASSERT_NEAR(y1, -0.3, 0.009);
+    ASSERT_NEAR(z1, 0, 0.009);
+    ASSERT_NEAR(x2, 0, 0.009);
+    ASSERT_NEAR(y2, -0.4, 0.009);
+    ASSERT_NEAR(z2, 0, 0.009);
 }
 
 TEST(parseCellTest, modelBase) {
@@ -67,38 +59,14 @@ TEST(parseCellTest, modelBase) {
     double y1 = cellVertices[0].getY();
     double z1 = cellVertices[0].getZ();
 
-    ASSERT_NEAR(x1, 0.00195, 0.009);
-    ASSERT_NEAR(y1, 0.00115, 0.009);
-    ASSERT_NEAR(z1, 0.0015, 0.009);
+    ASSERT_NEAR(x1, 0, 0.009);
+    ASSERT_NEAR(y1, -0.3, 0.009);
+    ASSERT_NEAR(z1, 0, 0.009);
 }
-
-TEST(centreTest, modelBase) {
-    // [0.00498937,0.00236761,0.00150169]
-    Vector3D centreExpected(0.00498937, 0.00236761, 0.00150169);
-
-	Model mod("tests/ExampleModel.mod");
-
-    Vector3D centreObtained = mod.getCentre();
-
-	ASSERT_NEAR(centreObtained.getX(), centreExpected.getX(), 0.009);
-    ASSERT_NEAR(centreObtained.getY(), centreExpected.getY(), 0.009);
-    ASSERT_NEAR(centreObtained.getZ(), centreExpected.getZ(), 0.009);
-}
-
-//TEST(accessorTest, modelBase) {
-//
-//    std::string filenameExpected = "tests/ExampleModel.mod";
-//
-//	Model mod("tests/ExampleModel.mod");
-//
-//    std::string filenameObtained = mod.getFilename();
-//
-//	ASSERT_EQ(filenameExpected, filenameObtained);
-//}
 
 TEST(materialCountTest, modelBase) {
 
-    int countExpected = 2;
+    int countExpected = 1;
 
 	Model mod("tests/ExampleModel.mod");
 
@@ -109,7 +77,7 @@ TEST(materialCountTest, modelBase) {
 
 TEST(vertexCountTest, modelBase) {
 
-    int countExpected = 301;
+    int countExpected = 220;
 
 	Model mod("tests/ExampleModel.mod");
 
@@ -120,7 +88,7 @@ TEST(vertexCountTest, modelBase) {
 
 TEST(cellCountTest, modelBase) {
 
-    int countExpected = 129;
+    int countExpected = 100;
 
 	Model mod("tests/ExampleModel.mod");
 
