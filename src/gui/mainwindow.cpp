@@ -1,3 +1,10 @@
+/**
+ * @file mainwindow.cpp
+ * @brief Main Qt file for the graphical user interface code
+ * @author Riccardo Di Maio
+ * @version 1.0 15/03/19
+ */
+
 // VTK libraries
 #include <vtkSmartPointer.h>
 #include <vtkActor.h>

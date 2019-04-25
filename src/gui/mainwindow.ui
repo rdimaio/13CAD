@@ -26,7 +26,7 @@
      </widget>
     </item>
     <item>
-     <widget class="QFrame" name="">
+     <widget class="QFrame" name="toolLayout">
       <property name="maximumSize">
        <size>
         <width>16777215</width>
@@ -35,7 +35,7 @@
       </property>
       <layout class="QHBoxLayout" name="horizontalLayout">
        <item>
-        <widget class="QGroupBox" name="">
+        <widget class="QGroupBox" name="filtersGrid">
          <property name="title">
           <string>Filters</string>
          </property>
@@ -322,7 +322,7 @@
            </layout>
           </item>
           <item row="1" column="1">
-           <layout class="QVBoxLayout" name="verticalLayout_9">
+           <layout class="QVBoxLayout" name="intensityLayout">
             <item>
              <widget class="QLabel" name="intensityLabel">
               <property name="text">
@@ -340,7 +340,7 @@
            </layout>
           </item>
           <item row="0" column="0">
-           <layout class="QVBoxLayout" name="verticalLayout_8">
+           <layout class="QVBoxLayout" name="specularityLayout">
             <item>
              <widget class="QLabel" name="specularityLabel">
               <property name="text">

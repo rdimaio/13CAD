@@ -1,3 +1,10 @@
+/**
+ * @file helpdialog.h
+ * @brief Header file for the help dialog
+ * @author Riccardo Di Maio
+ * @version 1.0 22/04/19
+ */
+
 #ifndef HELPDIALOG_H
 #define HELPDIALOG_H
 

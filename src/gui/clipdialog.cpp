@@ -1,3 +1,10 @@
+/**
+ * @file clipdialog.cpp
+ * @brief Source file for the clip filter dialog
+ * @author Riccardo Di Maio
+ * @version 1.0 24/04/19
+ */
+
 #include "clipdialog.h"
 #include "ui_clipdialog.h"
 #include "mainwindow.h"

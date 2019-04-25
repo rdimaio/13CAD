@@ -1,3 +1,10 @@
+/**
+ * @file clipdialog.h
+ * @brief Header file for the clip filter dialog
+ * @author Riccardo DI Maio
+ * @version 1.0 24/04/19
+ */
+
 #ifndef CLIPDIALOG_H
 #define CLIPDIALOG_H
 

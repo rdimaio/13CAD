@@ -1,5 +1,7 @@
 # Break 2
-
+- GUI was finalised
+- All source code was properly organised and formatted
+- Installers were created
 
 # Term 2
 ## Project week 3:

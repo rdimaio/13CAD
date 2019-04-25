@@ -1,3 +1,10 @@
+/**
+ * @file mainwindow.h
+ * @brief Header file for the graphical user interface code
+ * @author Riccardo Di Maio
+ * @version 1.0 15/03/19
+ */
+
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
