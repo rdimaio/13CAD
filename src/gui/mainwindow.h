@@ -16,6 +16,8 @@
 #include <QAction>
 #include <QActionGroup>
 
+#include "clipdialog.h"
+
 namespace Ui {
 class MainWindow;
 }
@@ -24,6 +26,8 @@ class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
+    ClipDialog* clipWindow = nullptr;
+    
     signals:
         void statusUpdateMessage(const QString & message, int timeout);
 
@@ -97,6 +101,11 @@ class MainWindow : public QMainWindow
         void on_showAxesCheckBox_stateChanged(int state);
 
         void on_resetLightingButton_clicked();
+
+        void on_clipXSlider_sliderMoved(int position);
+        void on_clipYSlider_sliderMoved(int position);
+        void on_clipZSlider_sliderMoved(int position);
+        void on_clipDialog_dialogRejected();
 
         // Camera
         // Note for the camera functions:

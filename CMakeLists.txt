@@ -80,7 +80,7 @@ else()
     # lib directories, and the necessary static libraries for linking.
     find_package( Qt5Widgets )
 
-    set( UIS src/gui/mainwindow.ui src/gui/helpdialog.ui)
+    set( UIS src/gui/mainwindow.ui src/gui/helpdialog.ui src/gui/clipdialog.ui)
     qt5_wrap_ui( UI_Srcs ${UIS} )
 
     set( ICONS src/gui/icons/icons.qrc )
@@ -106,7 +106,10 @@ else()
       src/gui/mainwindow.ui
       src/gui/helpdialog.cpp
       src/gui/helpdialog.h
-      src/gui/helpdialog.ui)
+      src/gui/helpdialog.ui
+      src/gui/clipdialog.cpp
+      src/gui/clipdialog.h
+      src/gui/clipdialog.ui)
       add_executable(${PROJECT_NAME} MACOSX_BUNDLE 
       ${SOURCES}
       ${UI_Srcs}

@@ -44,6 +44,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "helpdialog.h"
+#include "clipdialog.h"
 
 // Local headers
 #include "model.h"
@@ -61,6 +62,21 @@ vtkSmartPointer<vtkLight> light = vtkSmartPointer<vtkLight>::New();
 // Setup axes
 vtkSmartPointer<vtkTransform> transform = vtkSmartPointer<vtkTransform>::New();
 vtkSmartPointer<vtkAxesActor> axes = vtkSmartPointer<vtkAxesActor>::New();
+// Setup clip plane
+vtkSmartPointer<vtkClipDataSet> clipFilter = vtkSmartPointer<vtkClipDataSet>::New();
+vtkSmartPointer<vtkPlane> clipPlane = vtkSmartPointer<vtkPlane>::New();
+float clipX = 0;
+float clipY = 0;
+float clipZ = 0;
+float clipNormalX = -1;
+float clipNormalY = 0;
+float clipNormalZ = 0;
+float prevClipX = 0;
+float prevClipY = 0;
+float prevClipZ = 0;
+float prevClipNormalX = -1;
+float prevClipNormalY = 0;
+float prevClipNormalZ = 0;
 // Initialise vectors for mappers and actors
 // .mod files have an actor/mapper per cell,
 // while .stl files only require one actor/mapper for the entire file
@@ -73,6 +89,8 @@ std::vector<vtkSmartPointer<vtkPyramid>> pyras;
 std::vector<vtkSmartPointer<vtkHexahedron>> hexas;
 QString inputFileName;	// Global string for model's filename
 bool modelLoaded = false; // Global flag that indicates a model is currently loaded
+bool clipFilterEnabled = false;
+bool clipWindowShown = false;
 
 // Declare stats QStrings (needed as global strings for the export data function)
 QString surfAreaString;
@@ -82,9 +100,12 @@ QString pointString;
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
 {
+	clipWindow = new ClipDialog();
 	// debug - works with both this-> and just setupWindow(); on its own;
 	// maybe change it if it breaks
 	this->setupWindow();
+
+	
 
 	// Setup light (but don't add it)
 	light->SetLightTypeToCameraLight();
@@ -206,6 +227,10 @@ void MainWindow::setupConnects()
 	connect(ui->specularitySlider, SIGNAL(sliderMoved(int)), this, SLOT(on_specularitySlider_sliderMoved(int)));
 	connect(ui->specularitySlider, SIGNAL(valueChanged(int)), this, SLOT(on_specularitySlider_valueChanged(int)));
 	connect(ui->intensitySlider, SIGNAL(sliderMoved(int)), this, SLOT(on_intensitySlider_sliderMoved(int)));
+	connect(clipWindow, SIGNAL(xSliderMoved(int)), this, SLOT(on_clipXSlider_sliderMoved(int)));
+	connect(clipWindow, SIGNAL(ySliderMoved(int)), this, SLOT(on_clipYSlider_sliderMoved(int)));
+	connect(clipWindow, SIGNAL(zSliderMoved(int)), this, SLOT(on_clipZSlider_sliderMoved(int)));
+	connect(clipWindow, SIGNAL(clipDialogRejected()), this, SLOT(on_clipDialog_dialogRejected()));
 }
 
 void MainWindow::loadModel(QString inputFilename)
@@ -825,19 +850,32 @@ void MainWindow::on_shrinkButton_clicked()
 }
 
 void MainWindow::on_clipButton_clicked()
-{
-
-	// Prompt user for clipping plane parameters
-	bool success;
-	double shrinkFactor = QInputDialog::getDouble(this, tr("Input dialog"),
-												  tr("Insert shrink factor (0 to 1)"), 0.5,
-												  0, 1, 2, &success);
-	if (success)
+{	
+	
+	// Toggle clip dialog between shown and hidden depending on its current state
+	if (clipWindowShown)
 	{
+		clipWindow->close();
+		clipWindowShown = false;
+	} else
+	{
+		clipWindow->show();
+		clipWindowShown = true;
+
+		// Store current plane parameters in case dialog is rejected
+		// (cancel button is pressed)
+		prevClipX = clipX;
+		prevClipY = clipY;
+		prevClipZ = clipZ;
+		prevClipNormalX = clipNormalX;
+		prevClipNormalY = clipNormalY;
+		prevClipNormalZ = clipNormalZ;
+	}
+
+	// When clicked for the first time, initialise clip plane with these parameters
+	if (!clipFilterEnabled)
 		// Connect clip filter to STL reader
-		vtkSmartPointer<vtkClipDataSet> clipFilter = vtkSmartPointer<vtkClipDataSet>::New();
 		clipFilter->SetInputConnection(reader->GetOutputPort());
-		vtkSmartPointer<vtkPlane> clipPlane = vtkSmartPointer<vtkPlane>::New();
 		clipPlane->SetOrigin(0.0, 0.0, 0.0);
 		clipPlane->SetNormal(-1.0, 0.0, 0.0);
 		clipFilter->SetClipFunction(clipPlane.Get());
@@ -845,13 +883,71 @@ void MainWindow::on_clipButton_clicked()
 		actors[0]->SetMapper(mappers[0]);
 
 		ui->qvtkWidget->GetRenderWindow()->Render();
-		ui->shrinkButton->setCheckable(true);
+		ui->clipButton->setCheckable(true);
 		emit statusUpdateMessage(QString("Clip filter enabled"), 0);
+		clipFilterEnabled = true;
+}
+
+void MainWindow::on_clipDialog_dialogRejected()
+{	
+	// Set clip plane parameters to how they were before the dialog was opened
+	clipX = prevClipX;
+	clipY = prevClipY;
+	clipZ = prevClipZ;
+	clipNormalX = prevClipNormalX;
+	clipNormalY = prevClipNormalY;
+	clipNormalZ = prevClipNormalZ;
+
+	clipPlane->SetOrigin(clipX, clipY, clipZ);
+
+	ui->qvtkWidget->GetRenderWindow()->Render();
+	emit statusUpdateMessage(QString("Changes to clip filter cancelled"), 0);
+}
+
+void MainWindow::on_clipXSlider_sliderMoved(int position)
+{
+	if (position == 99)
+	{
+		clipX = 1;
 	}
 	else
 	{
-		emit statusUpdateMessage(QString("Error while enabling clip filter"), 0);
+		clipX = (float)position / 100;
 	}
+	clipPlane->SetOrigin(clipX, clipY, clipZ);
+	// START HERE; BEFORE RENDERING, ADD THE CLIP PLANE TO THE INPUT OF THE CLIP FILTER.
+	ui->qvtkWidget->GetRenderWindow()->Render();
+	emit statusUpdateMessage(QString("X parameter of clip filter changed"), 0);
+}
+
+void MainWindow::on_clipYSlider_sliderMoved(int position)
+{
+	if (position == 99)
+	{
+		clipY = 1;
+	}
+	else
+	{
+		clipY = (float)position / 100;
+	}
+	clipPlane->SetOrigin(clipX, clipY, clipZ);
+	ui->qvtkWidget->GetRenderWindow()->Render();
+    emit statusUpdateMessage(QString("Y parameter of clip filter changed"), 0);
+}
+
+void MainWindow::on_clipZSlider_sliderMoved(int position)
+{
+	if (position == 99)
+	{
+		clipZ = 1;
+	}
+	else
+	{
+		clipZ = (float)position / 100;
+	}
+	clipPlane->SetOrigin(clipX, clipY, clipZ);
+	ui->qvtkWidget->GetRenderWindow()->Render();
+    emit statusUpdateMessage(QString("Z parameter of clip filter changed"), 0);
 }
 
 void MainWindow::on_bkgColourButton_clicked()
@@ -966,6 +1062,15 @@ void MainWindow::on_resetFiltersButton_clicked()
 	// Uncheck buttons
 	ui->shrinkButton->setCheckable(false);
 	ui->clipButton->setCheckable(false);
+
+	clipFilterEnabled = false;
+
+	clipX = 0;
+	clipY = 0;
+	clipZ = 0;
+	clipNormalX = -1;
+	clipNormalY = 0;
+	clipNormalZ = 0;
 
 	emit statusUpdateMessage(QString("Filters have been reset"), 0);
 	ui->qvtkWidget->GetRenderWindow()->Render();
