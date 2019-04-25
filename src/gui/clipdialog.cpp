@@ -11,6 +11,9 @@ ClipDialog::ClipDialog(QWidget *parent) :
     connect(ui->xSlider, SIGNAL(sliderMoved(int)), this, SLOT(on_xSlider_sliderMoved(int)));
     connect(ui->ySlider, SIGNAL(sliderMoved(int)), this, SLOT(on_ySlider_sliderMoved(int)));
     connect(ui->zSlider, SIGNAL(sliderMoved(int)), this, SLOT(on_zSlider_sliderMoved(int)));
+    connect(ui->xDial, SIGNAL(sliderMoved(int)), this, SLOT(on_xDial_sliderMoved(int)));
+    connect(ui->yDial, SIGNAL(sliderMoved(int)), this, SLOT(on_yDial_sliderMoved(int)));
+    connect(ui->zDial, SIGNAL(sliderMoved(int)), this, SLOT(on_zDial_sliderMoved(int)));
     connect(ui->buttonBox, SIGNAL(rejected()), this, SLOT(on_clipDialog_rejected()));
     connect(ui->buttonBox, SIGNAL(accepted()), this, SLOT(on_clipDialog_accepted()));
 }
@@ -33,6 +36,21 @@ void ClipDialog::on_ySlider_sliderMoved(int position)
 void ClipDialog::on_zSlider_sliderMoved(int position)
 {
     emit zSliderMoved(position);
+}
+
+void ClipDialog::on_xDial_sliderMoved(int position)
+{
+    emit xDialMoved(position);
+}
+
+void ClipDialog::on_yDial_sliderMoved(int position)
+{
+    emit yDialMoved(position);
+}
+
+void ClipDialog::on_zDial_sliderMoved(int position)
+{
+    emit zDialMoved(position);
 }
 
 void ClipDialog::on_clipDialog_rejected()

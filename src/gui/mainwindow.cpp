@@ -63,8 +63,8 @@ vtkSmartPointer<vtkLight> light = vtkSmartPointer<vtkLight>::New();
 vtkSmartPointer<vtkTransform> transform = vtkSmartPointer<vtkTransform>::New();
 vtkSmartPointer<vtkAxesActor> axes = vtkSmartPointer<vtkAxesActor>::New();
 // Setup clip plane
-vtkSmartPointer<vtkClipDataSet> clipFilter = vtkSmartPointer<vtkClipDataSet>::New();
-vtkSmartPointer<vtkPlane> clipPlane = vtkSmartPointer<vtkPlane>::New();
+vtkSmartPointer<vtkClipDataSet> clipFilter;
+vtkSmartPointer<vtkPlane> clipPlane;
 float clipX = 0;
 float clipY = 0;
 float clipZ = 0;
@@ -199,6 +199,8 @@ void MainWindow::setupButtons(bool modelLoaded)
 	// Uncheck filter buttons
 	ui->shrinkButton->setCheckable(true);
 	ui->clipButton->setCheckable(true);
+	ui->shrinkButton->setChecked(false);
+	ui->clipButton->setChecked(false);
 	
 	// debug - grey out remaining buttons too
 }
@@ -235,6 +237,9 @@ void MainWindow::setupConnects()
 	connect(clipWindow, SIGNAL(xSliderMoved(int)), this, SLOT(on_clipXSlider_sliderMoved(int)));
 	connect(clipWindow, SIGNAL(ySliderMoved(int)), this, SLOT(on_clipYSlider_sliderMoved(int)));
 	connect(clipWindow, SIGNAL(zSliderMoved(int)), this, SLOT(on_clipZSlider_sliderMoved(int)));
+	connect(clipWindow, SIGNAL(xDialMoved(int)), this, SLOT(on_clipXDial_sliderMoved(int)));
+	connect(clipWindow, SIGNAL(yDialMoved(int)), this, SLOT(on_clipYDial_sliderMoved(int)));
+	connect(clipWindow, SIGNAL(zDialMoved(int)), this, SLOT(on_clipZDial_sliderMoved(int)));
 	connect(clipWindow, SIGNAL(clipDialogRejected()), this, SLOT(on_clipDialog_dialogRejected()));
 	connect(clipWindow, SIGNAL(clipDialogAccepted()), this, SLOT(on_clipDialog_dialogAccepted()));
 }
@@ -903,7 +908,11 @@ void MainWindow::on_clipButton_clicked()
 
 	// When clicked for the first time, initialise clip plane with these parameters
 	if (!clipFilterEnabled)
+		clipFilter = NULL;
+		clipPlane = NULL;
 		// Connect clip filter to STL reader
+		clipFilter = vtkSmartPointer<vtkClipDataSet>::New();
+		clipPlane = vtkSmartPointer<vtkPlane>::New();
 		clipFilter->SetInputConnection(reader->GetOutputPort());
 		clipPlane->SetOrigin(0.0, 0.0, 0.0);
 		clipPlane->SetNormal(-1.0, 0.0, 0.0);
@@ -925,11 +934,11 @@ void MainWindow::on_clipXSlider_sliderMoved(int position)
 {
 	if (position == 99)
 	{
-		clipX = 1;
+		clipX = 10;
 	}
 	else
 	{
-		clipX = (float)position;
+		clipX = -(float)position*10;
 	}
 	clipPlane->SetOrigin(clipX, clipY, clipZ);
 	clipFilter->SetClipFunction(clipPlane.Get());
@@ -943,11 +952,11 @@ void MainWindow::on_clipYSlider_sliderMoved(int position)
 {
 	if (position == 99)
 	{
-		clipY = 1;
+		clipY = 20;
 	}
 	else
 	{
-		clipY = (float)position;
+		clipY = (float)position*20;
 	}
 	clipPlane->SetOrigin(clipX, clipY, clipZ);
 	clipFilter->SetClipFunction(clipPlane.Get());
@@ -961,11 +970,11 @@ void MainWindow::on_clipZSlider_sliderMoved(int position)
 {
 	if (position == 99)
 	{
-		clipZ = 1;
+		clipZ = 20;
 	}
 	else
 	{
-		clipZ = (float)position;
+		clipZ = (float)position*20;
 	}
 	clipPlane->SetOrigin(clipX, clipY, clipZ);
 	clipFilter->SetClipFunction(clipPlane.Get());
@@ -973,6 +982,60 @@ void MainWindow::on_clipZSlider_sliderMoved(int position)
 	actors[0]->SetMapper(mappers[0]);
 	ui->qvtkWidget->GetRenderWindow()->Render();
     emit statusUpdateMessage(QString("Z parameter of clip filter changed"), 0);
+}
+
+void MainWindow::on_clipXDial_sliderMoved(int position)
+{
+	if (position == 99)
+	{
+		clipNormalX = 10;
+	}
+	else
+	{
+		clipNormalX = (float)position*10;
+	}
+	clipPlane->SetNormal(clipNormalX, clipNormalY, clipNormalZ);
+	clipFilter->SetClipFunction(clipPlane.Get());
+	mappers[0]->SetInputConnection(clipFilter->GetOutputPort());
+	actors[0]->SetMapper(mappers[0]);
+	ui->qvtkWidget->GetRenderWindow()->Render();
+	emit statusUpdateMessage(QString("X rotation of clip filter changed"), 0);
+}
+
+void MainWindow::on_clipYDial_sliderMoved(int position)
+{
+	if (position == 99)
+	{
+		clipNormalY = 10;
+	}
+	else
+	{
+		clipNormalY = (float)position*10;
+	}
+	clipPlane->SetNormal(clipNormalX, clipNormalY, clipNormalZ);
+	clipFilter->SetClipFunction(clipPlane.Get());
+	mappers[0]->SetInputConnection(clipFilter->GetOutputPort());
+	actors[0]->SetMapper(mappers[0]);
+	ui->qvtkWidget->GetRenderWindow()->Render();
+	emit statusUpdateMessage(QString("Y rotation of clip filter changed"), 0);
+}
+
+void MainWindow::on_clipZDial_sliderMoved(int position)
+{
+	if (position == 99)
+	{
+		clipNormalZ = 10;
+	}
+	else
+	{
+		clipNormalZ = (float)position*10;
+	}
+	clipPlane->SetNormal(clipNormalX, clipNormalY, clipNormalZ);
+	clipFilter->SetClipFunction(clipPlane.Get());
+	mappers[0]->SetInputConnection(clipFilter->GetOutputPort());
+	actors[0]->SetMapper(mappers[0]);
+	ui->qvtkWidget->GetRenderWindow()->Render();
+	emit statusUpdateMessage(QString("Z rotation of clip filter changed"), 0);
 }
 
 void MainWindow::on_bkgColourButton_clicked()

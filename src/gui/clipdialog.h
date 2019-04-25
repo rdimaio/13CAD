@@ -15,6 +15,9 @@ signals:
     void xSliderMoved(int value);
     void ySliderMoved(int value);
     void zSliderMoved(int value);
+    void xDialMoved(int value);
+    void yDialMoved(int value);
+    void zDialMoved(int value);
     void clipDialogRejected();
     void clipDialogAccepted();
 
@@ -26,6 +29,9 @@ private slots:
     void on_xSlider_sliderMoved(int position);
     void on_ySlider_sliderMoved(int position);
     void on_zSlider_sliderMoved(int position);
+    void on_xDial_sliderMoved(int position);
+    void on_yDial_sliderMoved(int position);
+    void on_zDial_sliderMoved(int position);
     void on_clipDialog_rejected();
     void on_clipDialog_accepted();
 

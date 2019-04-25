@@ -105,6 +105,9 @@ class MainWindow : public QMainWindow
         void on_clipXSlider_sliderMoved(int position);
         void on_clipYSlider_sliderMoved(int position);
         void on_clipZSlider_sliderMoved(int position);
+        void on_clipXDial_sliderMoved(int position);
+        void on_clipYDial_sliderMoved(int position);
+        void on_clipZDial_sliderMoved(int position);
         void on_clipDialog_dialogRejected();
         void on_clipDialog_dialogAccepted();
 
