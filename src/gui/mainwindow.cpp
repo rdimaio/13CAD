@@ -596,7 +596,7 @@ void MainWindow::handleActionOpen()
 	// Prompt user for a filename
 	inputFileName = QFileDialog::getOpenFileName(this, tr("Open File"),
 												 QDir::currentPath(),
-												 tr("Supported Models (*.mod, *.stl);;STL Model (*.stl);;Proprietary Model (*.mod)"));
+												 tr("Supported Models (*.mod *.stl);;STL Model (*.stl);;Proprietary Model (*.mod)"));
 
 	if (!inputFileName.isEmpty() && !inputFileName.isNull())
 	{

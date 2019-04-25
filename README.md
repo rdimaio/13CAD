@@ -6,6 +6,43 @@
 // H62PEP - Group 13
 ```
 
+# Key features
+- Open, visualize and save .mod and .stl files
+- Fully fledged camera controls allow for 
+- Modify properties of the visualization, such as the model's opacity or colour
+- Toggle the background to be a gradient instead of a uniform colour of your choice
+- Switch between different visualization paradigms, such as wireframes and points
+- Enable an external light, modifying its intensity and the specularity of the model
+- Export volume, surface area, number of cells and vertices as text file data
+- Filters, like shrink and clip filters, are available
+
+# Requirements
+- Windows/Linux (possibly MAC OSX, not tested)
+- CMake 3.3 or greater (if installing from source)
+- Qt 5
+- VTK 8.2.0
+
+# Installation
+**Note: the preloaded .mod and .stl test files are not available
+## From source
+```bash
+# Clone the repository
+$ git clone https://github.com/rdimaio/ModelLoader
+
+# Go into the ModelLoader folder
+$ cd ModelLoader
+
+# Build and make
+$ cmake .
+$ make
+
+# Run the program
+$ ./ModelLoader
+```
+
+## Via .zip (Linux)
+
+
 ## Library structure
 The library's structure is a slightly modified version of [this answer](https://stackoverflow.com/a/1398594):
 
@@ -16,6 +53,7 @@ The library's structure is a slightly modified version of [this answer](https://
 /include  Public header files (.h) exposed to the library users
 /lib      Library build directory
 /src      Source files (.cpp) and private header files (.h)
+/src/gui  Graphical user interface files
 /tests    Test suites
 ```
 
@@ -133,8 +171,14 @@ in case the latest commit breaks the tests in any way.
 - Code could be cleaned up, especially in mainwindow.cpp.
 The different functions could be put in different files,
 improving the ease of navigating the GUI source code.
+- Many class member variables could be transformed into static/constant variables;
+[This link](https://stackoverflow.com/questions/5620256/understanding-how-to-correctly-treat-c-class-constants)
+provides a good understanding of the matter.
+- A function to export a depth map could be added, using [this example](https://vtk.org/Wiki/VTK/Examples/Cxx/Utilities/ZBuffer)
+as a starting point.
+- Colorblind mode could be implemented.
 
-## Useful links
+# Useful links
 
 - [An excellent and very brief git guide](http://rogerdudler.github.io/git-guide/)
 - [A working example of Qt and VTK working together.](https://vtk.org/Wiki/VTK/Examples/Cxx/Qt/SideBySideRenderWindowsQt)

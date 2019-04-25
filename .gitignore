@@ -52,6 +52,7 @@ compile_commands.json
 CTestTestfile.cmake
 
 # CPack
+_CPack_Packages
 CPackConfig.cmake
 CPackSourceConfig.cmake
 

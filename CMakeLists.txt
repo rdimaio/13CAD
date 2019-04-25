@@ -118,13 +118,17 @@ else()
 
     target_link_libraries(${PROJECT_NAME} Qt5::Widgets ${VTK_LIBRARIES})
 
+    install(TARGETS ${PROJECT_NAME}
+      RUNTIME DESTINATION bin
+      LIBRARY DESTINATION lib
+      ARCHIVE DESTINATION lib/static)
+
     # Use NSIS to generate installer for Windows, else format it to Zip
     if(WIN32)
       set(CPACK_GENERATOR "NSIS")
     else()
       set(CPACK_GENERATOR "ZIP")
     endif()
-    
     include(CPack)
 
 endif(TESTING)
