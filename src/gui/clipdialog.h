@@ -16,6 +16,7 @@ signals:
     void ySliderMoved(int value);
     void zSliderMoved(int value);
     void clipDialogRejected();
+    void clipDialogAccepted();
 
 public:
     explicit ClipDialog(QWidget *parent = nullptr);
@@ -26,6 +27,7 @@ private slots:
     void on_ySlider_sliderMoved(int position);
     void on_zSlider_sliderMoved(int position);
     void on_clipDialog_rejected();
+    void on_clipDialog_accepted();
 
 private:
     Ui::ClipDialog *ui;

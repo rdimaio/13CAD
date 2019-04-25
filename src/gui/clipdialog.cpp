@@ -12,6 +12,7 @@ ClipDialog::ClipDialog(QWidget *parent) :
     connect(ui->ySlider, SIGNAL(sliderMoved(int)), this, SLOT(on_ySlider_sliderMoved(int)));
     connect(ui->zSlider, SIGNAL(sliderMoved(int)), this, SLOT(on_zSlider_sliderMoved(int)));
     connect(ui->buttonBox, SIGNAL(rejected()), this, SLOT(on_clipDialog_rejected()));
+    connect(ui->buttonBox, SIGNAL(accepted()), this, SLOT(on_clipDialog_accepted()));
 }
 
 ClipDialog::~ClipDialog()
@@ -37,4 +38,9 @@ void ClipDialog::on_zSlider_sliderMoved(int position)
 void ClipDialog::on_clipDialog_rejected()
 {
     emit clipDialogRejected();
+}
+
+void ClipDialog::on_clipDialog_accepted()
+{
+    emit clipDialogAccepted();
 }

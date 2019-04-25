@@ -121,6 +121,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 	ui->shrinkButton->setEnabled(false);
 	ui->clipButton->setEnabled(false);
 	ui->resetFiltersButton->setEnabled(false);
+	
 
 	// Setup the renderers's camera
 	renderer->ResetCamera();
@@ -195,6 +196,10 @@ void MainWindow::setupButtons(bool modelLoaded)
 	ui->negYButton->setEnabled(modelLoaded);
 	ui->negZButton->setEnabled(modelLoaded);
 	ui->neg90Button->setEnabled(modelLoaded);
+	// Uncheck filter buttons
+	ui->shrinkButton->setCheckable(true);
+	ui->clipButton->setCheckable(true);
+	
 	// debug - grey out remaining buttons too
 }
 
@@ -231,6 +236,7 @@ void MainWindow::setupConnects()
 	connect(clipWindow, SIGNAL(ySliderMoved(int)), this, SLOT(on_clipYSlider_sliderMoved(int)));
 	connect(clipWindow, SIGNAL(zSliderMoved(int)), this, SLOT(on_clipZSlider_sliderMoved(int)));
 	connect(clipWindow, SIGNAL(clipDialogRejected()), this, SLOT(on_clipDialog_dialogRejected()));
+	connect(clipWindow, SIGNAL(clipDialogAccepted()), this, SLOT(on_clipDialog_dialogAccepted()));
 }
 
 void MainWindow::loadModel(QString inputFilename)
@@ -847,6 +853,30 @@ void MainWindow::on_shrinkButton_clicked()
 	{
 		emit statusUpdateMessage(QString("Error while enabling shrink filter"), 0);
 	}
+	ui->shrinkButton->setCheckable(true);
+	ui->shrinkButton->setChecked(true);
+}
+
+void MainWindow::on_clipDialog_dialogAccepted()
+{	
+	clipWindowShown = false;
+}
+
+void MainWindow::on_clipDialog_dialogRejected()
+{	
+	// Set clip plane parameters to how they were before the dialog was opened
+	clipX = prevClipX;
+	clipY = prevClipY;
+	clipZ = prevClipZ;
+	clipNormalX = prevClipNormalX;
+	clipNormalY = prevClipNormalY;
+	clipNormalZ = prevClipNormalZ;
+
+	clipPlane->SetOrigin(clipX, clipY, clipZ);
+
+	clipWindowShown = false;
+	ui->qvtkWidget->GetRenderWindow()->Render();
+	emit statusUpdateMessage(QString("Changes to clip filter cancelled"), 0);
 }
 
 void MainWindow::on_clipButton_clicked()
@@ -870,7 +900,6 @@ void MainWindow::on_clipButton_clicked()
 		prevClipNormalX = clipNormalX;
 		prevClipNormalY = clipNormalY;
 		prevClipNormalZ = clipNormalZ;
-	}
 
 	// When clicked for the first time, initialise clip plane with these parameters
 	if (!clipFilterEnabled)
@@ -884,24 +913,12 @@ void MainWindow::on_clipButton_clicked()
 
 		ui->qvtkWidget->GetRenderWindow()->Render();
 		ui->clipButton->setCheckable(true);
+		ui->clipButton->setChecked(true);
 		emit statusUpdateMessage(QString("Clip filter enabled"), 0);
 		clipFilterEnabled = true;
-}
-
-void MainWindow::on_clipDialog_dialogRejected()
-{	
-	// Set clip plane parameters to how they were before the dialog was opened
-	clipX = prevClipX;
-	clipY = prevClipY;
-	clipZ = prevClipZ;
-	clipNormalX = prevClipNormalX;
-	clipNormalY = prevClipNormalY;
-	clipNormalZ = prevClipNormalZ;
-
-	clipPlane->SetOrigin(clipX, clipY, clipZ);
-
-	ui->qvtkWidget->GetRenderWindow()->Render();
-	emit statusUpdateMessage(QString("Changes to clip filter cancelled"), 0);
+	}
+	ui->clipButton->setCheckable(true);
+	ui->clipButton->setChecked(true);
 }
 
 void MainWindow::on_clipXSlider_sliderMoved(int position)
@@ -912,10 +929,12 @@ void MainWindow::on_clipXSlider_sliderMoved(int position)
 	}
 	else
 	{
-		clipX = (float)position / 100;
+		clipX = (float)position;
 	}
 	clipPlane->SetOrigin(clipX, clipY, clipZ);
-	// START HERE; BEFORE RENDERING, ADD THE CLIP PLANE TO THE INPUT OF THE CLIP FILTER.
+	clipFilter->SetClipFunction(clipPlane.Get());
+	mappers[0]->SetInputConnection(clipFilter->GetOutputPort());
+	actors[0]->SetMapper(mappers[0]);
 	ui->qvtkWidget->GetRenderWindow()->Render();
 	emit statusUpdateMessage(QString("X parameter of clip filter changed"), 0);
 }
@@ -928,9 +947,12 @@ void MainWindow::on_clipYSlider_sliderMoved(int position)
 	}
 	else
 	{
-		clipY = (float)position / 100;
+		clipY = (float)position;
 	}
 	clipPlane->SetOrigin(clipX, clipY, clipZ);
+	clipFilter->SetClipFunction(clipPlane.Get());
+	mappers[0]->SetInputConnection(clipFilter->GetOutputPort());
+	actors[0]->SetMapper(mappers[0]);
 	ui->qvtkWidget->GetRenderWindow()->Render();
     emit statusUpdateMessage(QString("Y parameter of clip filter changed"), 0);
 }
@@ -943,9 +965,12 @@ void MainWindow::on_clipZSlider_sliderMoved(int position)
 	}
 	else
 	{
-		clipZ = (float)position / 100;
+		clipZ = (float)position;
 	}
 	clipPlane->SetOrigin(clipX, clipY, clipZ);
+	clipFilter->SetClipFunction(clipPlane.Get());
+	mappers[0]->SetInputConnection(clipFilter->GetOutputPort());
+	actors[0]->SetMapper(mappers[0]);
 	ui->qvtkWidget->GetRenderWindow()->Render();
     emit statusUpdateMessage(QString("Z parameter of clip filter changed"), 0);
 }
@@ -1060,10 +1085,12 @@ void MainWindow::on_resetFiltersButton_clicked()
 	loadModel(inputFileName);
 
 	// Uncheck buttons
-	ui->shrinkButton->setCheckable(false);
-	ui->clipButton->setCheckable(false);
+	ui->shrinkButton->setChecked(false);
+	ui->clipButton->setChecked(false);
 
 	clipFilterEnabled = false;
+
+	clipWindow->hide();
 
 	clipX = 0;
 	clipY = 0;

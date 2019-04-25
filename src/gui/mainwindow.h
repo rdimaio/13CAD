@@ -106,6 +106,7 @@ class MainWindow : public QMainWindow
         void on_clipYSlider_sliderMoved(int position);
         void on_clipZSlider_sliderMoved(int position);
         void on_clipDialog_dialogRejected();
+        void on_clipDialog_dialogAccepted();
 
         // Camera
         // Note for the camera functions:
