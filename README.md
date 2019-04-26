@@ -6,6 +6,8 @@
 // H62PEP - Group 13
 ```
 
+![Demo Screenshot](/src/gui/icons/screenshot.png?raw=true "Demo Screenshot")
+
 # Key features
 - Open, visualize and save .mod and .stl files
 - Fully fledged camera controls allow for 
@@ -23,7 +25,9 @@
 - VTK 8.2.0
 
 # Installation
-**Note: the preloaded .mod and .stl test files are not available
+
+**Note: the preloaded .mod and .stl test files are not available in the Windows installer.**
+
 ## From source
 ```bash
 # Clone the repository
@@ -41,7 +45,17 @@ $ ./ModelLoader
 ```
 
 ## Via .zip (Linux)
+1. Download the [Linux executable](https://github.com/rdimaio/ModelLoader/releases/tag/1.0.0)
+2. Extract and run it
 
+## Via .zip (Windows)
+1. Download the [Windows executable](https://github.com/rdimaio/ModelLoader/releases/tag/1.0.0)
+2. Extract and run it
+
+## .exe installer (Windows)
+1. Download the [Windows installer](https://github.com/rdimaio/ModelLoader/releases/tag/1.0.0)
+2. Run the installer and choose your installation path.
+3. (Optional) Download the [Test models](https://github.com/rdimaio/ModelLoader/releases/tag/1.0.0) to test the program.
 
 ## Library structure
 The library's structure is a slightly modified version of [this answer](https://stackoverflow.com/a/1398594):
