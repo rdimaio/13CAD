@@ -26,8 +26,6 @@
 
 # Installation
 
-**Note: the preloaded .mod and .stl test files are not available in the Windows installer.**
-
 ## From source
 ```bash
 # Clone the repository
@@ -52,7 +50,10 @@ $ ./ModelLoader
 1. Download the [Windows executable](https://github.com/rdimaio/ModelLoader/releases/tag/1.0.0)
 2. Extract and run it
 
-## .exe installer (Windows)
+## Via the .exe installer (Windows)
+
+Note: the preloaded .mod and .stl test files are not automatically included in the Windows installer.
+
 1. Download the [Windows installer](https://github.com/rdimaio/ModelLoader/releases/tag/1.0.0)
 2. Run the installer and choose your installation path.
 3. (Optional) Download the [Test models](https://github.com/rdimaio/ModelLoader/releases/tag/1.0.0) to test the program.
