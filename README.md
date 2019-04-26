@@ -56,7 +56,8 @@ Note: the preloaded .mod and .stl test files are not automatically included in t
 
 1. Download the [Windows installer](https://github.com/rdimaio/ModelLoader/releases/tag/1.0.0)
 2. Run the installer and choose your installation path.
-3. (Optional) Download the [Test models](https://github.com/rdimaio/ModelLoader/releases/tag/1.0.0) to test the program.
+3. (Optional) Download the [Tests zip file](https://github.com/rdimaio/ModelLoader/releases/tag/1.0.0),
+unzip it and save it as "tests" in the location the executable file has been installed in.
 
 ## Library structure
 The library's structure is a slightly modified version of [this answer](https://stackoverflow.com/a/1398594):
