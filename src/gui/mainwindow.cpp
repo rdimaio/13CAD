@@ -150,6 +150,18 @@ void MainWindow::setupWindow()
 
 	setWindowTitle(tr("13CAD"));
 
+	// Only enable STL and MOD tests if files are present
+	std::ifstream modfile("tests/ExampleModel.mod");
+	std::ifstream stlfile("tests/ExampleSTL.stl");
+	if (!modfile.good())
+	{
+		ui->actionModTest->setEnabled(false);
+	}
+	if (!stlfile.good())
+	{
+		ui->actionStlTest->setEnabled(false);
+	}
+
 	// Link the VTK render window to the QtVTK widget
 	// (qvtkWidget is the name gave to QtVTKOpenGLWidget in Qt Creator)
 	ui->qvtkWidget->SetRenderWindow(renderWindow);

@@ -243,7 +243,11 @@ int Model::getCellCount()
 	return count;
 }
 
-std::string Model::getCellList() {}
+std::string Model::getCellList() 
+{ 
+	std::string ph = "placeholder";
+	return ph; 
+}
 
 Vector3D Model::getCentre()
 {

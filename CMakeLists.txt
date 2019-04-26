@@ -125,6 +125,8 @@ else()
 
     # Use NSIS to generate installer for Windows, else format it to Zip
     if(WIN32)
+	  file(GLOB DLL_FILES ${DLL_DIR}/*.dll)
+      install(FILES ${DLL_FILES} DESTINATION bin)
       set(CPACK_GENERATOR "NSIS")
     else()
       set(CPACK_GENERATOR "ZIP")

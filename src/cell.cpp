@@ -15,7 +15,10 @@
 Cell::Cell() {}
 Cell::~Cell() {}
 
-double Cell::getVolume() {}
+double Cell::getVolume() 
+{
+	return 0;
+}
 
 double Cell::getMass()
 {
@@ -95,6 +98,7 @@ Hexahedron::~Hexahedron() {}
 
 double Hexahedron::getVolume()
 {
+	return 0;
 }
 
 Tetrahedron::Tetrahedron(std::vector<Vector3D> &vertices, Material &material)
