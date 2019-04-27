@@ -10,7 +10,7 @@
 
 # Key features
 - Open, visualize and save .mod and .stl files
-- Fully fledged camera controls allow for 
+- Fully fledged camera controls allow for straightforward model analysis
 - Modify properties of the visualization, such as the model's opacity or colour
 - Toggle the background to be a gradient instead of a uniform colour of your choice
 - Switch between different visualization paradigms, such as wireframes and points
