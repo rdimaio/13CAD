@@ -6,7 +6,7 @@
 // H62PEP - Group 13
 ```
 
-![Demo Screenshot](/src/gui/icons/screenshot.png?raw=true "Demo Screenshot")
+![Demo GIF](/src/gui/icons/demo.gif?raw=true "Demo GIF")
 
 # Key features
 - Open, visualize and save .mod and .stl files
