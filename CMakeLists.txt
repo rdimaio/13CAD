@@ -74,19 +74,22 @@ if(TESTING)
     file(GLOB TEST_SOURCES "tests/*.cpp")
     add_executable(${TEST_PROJECT_NAME} ${TEST_SOURCES} ${SOURCES})
     target_link_libraries(${TEST_PROJECT_NAME} gtest_main pthread)
+# Non-testing mode
 else()
 
     # Find the Qt widgets package. This locates the relevant include and
     # lib directories, and the necessary static libraries for linking.
     find_package( Qt5Widgets )
 
+    # Set UI files
     set( UIS src/gui/mainwindow.ui src/gui/helpdialog.ui src/gui/clipdialog.ui)
     qt5_wrap_ui( UI_Srcs ${UIS} )
 
+    # Set icons
     set( ICONS src/gui/icons/icons.qrc )
     qt5_add_resources( QRC_Srcs ${ICONS} )
 
-    # Also link to VTK
+    # Link to VTK
     # find_package( VTK REQUIRED)
     find_package(VTK REQUIRED)
     if (NOT VTK_FOUND)
@@ -98,26 +101,31 @@ else()
 
     include( ${VTK_USE_FILE} )
 
-    # Append main.cpp
+    # Append sources manually
     list(APPEND SOURCES 
       src/main.cpp
       src/gui/mainwindow.cpp 
-		  src/gui/mainwindow.h 
+      src/gui/mainwindow.h 
       src/gui/mainwindow.ui
       src/gui/helpdialog.cpp
       src/gui/helpdialog.h
       src/gui/helpdialog.ui
       src/gui/clipdialog.cpp
       src/gui/clipdialog.h
-      src/gui/clipdialog.ui)
-      add_executable(${PROJECT_NAME} MACOSX_BUNDLE 
+      src/gui/clipdialog.ui
+    )
+    
+    # Add sources to the executable
+    add_executable(${PROJECT_NAME} MACOSX_BUNDLE 
       ${SOURCES}
       ${UI_Srcs}
       ${QRC_Srcs}
     )
-
+    
+    # Link libraries
     target_link_libraries(${PROJECT_NAME} Qt5::Widgets ${VTK_LIBRARIES})
 
+    # Give installation instructions
     install(TARGETS ${PROJECT_NAME}
       RUNTIME DESTINATION bin
       LIBRARY DESTINATION lib
@@ -125,12 +133,14 @@ else()
 
     # Use NSIS to generate installer for Windows, else format it to Zip
     if(WIN32)
-	  file(GLOB DLL_FILES ${DLL_DIR}/*.dll)
+      file(GLOB DLL_FILES ${DLL_DIR}/*.dll)
       install(FILES ${DLL_FILES} DESTINATION bin)
       set(CPACK_GENERATOR "NSIS")
     else()
       set(CPACK_GENERATOR "ZIP")
     endif()
+    
+    # Include CPack for packaging
     include(CPack)
 
 endif(TESTING)
