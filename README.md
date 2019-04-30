@@ -1,10 +1,25 @@
-[![Build Status](https://travis-ci.com/rdimaio/ModelLoader.svg?token=GZpV6k64pFgseGbhWU1L&branch=master)](https://travis-ci.com/rdimaio/ModelLoader)
-
-# 13CAD - Cross-platform model visualization software
-
 ```cpp
 // H62PEP - Group 13
 ```
+
+# 13CAD - Cross-platform model visualization software
+
+<div align="center">
+&nbsp;&nbsp;
+
+    
+  <!-- Build Status -->
+  <a href="https://travis-ci.com/rdimaio/ModelLoader">
+    <img src="https://travis-ci.com/rdimaio/ModelLoader.svg?token=GZpV6k64pFgseGbhWU1L&branch=master"
+      alt="Build Status" />
+  </a>
+  <!-- SemVer Version -->
+  <a href="https://github.com/rdimaio/ModelLoader">
+    <img src="https://img.shields.io/badge/Version-1.0.0-blue.svg"
+      alt="SemVer Version" />
+  </a>
+
+</div>
 
 ![Demo GIF](/src/gui/icons/demo.gif?raw=true "Demo GIF")
 
@@ -59,7 +74,7 @@ Note: the preloaded .mod and .stl test files are not automatically included in t
 3. (Optional) Download the [Tests zip file](https://github.com/rdimaio/ModelLoader/releases/tag/1.0.0),
 unzip it and save it as "tests" in the location the executable file has been installed in.
 
-## Library structure
+# Library structure
 The library's structure is a slightly modified version of [this answer](https://stackoverflow.com/a/1398594):
 
 ```
@@ -83,13 +98,13 @@ the difference between the two. In particular:
 
 As a general rule, **keep everything private unless absolutely necessary to the user**.
 
-## Coding style
+# Coding style
 
 Note: these are not universal coding rules. 
 You can write code however you like, but for consistency's sake it's ideal that
 all members of the group follow this set of conventions (which are very common in C++).
 
-### Git
+## Git
 - Follow the [Git commit message convention](https://gist.github.com/robertpainsi/b632364184e70900af4ab688decf6f53)
 when naming commits. The most important point is that you write your commit messages **in the imperative**: this means
 you would say "Fix bug", not "Fixed bug" or "Bug fixes". This is very important, as it's the standard convention
@@ -102,7 +117,7 @@ git commit -m "Add getVolume() function to vector.cpp"
 git commit -m "Updated vector.cpp"
 ```
 
-### C++
+## C++
 - Class names must be capitalised (e.g. ```class Vector```, ```class Shape```)
 - Functions and variables follow the ```camelCase``` naming convention (e.g. ```getVolume()```, ```sampleVariable```. 
 See [this](https://en.wikipedia.org/wiki/Camel_case) for more details.)
