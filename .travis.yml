@@ -1,5 +1,8 @@
 sudo: false
 
+# Set Trusty as default build environment
+dist: trusty
+
 language:
   - cpp
 
@@ -34,7 +37,6 @@ matrix:
 
 before_install:
     - eval "${MATRIX_EVAL}"
-    - sudo apt-get -y install libjsoncpp0 libobjc-4.8-dev libclang-common-5.0-dev
 
 addons:
   apt:
