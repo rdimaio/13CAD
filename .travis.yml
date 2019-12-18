@@ -15,9 +15,9 @@ branches:
 # the generated documentation.
 env:
   global:
-    - GH_REPO_NAME: ModelLoader
+    - GH_REPO_NAME: 13CAD
     - DOXYFILE: $TRAVIS_BUILD_DIR/Doxyfile
-    - GH_REPO_REF: github.com/rdimaio/ModelLoader.git
+    - GH_REPO_REF: github.com/rdimaio/13CAD.git
 
 matrix:
   include:
