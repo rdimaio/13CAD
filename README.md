@@ -9,12 +9,12 @@
 
     
   <!-- Build Status -->
-  <a href="https://travis-ci.com/rdimaio/ModelLoader">
-    <img src="https://travis-ci.com/rdimaio/ModelLoader.svg?token=GZpV6k64pFgseGbhWU1L&branch=master"
+  <a href="https://travis-ci.com/rdimaio/13CAD">
+    <img src="https://travis-ci.com/rdimaio/13CAD.svg?token=GZpV6k64pFgseGbhWU1L&branch=master"
       alt="Build Status" />
   </a>
   <!-- SemVer Version -->
-  <a href="https://github.com/rdimaio/ModelLoader">
+  <a href="https://github.com/rdimaio/13CAD">
     <img src="https://img.shields.io/badge/Version-1.0.0-blue.svg"
       alt="SemVer Version" />
   </a>
@@ -44,10 +44,10 @@
 ## From source
 ```bash
 # Clone the repository
-$ git clone https://github.com/rdimaio/ModelLoader
+$ git clone https://github.com/rdimaio/13CAD
 
-# Go into the ModelLoader folder
-$ cd ModelLoader
+# Go into the 13CAD folder
+$ cd 13CAD
 
 # Build and make
 $ cmake .
@@ -58,20 +58,20 @@ $ ./ModelLoader
 ```
 
 ## Via .zip (Linux)
-1. Download the [Linux executable](https://github.com/rdimaio/ModelLoader/releases/tag/1.0.0)
+1. Download the [Linux executable](https://github.com/rdimaio/13CAD/releases/tag/1.0.0)
 2. Extract and run it
 
 ## Via .zip (Windows)
-1. Download the [Windows executable](https://github.com/rdimaio/ModelLoader/releases/tag/1.0.0)
+1. Download the [Windows executable](https://github.com/rdimaio/13CAD/releases/tag/1.0.0)
 2. Extract and run it
 
 ## Via the .exe installer (Windows)
 
 Note: the preloaded .mod and .stl test files are not automatically included in the Windows installer.
 
-1. Download the [Windows installer](https://github.com/rdimaio/ModelLoader/releases/tag/1.0.0)
+1. Download the [Windows installer](https://github.com/rdimaio/13CAD/releases/tag/1.0.0)
 2. Run the installer and choose your installation path.
-3. (Optional) Download the [Tests zip file](https://github.com/rdimaio/ModelLoader/releases/tag/1.0.0),
+3. (Optional) Download the [Tests zip file](https://github.com/rdimaio/13CAD/releases/tag/1.0.0),
 unzip it and save it as "tests" in the location the executable file has been installed in.
 
 # Library structure
@@ -150,7 +150,7 @@ of the library (the alternative would be having to navigate
 through dozens of source files and reading comments).
 We are going to use **Doxygen** to automate our documentation.
 
-The documentation for our project can be found [here](https://rdimaio.github.io/ModelLoader/html/).
+The documentation for our project can be found [here](https://rdimaio.github.io/13CAD/html/).
 
 ## Doxygen
 [Doxygen](http://www.doxygen.org/) is a tool that generates documentation from
